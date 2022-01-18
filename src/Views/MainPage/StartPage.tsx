@@ -1,7 +1,6 @@
 import React from 'react';
-import './App.scss';
 
-export function App() {
+export function StartPage() {
   return (
     <div />
   );
