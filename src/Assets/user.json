@@ -1,5 +1,5 @@
 [
   {"id" : "1", "name" : "user", "password" : "user", "email" : "test@test.ru", "subscribes" : ["More TV", "Кинопоиск HD"], "favorite_films" : ["27046", "421892", "808"]},
   {"id" : "2", "name" : "admin", "password" : "admin", "email" : "admin@admin.com", "subscribes" : ["Netflix", "IVI"], "favorite_films" : ["421892", "808"]},
-  {"id" : "2", "name" : "alex", "password" : "alex", "email" : "alex@alex.by", "subscribes" : ["OKKO"], "favorite_films" : ["421892", "27046"]}
+  {"id" : "3", "name" : "alex", "password" : "alex", "email" : "alex@alex.by", "subscribes" : ["OKKO"], "favorite_films" : ["421892", "27046"]}
 ]
