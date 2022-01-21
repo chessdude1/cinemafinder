@@ -16,7 +16,11 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -25,10 +29,25 @@
     "react/prop-types": "off",
     "no-use-before-define": "off",
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
-    "jsx-quotes": ["warn", "prefer-single"],
+    "default-param-last": "off",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "jsx-quotes": [
+      "warn",
+      "prefer-single"
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
