@@ -11,6 +11,7 @@ export function StartPage() {
           <NavLink to='/search'>Search</NavLink>
           <NavLink to='/account'>Account</NavLink>
           <NavLink to='/registration'>Sign Up</NavLink>
+          <NavLink to='/favourites'>Favorites</NavLink>
         </nav>
       </header>
       <Outlet />
