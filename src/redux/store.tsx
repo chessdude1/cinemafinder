@@ -4,6 +4,7 @@ import {
 import createSagaMiddleware from '@redux-saga/core';
 import { FavouritesPageReducer } from './FavouritesPageRedux/FavouritesPageReducer';
 import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
+import rootSaga from './Sages/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
@@ -23,6 +24,8 @@ export const store = createStore(
   reducers,
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
+
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ReturnType<typeof store.dispatch>
