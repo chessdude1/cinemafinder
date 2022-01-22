@@ -12,6 +12,7 @@ export function FavouritesPage() {
   function decrement() {
     dispatch(FavouritePageActions.Decrement());
   }
+
   return (
     <div>
 
