@@ -21,6 +21,7 @@ const initialState : FavouritePageStateType = {
       backdropPath: '/dQdzzIn4M8xPSzbTRhkbqRmEc54.jpg',
       status: 'Released',
       releaseDate: '2007-12-21',
+      voteAverage: 4.8,
     },
   ],
 };

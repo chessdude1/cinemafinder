@@ -18,7 +18,8 @@ interface FavouriteFilmRequest {
   backdrop_path: string,
   popularity:number,
   release_date: string,
-  status : string
+  status : string,
+  vote_average : number
 }
 
 function* workerAddFavouriteFilm() {
@@ -40,6 +41,7 @@ function* workerAddFavouriteFilm() {
       watchProviders,
       releaseDate: filmRequest.release_date,
       status: filmRequest.status,
+      voteAverage: filmRequest.vote_average,
     };
 
     yield put(FavouritePageActions.AddFavouriteFilm(favoriteFilm));

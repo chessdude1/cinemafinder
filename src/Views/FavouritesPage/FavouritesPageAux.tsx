@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
-import { FavouritePageActions } from '../../redux/FavouritesPageRedux/FavouritePageActions';
+import { FavouriteFilm } from '../../redux/FavouritesPageRedux/FavouritePageActions';
 import { FavouritePageSagaTypes } from '../../redux/Sages/FavoritePageSaga';
 import { FavouritesPage } from './FavouritesPage';
 
@@ -62,7 +62,7 @@ export function FavouritesPageAux() {
 
   const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
   const [ratingFilterValue, setRatingFilterValue] = useState<number[] | number>(5);
-  const [yearFilterValue, setYearFilterValue] = useState<number[] | number>([1900, 2022]);
+  const [yearFilterValue, setYearFilterValue] = useState<Array<number> | number>([1900, 2022]);
   const [options, setOptions] = useState<optionsType>(initialOptions);
   const [genres, setGenres] = useState<genresType>(initialGenres);
 
@@ -72,6 +72,21 @@ export function FavouritesPageAux() {
     dispatch({ type: FavouritePageSagaTypes.ADDFAVOURITESAGA });
   } // init saga worker
 
+  function filterfilms(favoriteFilmsToFilter : Array<FavouriteFilm>) {
+    let filteredFilms = [...favoriteFilmsToFilter];
+    filteredFilms = filteredFilms.filter(
+      (film) => Math.floor(Number(film.voteAverage)) > ratingFilterValue,
+    );
+
+    if (Array.isArray(yearFilterValue)) {
+      filteredFilms = filteredFilms.filter((film) => yearFilterValue[0] < Number(film.releaseDate.split('-')[0]));
+      filteredFilms = filteredFilms.filter((film) => yearFilterValue[1] > Number(film.releaseDate.split('-')[0]));
+    }
+
+    return filteredFilms;
+  }
+
+  console.log(filterfilms(films));
   useEffect(() => {
     AddFavouriteFilm();
   }, []);
@@ -82,7 +97,7 @@ export function FavouritesPageAux() {
       setGenres={setGenres}
       ratingFilterValue={ratingFilterValue}
       setRatingFilterValue={setRatingFilterValue}
-      favoriteFilms={films}
+      favoriteFilms={filterfilms(films)}
       yearFilterValue={yearFilterValue}
       setYearFilterValue={setYearFilterValue}
       options={options}
