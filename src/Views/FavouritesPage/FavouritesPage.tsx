@@ -1,28 +1,29 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../../Hooks/useTypedSelector';
-import { FavouritePageActions } from '../../redux/FavouritesPageRedux/FavouritePageActions';
-import { FavouritePageSagaTypes } from '../../redux/Sages/FavoritePageSaga';
+import { FavouriteFilm } from '../../redux/FavouritesPageRedux/FavouritePageActions';
+import { FavoriteFilmCard } from './FavoriteFilmCard/FavoriteFilmCard';
+import './FavouritePageStyles.scss';
 
-export function FavouritesPage() {
-  const number = useTypedSelector((store) => store.FavouritesPageReducer.number);
-  const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
-  const dispatch = useDispatch();
-  function increment() {
-    dispatch(FavouritePageActions.Increment());
-  }
-  function decrement() {
-    dispatch(FavouritePageActions.Decrement());
-  }
-  function AddFavouriteFilm() {
-    dispatch({ type: FavouritePageSagaTypes.ADDFAVOURITESAGA });
-  } // init saga worker
+interface FavouritesPageType {
+  favoriteFilms : Array<FavouriteFilm>
+}
 
+export function FavouritesPage({ favoriteFilms } : FavouritesPageType) {
   return (
-    <div>
-      <button type='button' aria-label='Save' onClick={() => { increment(); }} />
-      <button type='button' aria-label='Save' onClick={() => { decrement(); }} />
-      <button type='button' aria-label='Save' onClick={() => { AddFavouriteFilm(); }} />
-    </div>
+    <main className='favourite-page'>
+      <section className='films-list'>
+        {favoriteFilms.map((favoriteFilm) => (
+          <FavoriteFilmCard
+            id={favoriteFilm.id}
+            posterPath={favoriteFilm.posterPath}
+            originalTitle={favoriteFilm.originalTitle}
+          />
+        ))}
+      </section>
+      <div className='filters'>
+        <div className='filters__rating-filter'>
+          123
+        </div>
+      </div>
+    </main>
   );
 }
