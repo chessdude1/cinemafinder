@@ -7,7 +7,7 @@ import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
 import { AccountPage } from './Views/AccountPage/AccountPage';
 
 import './App.scss';
-import { FavouritesPage } from './Views/FavouritesPage/FavouritesPage';
+import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
 import { MoviePage } from './Views/MoviePage/MoviePage';
 import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
 
@@ -18,7 +18,7 @@ export function App() {
         <Route path='search' element={<SearchPage />} />
         <Route path='registration' element={<RegistrationPage />} />
         <Route path='movie' element={<MoviePage />} />
-        <Route path='favourites' element={<FavouritesPage />} />
+        <Route path='favourites' element={<FavouritesPageAux />} />
         <Route path='account' element={<AccountPage />}>
           <Route path='settings' element={<SettingsPage />} />
         </Route>

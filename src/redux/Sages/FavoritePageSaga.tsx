@@ -1,6 +1,7 @@
 import { put, select, takeEvery } from '@redux-saga/core/effects';
-import { getMovie } from '../../Services/Service';
-import { FavouriteFilm, FavouritePageActions } from '../FavouritesPageRedux/FavouritePageActions';
+import { getMovie, getWatchProviders } from '../../Services/Service';
+import { ListOfWatchProvidersType } from '../../Services/ServiceTypes';
+import { FavouritePageActions } from '../FavouritesPageRedux/FavouritePageActions';
 import { RootState } from '../store';
 
 export enum FavouritePageSagaTypes {
@@ -8,17 +9,40 @@ export enum FavouritePageSagaTypes {
 } // enum to init saga work
 // ADDFAVOURITESAGA not registered in any reducer
 
-async function getUser(id : string) {
-  const request = await getMovie(id);
-  return request.data;
+interface FavouriteFilmRequest {
+  id: number,
+  original_language: string,
+  original_title: string,
+  poster_path: string,
+  genres: Array<{id : number, name : string}>,
+  backdrop_path: string,
+  popularity:number,
+  release_date: string,
+  status : string
 }
 
 function* workerAddFavouriteFilm() {
-  const store2 : RootState = yield select((store) => (store));
-  const userFilmIds = store2.AuthPageReducer.user.favorite_films;
+  const storeSaga : RootState = yield select((store) => (store));
+  const userFilmIds = storeSaga.AuthPageReducer.user.favorite_films;
+
   for (let i = 0; i < userFilmIds.length; i += 1) {
-    const data :FavouriteFilm = yield getUser(store2.AuthPageReducer.user.favorite_films[i]);
-    yield put(FavouritePageActions.AddFavouriteFilm(data));
+    const watchProviders : ListOfWatchProvidersType = yield getWatchProviders(userFilmIds[i]);
+    const filmRequest
+    : FavouriteFilmRequest = yield getMovie(userFilmIds[i]);
+    const favoriteFilm = {
+      id: filmRequest.id,
+      backdropPath: filmRequest.backdrop_path,
+      genres: filmRequest.genres,
+      originalLanguage: filmRequest.original_language,
+      originalTitle: filmRequest.original_title,
+      posterPath: filmRequest.poster_path,
+      popularity: filmRequest.popularity,
+      watchProviders,
+      releaseDate: filmRequest.release_date,
+      status: filmRequest.status,
+    };
+
+    yield put(FavouritePageActions.AddFavouriteFilm(favoriteFilm));
     // ADDFAVOURITESAGA type call FavouritePageActions.AddFavouriteFilm
   }
 }

@@ -5,9 +5,10 @@ const initialState : FavouritePageStateType = {
   films: [
     {
       id: 27046,
-      original_language: 'ru',
-      original_title: 'Ирония судьбы. Продолжение',
-      poster_path: '/yzjLu5rTsIVHYmvMciUjmT3lJBc.jpg',
+      originalLanguage: 'ru',
+      originalTitle: 'Ирония судьбы. Продолжение',
+      posterPath: '/yzjLu5rTsIVHYmvMciUjmT3lJBc.jpg',
+      popularity: 5.072,
       genres: [
         {
           id: 35,
@@ -18,7 +19,9 @@ const initialState : FavouritePageStateType = {
           name: 'Romance',
         },
       ],
-      backdrop_path: '/dQdzzIn4M8xPSzbTRhkbqRmEc54.jpg',
+      backdropPath: '/dQdzzIn4M8xPSzbTRhkbqRmEc54.jpg',
+      status: 'Released',
+      releaseDate: '2007-12-21',
     },
   ],
 };

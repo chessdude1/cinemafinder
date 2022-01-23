@@ -19,11 +19,14 @@ export interface FavouritePageStateType {
 
 export interface FavouriteFilm {
   id: number,
-  original_language: string,
-  original_title: string,
-  poster_path: string,
+  originalLanguage: string,
+  originalTitle: string,
+  posterPath: string,
   genres: Array<{id : number, name : string}>,
-  backdrop_path: string
+  backdropPath: string
+  popularity: number,
+  status : string,
+  releaseDate: string
 }
 
 interface DecrementType {
@@ -33,6 +36,7 @@ interface DecrementType {
 interface IncrementType {
   type: FavouritePageActionTypes.INCREMENT;
 }
+
 interface AddFavouriteFilm {
   type : FavouritePageActionTypes.ADDFAVOURITE,
   payload : FavouriteFilm
