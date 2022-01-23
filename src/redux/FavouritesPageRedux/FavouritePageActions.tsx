@@ -21,7 +21,8 @@ export interface FavouriteFilm {
   backdropPath: string
   popularity: number,
   status : string,
-  releaseDate: string
+  releaseDate: string,
+  voteAverage : number
 }
 
 interface AddFavouriteFilm {
