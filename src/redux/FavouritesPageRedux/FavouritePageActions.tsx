@@ -1,19 +1,14 @@
 export enum FavouritePageActionTypes {
-  INCREMENT = 'INCREMENT',
-  DECREMENT = 'DECREMENT',
   ADDFAVOURITE = 'ADDFAVOURITE'
 }
 
 export const FavouritePageActions = {
-  Decrement: (): DecrementType => ({ type: FavouritePageActionTypes.DECREMENT }),
-  Increment: (): IncrementType => ({ type: FavouritePageActionTypes.INCREMENT }),
   AddFavouriteFilm:
   (film : FavouriteFilm)
   : AddFavouriteFilm => ({ type: FavouritePageActionTypes.ADDFAVOURITE, payload: film }),
 };
 
 export interface FavouritePageStateType {
-  number : number,
   films : Array<FavouriteFilm>
 }
 
@@ -29,17 +24,9 @@ export interface FavouriteFilm {
   releaseDate: string
 }
 
-interface DecrementType {
-  type: FavouritePageActionTypes.DECREMENT;
-}
-
-interface IncrementType {
-  type: FavouritePageActionTypes.INCREMENT;
-}
-
 interface AddFavouriteFilm {
   type : FavouritePageActionTypes.ADDFAVOURITE,
   payload : FavouriteFilm
 }
 
-export type FavouritePageActionsType = DecrementType | IncrementType | AddFavouriteFilm;
+export type FavouritePageActionsType = AddFavouriteFilm;
