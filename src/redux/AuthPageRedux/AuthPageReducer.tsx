@@ -13,8 +13,10 @@ const initialState = {
   // mock user
 };
 
-export function AuthPageReducer(state = initialState, action : AuthPageActionsTypes)
- : typeof initialState {
+export function AuthPageReducer(
+  state = initialState,
+  action: AuthPageActionsTypes,
+): typeof initialState {
   switch (action.type) {
     case UserOperations.SETUSER:
       return { ...state, user: action.payload };

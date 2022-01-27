@@ -1,11 +1,10 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
 
 export function StartPage() {
   return (
     <div>
       <h1>START PAGE</h1>
-      <header>
+      {/* <header>
         <nav>
           <NavLink to='/'>Home</NavLink>
           <NavLink to='/search'>Search</NavLink>
@@ -14,7 +13,7 @@ export function StartPage() {
           <NavLink to='/favourites'>Favorites</NavLink>
         </nav>
       </header>
-      <Outlet />
+      <Outlet /> */}
     </div>
   );
 }
