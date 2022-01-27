@@ -10,6 +10,7 @@ import { MoviePageAux } from './Views/MoviePage/MoviePageAux';
 import Header from './Layouts/Header';
 import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
 import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
+<<<<<<< HEAD
 import './App.scss';
 
 export function App() {
@@ -23,6 +24,19 @@ export function App() {
         <Route path='/authorization' element={<AuthorizationPage />} />
         <Route path='/favourites' element={<FavouritesPageAux />} />
         <Route path='/account' element={<AccountPage />}>
+=======
+import { SearchPageAux } from './Views/SearchPage/SearchPageAux';
+
+export function App() {
+  return (
+    <Routes>
+      <Route path='/' element={<StartPage />}>
+        <Route path='search' element={<SearchPageAux />} />
+        <Route path='registration' element={<RegistrationPage />} />
+        <Route path='movie' element={<MoviePage />} />
+        <Route path='favourites' element={<FavouritesPageAux />} />
+        <Route path='account' element={<AccountPage />}>
+>>>>>>> 150e56f... feat: build search redux structure
           <Route path='settings' element={<SettingsPage />} />
         </Route>
         <Route path='/movie/:movieId' element={<MoviePageAux />} />

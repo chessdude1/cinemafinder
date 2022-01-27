@@ -7,7 +7,6 @@ export function AccountPage() {
       <h2>User Account</h2>
       <nav>
         <NavLink to='settings'>Settings</NavLink>
-        <NavLink to='favourites'>Favourite movies</NavLink>
       </nav>
       <Outlet />
     </div>

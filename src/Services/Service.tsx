@@ -1,24 +1,25 @@
 import axios from 'axios';
-import {
-  WatchProvidersResponseType, ListOfWatchProvidersType, MovieWithAdditionalInformation,
-} from './ServiceTypes';
+import { WatchProvidersResponseType, ListOfWatchProvidersType, MovieWithAdditionalInformation } from './ServiceTypes';
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
 });
 
-export async function getMovie(id : string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
+export async function getPopularMovies(timespan = 'week', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
+  const movieResponse = await instance.get(`trending/all/${timespan}?api_key=${apiKey}&language=${language}`);
+  return movieResponse.data;
+}
+export async function getMovie(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const movieResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);
   return movieResponse.data;
 }
-
 export async function getSimilarMovies(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const similarFilms = await instance.get(`movie/${id}/similar?api_key=${apiKey}&language=${language}`);
   return similarFilms.data.results;
 }
 
-export async function getWatchProviders(id : string, apiKey = 'a48c1568134ff7732653e3df2aee4eaf') : Promise<ListOfWatchProvidersType> {
-  const responseListOfProviders : WatchProvidersResponseType = await instance.get(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`);
+export async function getWatchProviders(id: string, apiKey = 'a48c1568134ff7732653e3df2aee4eaf'): Promise<ListOfWatchProvidersType> {
+  const responseListOfProviders: WatchProvidersResponseType = await instance.get(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`);
   let listOfProviders = {};
   if (responseListOfProviders.data.results.RU) {
     if (responseListOfProviders.data.results.RU.buy) {
@@ -49,7 +50,7 @@ export async function getWatchProviders(id : string, apiKey = 'a48c1568134ff7732
   return listOfProviders;
 }
 
-export async function getMovieWithAdditionalInformation(id : string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') : Promise< MovieWithAdditionalInformation> {
+export async function getMovieWithAdditionalInformation(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf'): Promise<MovieWithAdditionalInformation> {
   const movieResponse = await getMovie(id, language, apiKey);
   const watchProviders = await getWatchProviders(id, apiKey);
   const similarFilms = await getSimilarMovies(id, language, apiKey);
