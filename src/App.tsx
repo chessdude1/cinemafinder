@@ -5,6 +5,8 @@ import { SearchPage } from './Views/SearchPage/SearchPage';
 import { PageNotFound } from './Views/ErrorPage/PageNotFound';
 import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
 import { AccountPage } from './Views/AccountPage/AccountPage';
+import { AuthorizationPage } from './Views/AuthorizationPage/AuthorizationPage';
+
 import Header from './Layouts/Header';
 
 import './App.scss';
@@ -20,6 +22,7 @@ export function App() {
         <Route path='/' element={<StartPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/registration' element={<RegistrationPage />} />
+        <Route path='/authorization' element={<AuthorizationPage />} />
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/favourites' element={<FavouritesPageAux />} />
         <Route path='/account' element={<AccountPage />}>

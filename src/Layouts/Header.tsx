@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Search', 'Account', 'SignUp', 'Favourites'];
+const pages = ['Search', 'Account', 'Favourites'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -111,7 +111,7 @@ function Header() {
             <Button
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              <NavLink to='/registration'>Sign In</NavLink>
+              <NavLink to='/authorization'>Sign In</NavLink>
             </Button>
             <Button
               sx={{ my: 2, color: 'white', display: 'block' }}
