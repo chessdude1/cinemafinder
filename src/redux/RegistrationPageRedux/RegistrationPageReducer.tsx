@@ -1,9 +1,10 @@
-import { AuthPageActionsTypes, UserOperations } from './AuthPageActions';
+import { RegistrationPageActionsTypes, UserOperations } from './RegistrationPageActions';
 
 const initialState = {
   isLogin: true,
   user: {
     id: 1,
+    name: 'user',
     password: 'user',
     email: 'test@test.ru',
     subscribes: ['More TV', 'Кинопоиск HD'],
@@ -12,9 +13,9 @@ const initialState = {
   // mock user
 };
 
-export function AuthPageReducer(
+export function RegistrationPageReducer(
   state = initialState,
-  action: AuthPageActionsTypes,
+  action: RegistrationPageActionsTypes,
 ): typeof initialState {
   switch (action.type) {
     case UserOperations.SETUSER:

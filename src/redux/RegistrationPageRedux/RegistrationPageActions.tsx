@@ -4,13 +4,14 @@ export enum UserOperations {
 
 interface UserType {
   id : number,
+  name : string,
   password : string,
   email : string,
   subscribes : Array<string>,
   favorite_films : Array<string>
 }
 
-export const AuthPageActions = {
+export const RegistrationPageActions = {
   SetUser: (user : UserType) : SetUserActionType => ({
     type: UserOperations.SETUSER,
     payload: user,
@@ -22,4 +23,4 @@ interface SetUserActionType {
   payload : UserType
 }
 
-export type AuthPageActionsTypes = SetUserActionType
+export type RegistrationPageActionsTypes = SetUserActionType

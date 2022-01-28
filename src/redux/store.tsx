@@ -4,12 +4,14 @@ import {
 import createSagaMiddleware from '@redux-saga/core';
 import { FavouritesPageReducer } from './FavouritesPageRedux/FavouritesPageReducer';
 import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
+import { RegistrationPageReducer } from './RegistrationPageRedux/RegistrationPageReducer';
 import rootSaga from './Sages/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
   FavouritesPageReducer,
   AuthPageReducer,
+  RegistrationPageReducer,
 });
 
 declare global {

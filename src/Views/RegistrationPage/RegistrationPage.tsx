@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
-import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
+import { RegistrationPageActions } from '../../redux/RegistrationPageRedux/RegistrationPageActions';
 
 interface ISugnUpFormType {
   name: string,
@@ -23,7 +23,7 @@ export function RegistrationPage() {
 
   function handleRegForm(values:ISugnUpFormType) {
     console.log('fuck');
-    dispatch(AuthPageActions.SetUser({
+    dispatch(RegistrationPageActions.SetUser({
       id: 5,
       subscribes: ['ivi'],
       favorite_films: ['192345'],
@@ -31,7 +31,7 @@ export function RegistrationPage() {
     }));
   }
 
-  const authPage = useTypedSelector((store) => store.AuthPageReducer);
+  const authPage = useTypedSelector((store) => store.RegistrationPageReducer);
   // console.log(authPage);
 
   const formik = useFormik({
