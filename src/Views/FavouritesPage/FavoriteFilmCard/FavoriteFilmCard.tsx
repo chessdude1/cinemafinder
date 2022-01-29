@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface FavoriteFilmCardType {
   id : number,
@@ -7,11 +8,14 @@ interface FavoriteFilmCardType {
 }
 
 export function FavoriteFilmCard({ id, posterPath, originalTitle } : FavoriteFilmCardType) {
+  const link = `/movie/${id}`;
   return (
-    <div>
-      <h2>{originalTitle}</h2>
-      <h2>{id}</h2>
-      <img alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
-    </div>
+    <NavLink to={link}>
+      <div>
+        <h2>{originalTitle}</h2>
+        <h2>{id}</h2>
+        <img alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
+      </div>
+    </NavLink>
   );
 }

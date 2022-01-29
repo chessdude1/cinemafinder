@@ -15,7 +15,9 @@ interface FavouritesPageType {
   setOptions : React.Dispatch<React.SetStateAction<optionsType>>
   options : optionsType,
   genres : genresType,
-  setGenres : React.Dispatch<React.SetStateAction<genresType>>
+  setGenres : React.Dispatch<React.SetStateAction<genresType>>,
+  checkboxsGenres : Array<Array<string>>,
+  checkboxsOptions : Array<Array<string>>
 }
 
 export function FavouritesPage({
@@ -28,28 +30,9 @@ export function FavouritesPage({
   options,
   setGenres,
   genres,
+  checkboxsOptions,
+  checkboxsGenres,
 } : FavouritesPageType) {
-  const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно'], ['rend', 'Аренда']];
-  const CheboxsGenres = [['Action', 'Экшен'],
-    ['Adventure', 'приключения'],
-    ['Animation', 'Мультфильмы'],
-    ['Comedy', 'Комедия'],
-    ['Crime', 'Криминал'],
-    ['Documentary', 'Документальное'],
-    ['Drama', 'Драма'],
-    ['Family', 'Семейное'],
-    ['Fantasy', 'Фантастика'],
-    ['History', 'Историческое'],
-    ['Horror', 'Ужасы'],
-    ['Music', 'Мюзикл'],
-    ['Mystery', 'Мистика'],
-    ['Romance', 'Романтика'],
-    ['Science Fiction', 'Научная фантастика'],
-    ['Thriller', 'Триллер'],
-    ['War', 'Военное'],
-    ['Western', 'Вестерн'],
-  ];
-
   return (
     <main className='favourite-page'>
       <section className='films-list'>
@@ -90,7 +73,7 @@ export function FavouritesPage({
           title='year'
         />
         <div className='filters__options'>
-          { CheckboxsOptions.map((checkbox) => (
+          { checkboxsOptions.map((checkbox) => (
             <CustomLabeledCheckbox
               key={checkbox[0]}
               label={`${checkbox[1]}`}
@@ -104,7 +87,7 @@ export function FavouritesPage({
           ))}
         </div>
         <div className='filter__genres'>
-          {CheboxsGenres.map((checkbox) => (
+          {checkboxsGenres.map((checkbox) => (
             <CustomLabeledCheckbox
               key={checkbox[0]}
               label={`${checkbox[1]}`}

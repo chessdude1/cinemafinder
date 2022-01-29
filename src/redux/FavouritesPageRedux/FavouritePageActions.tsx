@@ -1,3 +1,5 @@
+import { ListOfWatchProvidersType } from '../../Services/ServiceTypes';
+
 export enum FavouritePageActionTypes {
   ADDFAVOURITE = 'ADDFAVOURITE'
 }
@@ -22,7 +24,8 @@ export interface FavouriteFilm {
   popularity: number,
   status : string,
   releaseDate: string,
-  voteAverage : number
+  voteAverage : number,
+  watchProviders : ListOfWatchProvidersType
 }
 
 interface AddFavouriteFilm {
