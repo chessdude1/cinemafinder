@@ -1,4 +1,5 @@
 import React from 'react';
+import { TranslateGenre } from '../../Auxiliary/translateGenre';
 import { MovieWithAdditionalInformation } from '../../Services/ServiceTypes';
 import './MoviePageStyles.scss';
 
@@ -7,6 +8,7 @@ interface MoviePage2 {
 }
 
 export function MoviePage({ currentMovie } : MoviePage2) {
+  const translatedGenres = TranslateGenre(currentMovie?.genres);
   return (
     <main className='movie-page'>
       <section className='poster'>
