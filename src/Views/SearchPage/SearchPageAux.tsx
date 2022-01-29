@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
@@ -22,7 +22,8 @@ export function SearchPageAux() {
     country: '',
     provider: '',
   };
-
+  const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
+  const filters = useTypedSelector((store) => store.SearchPageReducer.filters);
   const dispatch = useDispatch();
 
   function getPopularMovies() {
@@ -32,7 +33,7 @@ export function SearchPageAux() {
   useEffect(() => {
     getPopularMovies();
   }, []);
-  const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
+
   return (
     <section>
       <SearchPage movies={movies} />

@@ -8,6 +8,7 @@ import {
 
 const initialState: SearchPageStateType = {
   movies: [],
+  filters: [],
 };
 
 export function SearchPageReducer(

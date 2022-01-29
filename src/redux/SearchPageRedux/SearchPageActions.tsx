@@ -17,8 +17,13 @@ export const SearchPageActions = {
 };
 
 export interface SearchPageStateType {
-  movies: Array<Movie>;
+  movies: Movie[];
+  filters: Filters[];
 }
+
+export type Filters = {
+  genre: string;
+};
 
 export interface Movie {
   adult: boolean;

@@ -51,7 +51,6 @@ function* workerAddFavouriteFilm() {
 }
 
 export function* watchAddFavouriteFilm() {
-  console.log('jnjk');
   yield takeEvery(
     FavouritePageSagaTypes.ADDFAVOURITESAGA,
     workerAddFavouriteFilm,
