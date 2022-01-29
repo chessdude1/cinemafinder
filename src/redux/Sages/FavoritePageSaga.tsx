@@ -5,31 +5,32 @@ import { FavouritePageActions } from '../FavouritesPageRedux/FavouritePageAction
 import { RootState } from '../store';
 
 export enum FavouritePageSagaTypes {
-  ADDFAVOURITESAGA = 'ADDFAVOURITESAGA'
+  ADDFAVOURITESAGA = 'ADDFAVOURITESAGA',
 } // enum to init saga work
 // ADDFAVOURITESAGA not registered in any reducer
 
 interface FavouriteFilmRequest {
-  id: number,
-  original_language: string,
-  original_title: string,
-  poster_path: string,
-  genres: Array<{id : number, name : string}>,
-  backdrop_path: string,
-  popularity:number,
-  release_date: string,
-  status : string,
-  vote_average : number
+  id: number;
+  original_language: string;
+  original_title: string;
+  poster_path: string;
+  genres: Array<{ id: number; name: string }>;
+  backdrop_path: string;
+  popularity: number;
+  release_date: string;
+  status: string;
+  vote_average: number;
 }
 
 function* workerAddFavouriteFilm() {
-  const storeSaga : RootState = yield select((store) => (store));
+  const storeSaga: RootState = yield select((store) => store);
   const userFilmIds = storeSaga.AuthPageReducer.user.favorite_films;
 
   for (let i = 0; i < userFilmIds.length; i += 1) {
-    const watchProviders : ListOfWatchProvidersType = yield getWatchProviders(userFilmIds[i]);
-    const filmRequest
-    : FavouriteFilmRequest = yield getMovie(userFilmIds[i]);
+    const watchProviders: ListOfWatchProvidersType = yield getWatchProviders(
+      userFilmIds[i],
+    );
+    const filmRequest: FavouriteFilmRequest = yield getMovie(userFilmIds[i]);
     const favoriteFilm = {
       id: filmRequest.id,
       backdropPath: filmRequest.backdrop_path,
@@ -50,5 +51,9 @@ function* workerAddFavouriteFilm() {
 }
 
 export function* watchAddFavouriteFilm() {
-  yield takeEvery(FavouritePageSagaTypes.ADDFAVOURITESAGA, workerAddFavouriteFilm);
+  console.log('jnjk');
+  yield takeEvery(
+    FavouritePageSagaTypes.ADDFAVOURITESAGA,
+    workerAddFavouriteFilm,
+  );
 }

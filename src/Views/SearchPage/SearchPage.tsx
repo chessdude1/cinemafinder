@@ -13,9 +13,9 @@ export function SearchPage({ movies }: SearchPageType) {
       <div className='movie-table'>
         {movies.map((movie) => (
           <MovieCard
-            key={movie.originalTitle}
-            title={movie.originalTitle}
-            posterPath={movie.posterPath}
+            key={movie.id}
+            title={movie.title}
+            posterPath={movie.poster_path}
           />
         ))}
       </div>

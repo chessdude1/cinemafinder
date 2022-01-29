@@ -3,7 +3,6 @@ import createSagaMiddleware from '@redux-saga/core';
 import { FavouritesPageReducer } from './FavouritesPageRedux/FavouritesPageReducer';
 import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
 import { SearchPageReducer } from './SearchPageRedux/SearchPageReducer';
-import { SearchPageStateType } from './SearchPageRedux/SearchPageActions';
 import rootSaga from './Sages/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();

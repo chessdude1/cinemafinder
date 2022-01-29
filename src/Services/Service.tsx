@@ -5,9 +5,10 @@ const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
 });
 
-export async function getPopularMovies(timespan = 'week', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
-  const movieResponse = await instance.get(`trending/all/${timespan}?api_key=${apiKey}&language=${language}`);
-  return movieResponse.data;
+export async function getPopularMovies(timespan = 'week', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf', pageNum = 1) {
+  const movieResponse = await instance.get(`trending/all/${timespan}?api_key=${apiKey}&language=${language}&page=${pageNum}`);
+  console.log(movieResponse.data);
+  return movieResponse.data.results;
 }
 export async function getMovie(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const movieResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);

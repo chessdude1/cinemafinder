@@ -1,15 +1,17 @@
 export enum SearchPageActionTypes {
   FILTER = 'FILTER',
   FETCH_POPULAR = 'FETCH_POPULAR',
+  LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
+  LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
 }
 
 export const SearchPageActions = {
-  FilterByGenres: (movie: Movie): FilterByGenres => ({
+  FilterByGenres: (movie: Movie[]): FilterByGenres => ({
     type: SearchPageActionTypes.FILTER,
     payload: movie,
   }),
-  FetchPopular: (movie: Movie): FetchPopular => ({
-    type: SearchPageActionTypes.FETCH_POPULAR,
+  FetchPopular: (movie: Movie[]): FetchPopular => ({
+    type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
   }),
 };
@@ -19,26 +21,43 @@ export interface SearchPageStateType {
 }
 
 export interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: Array<{ id: number; name: string }>;
   id: number;
-  originalLanguage: string;
-  originalTitle: string;
-  posterPath: string;
-  genres: Array<{ id: number; name: string }>;
-  backdropPath: string;
+  media_type: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
   popularity: number;
-  status: string;
-  releaseDate: string;
-  voteAverage: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 interface FilterByGenres {
   type: SearchPageActionTypes.FILTER;
-  payload: Movie;
+  payload: Movie[];
 }
 
 interface FetchPopular {
-  type: SearchPageActionTypes.FETCH_POPULAR;
-  payload: Movie;
+  type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
+  payload: Movie[];
 }
 
-export type SearchPageActionsType = FilterByGenres | FetchPopular;
+interface LoadedPopular {
+  type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
+  payload: Movie[];
+}
+// interface LoadedError {
+//   type: SearchPageActionTypes.LOAD_POPULAR_ERROR;
+//   payload: Movie;
+// }
+
+export type SearchPageActionsType =
+  | FilterByGenres
+  | FetchPopular
+  | LoadedPopular;
