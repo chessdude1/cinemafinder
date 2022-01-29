@@ -7,6 +7,7 @@ import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
 import rootSaga from './Sages/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
+
 const reducers = combineReducers({
   FavouritesPageReducer,
   AuthPageReducer,

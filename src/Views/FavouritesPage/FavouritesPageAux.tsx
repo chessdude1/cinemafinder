@@ -6,14 +6,14 @@ import { FavouritePageSagaTypes } from '../../redux/Sages/FavoritePageSaga';
 import { FavouritesPage } from './FavouritesPage';
 
 export interface optionsType {
-  ads ?: boolean,
-  flatrate ?: boolean,
-  buy ?: boolean,
-  rend ?: boolean
+ [ ads : string] : boolean,
+  flatrate : boolean,
+  buy : boolean,
+  rend : boolean
 }
 
 export interface genresType {
-  Adventure: boolean,
+ [ Adventure: string ]: boolean,
   Animation: boolean,
   Comedy: boolean,
   Crime: boolean,
@@ -61,12 +61,34 @@ export function FavouritesPageAux() {
   };
 
   const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
+
   const [ratingFilterValue, setRatingFilterValue] = useState<number[] | number>(5);
   const [yearFilterValue, setYearFilterValue] = useState<Array<number> | number>([1900, 2022]);
   const [options, setOptions] = useState<optionsType>(initialOptions);
   const [genres, setGenres] = useState<genresType>(initialGenres);
 
   const dispatch = useDispatch();
+
+  const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно'], ['rend', 'Аренда']];
+  const CheckboxsGenres = [['Action', 'Экшен'],
+    ['Adventure', 'приключения'],
+    ['Animation', 'Мультфильмы'],
+    ['Comedy', 'Комедия'],
+    ['Crime', 'Криминал'],
+    ['Documentary', 'Документальное'],
+    ['Drama', 'Драма'],
+    ['Family', 'Семейное'],
+    ['Fantasy', 'Фантастика'],
+    ['History', 'Историческое'],
+    ['Horror', 'Ужасы'],
+    ['Music', 'Мюзикл'],
+    ['Mystery', 'Мистика'],
+    ['Romance', 'Романтика'],
+    ['Science Fiction', 'Научная фантастика'],
+    ['Thriller', 'Триллер'],
+    ['War', 'Военное'],
+    ['Western', 'Вестерн'],
+  ];
 
   function AddFavouriteFilm() {
     dispatch({ type: FavouritePageSagaTypes.ADDFAVOURITESAGA });
@@ -83,10 +105,26 @@ export function FavouritesPageAux() {
       filteredFilms = filteredFilms.filter((film) => yearFilterValue[1] > Number(film.releaseDate.split('-')[0]));
     }
 
+    filteredFilms = filteredFilms.filter((film) => { // filter on genre
+      const result : Array<boolean> = [];
+      film.genres.forEach((genre) => {
+        result.push(genres[genre.name]);
+      });
+      return result.includes(true); // if film has one valid genre => film valid
+    });
+
+    filteredFilms = filteredFilms.filter((film) => {
+      const result: Array<boolean> = [];
+      const currentFilmWatchTypes = Object.keys(film.watchProviders);
+      currentFilmWatchTypes.forEach((watchProviderType) => {
+        result.push(options[watchProviderType]);
+      });
+      return result.includes(true);
+    });
+
     return filteredFilms;
   }
 
-  console.log(filterfilms(films));
   useEffect(() => {
     AddFavouriteFilm();
   }, []);
@@ -102,6 +140,8 @@ export function FavouritesPageAux() {
       setYearFilterValue={setYearFilterValue}
       options={options}
       setOptions={setOptions}
+      checkboxsOptions={CheckboxsOptions}
+      checkboxsGenres={CheckboxsGenres}
     />
   );
 }

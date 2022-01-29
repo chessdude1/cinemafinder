@@ -6,13 +6,13 @@ import { PageNotFound } from './Views/ErrorPage/PageNotFound';
 import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
 import { AccountPage } from './Views/AccountPage/AccountPage';
 import { AuthorizationPage } from './Views/AuthorizationPage/AuthorizationPage';
-
+import { MoviePage } from './Views/MoviePage/MoviePage';
 import Header from './Layouts/Header';
 
 import './App.scss';
 import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
-import { MoviePage } from './Views/MoviePage/MoviePage';
 import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
+import { MoviePageAux } from './Views/MoviePage/MoviePageAux';
 
 export function App() {
   return (
@@ -28,6 +28,7 @@ export function App() {
         <Route path='/account' element={<AccountPage />}>
           <Route path='settings' element={<SettingsPage />} />
         </Route>
+        <Route path='/movie/:movieId' element={<MoviePageAux />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </>

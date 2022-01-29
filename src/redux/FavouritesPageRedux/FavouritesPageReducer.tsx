@@ -8,6 +8,11 @@ const initialState : FavouritePageStateType = {
       originalTitle: 'Ирония судьбы. Продолжение',
       posterPath: '/yzjLu5rTsIVHYmvMciUjmT3lJBc.jpg',
       popularity: 5.072,
+      watchProviders: {
+        ads: [{
+          display_priority: 123, logo_path: 123, provider_id: 123, provider_name: '123',
+        }],
+      },
       genres: [
         {
           id: 35,
