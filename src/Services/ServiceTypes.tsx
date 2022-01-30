@@ -13,7 +13,7 @@ export interface WatchProvidersResponseType {
   }
 } // one cinema can be in multiple tabs for example more TV ib ads and in buy
 
-interface onlineCinema {
+export interface onlineCinema {
   display_priority: number,
   logo_path: number,
   provider_id: number,
@@ -54,10 +54,11 @@ export interface MovieWithAdditionalInformation {
   tagline : string,
   production_companies : Array<{id : number, logo_path: string}>
   production_countries : Array<{name : string}>
-  watchProviders : Array<MovieWithAdditionalInformation>
+  watchProviders : ListOfWatchProvidersType
+
 }
 
-interface filmResponse{
+export interface filmResponse{
   adult: boolean,
   backdrop_path: string,
   genre_ids: Array<number>,
@@ -72,5 +73,4 @@ interface filmResponse{
   video: boolean,
   vote_average: number,
   vote_count: number,
-
 }
