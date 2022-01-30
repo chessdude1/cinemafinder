@@ -7,6 +7,11 @@ const instance = axios.create({
 
 export async function getPopularMovies(timespan = 'week', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf', pageNum = 1) {
   const movieResponse = await instance.get(`trending/movie/${timespan}?api_key=${apiKey}&language=${language}&page=${pageNum}`);
+  return movieResponse.data.results;
+}
+
+export async function getMoviesWithFilter(withGenres = '', sortBy = 'popularity.desc', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf', pageNum = 1) {
+  const movieResponse = await instance.get(`discover/movie?api_key=${apiKey}&language=${language}&with_genres=${withGenres}&sort_by=${sortBy}&page=${pageNum}`);
   console.log(movieResponse.data);
   return movieResponse.data.results;
 }

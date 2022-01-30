@@ -1,14 +1,25 @@
+import {
+  genre,
+  genreFilter,
+  yearFilter,
+} from '../../Views/SearchPage/SearchQueryTypes';
+
 export enum SearchPageActionTypes {
-  FILTER = 'FILTER',
+  UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
+  FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
   LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
 }
 
 export const SearchPageActions = {
-  FilterByGenres: (movie: Movie[]): FilterByGenres => ({
-    type: SearchPageActionTypes.FILTER,
+  FetchFilteredMovies: (movie: Movie[]): FetchFilteredMovies => ({
+    type: SearchPageActionTypes.FETCH_FILTERD_MOVIES,
     payload: movie,
+  }),
+  UpdateGenresFilter: (filter: genre[]): UpdateGenresFilter => ({
+    type: SearchPageActionTypes.UPDATE_GENRES_FILTER,
+    payload: filter,
   }),
   FetchPopular: (movie: Movie[]): FetchPopular => ({
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
@@ -18,11 +29,13 @@ export const SearchPageActions = {
 
 export interface SearchPageStateType {
   movies: Movie[];
-  filters: Filters[];
+  genre: genre[];
+  year: yearFilter;
 }
 
 export type Filters = {
-  genre: string;
+  genre: genre[];
+  year: yearFilter;
 };
 
 export interface Movie {
@@ -43,9 +56,9 @@ export interface Movie {
   vote_count: number;
 }
 
-interface FilterByGenres {
-  type: SearchPageActionTypes.FILTER;
-  payload: Movie[];
+interface UpdateGenresFilter {
+  type: SearchPageActionTypes.UPDATE_GENRES_FILTER;
+  payload: genre[];
 }
 
 interface FetchPopular {
@@ -53,8 +66,8 @@ interface FetchPopular {
   payload: Movie[];
 }
 
-interface LoadedPopular {
-  type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
+interface FetchFilteredMovies {
+  type: SearchPageActionTypes.FETCH_FILTERD_MOVIES;
   payload: Movie[];
 }
 // interface LoadedError {
@@ -63,6 +76,6 @@ interface LoadedPopular {
 // }
 
 export type SearchPageActionsType =
-  | FilterByGenres
+  | UpdateGenresFilter
   | FetchPopular
-  | LoadedPopular;
+  | FetchFilteredMovies;

@@ -1,7 +1,11 @@
 import { all } from '@redux-saga/core/effects';
 import { watchAddFavouriteFilm } from './FavoritePageSaga';
-import { watchFetchPopular } from './SearchPageSaga';
+import { watchFetchFiltered, watchFetchPopular } from './SearchPageSaga';
 
 export default function* rootSaga() {
-  yield all([watchAddFavouriteFilm(), watchFetchPopular()]);
+  yield all([
+    watchAddFavouriteFilm(),
+    watchFetchPopular(),
+    watchFetchFiltered(),
+  ]);
 }

@@ -4,8 +4,10 @@ import {
   getMovie,
   getWatchProviders,
   getPopularMovies,
+  getMoviesWithFilter,
 } from '../../Services/Service';
 import { ListOfWatchProvidersType } from '../../Services/ServiceTypes';
+import { genre } from '../../Views/SearchPage/SearchQueryTypes';
 import {
   Movie,
   SearchPageActions,
@@ -15,8 +17,8 @@ import { RootState } from '../store';
 
 export enum SearchPageSagaTypes {
   FETCHPOPULARSAGA = 'FETCHPOPULARSAGA',
-} // enum to init saga work
-// ADDFAVOURITESAGA not registered in any reducer
+  FETCHFILTEREDSAGA = 'FETCHFILTEREDSAGA',
+}
 
 interface MovieRequest {
   id: number;
@@ -38,4 +40,22 @@ function* workerFetchPopular() {
 
 export function* watchFetchPopular() {
   yield takeEvery(SearchPageSagaTypes.FETCHPOPULARSAGA, workerFetchPopular);
+}
+
+function* workerFetchFiltered() {
+  const storeSaga: RootState = yield select((store) => store);
+  const genres = storeSaga.SearchPageReducer.genre
+    .map((obj) => {
+      if (obj.applied === true) {
+        return obj.id;
+      }
+      return '';
+    })
+    .join(',');
+  const filtered: Movie[] = yield getMoviesWithFilter(genres);
+  yield put(SearchPageActions.FetchFilteredMovies(filtered));
+}
+
+export function* watchFetchFiltered() {
+  yield takeEvery(SearchPageSagaTypes.FETCHFILTEREDSAGA, workerFetchFiltered);
 }
