@@ -1,4 +1,7 @@
-export function TranslateGenre(genres : Array<{id: number, name : string}>) {
+export function TranslateGenre(genres : Array<{id: number, name : string}> | undefined) {
+  if (!genres) {
+    return [];
+  }
   const Genres : genresStringTypes = {
     Action: 'Экшен',
     Adventure: 'приключения',
@@ -20,7 +23,7 @@ export function TranslateGenre(genres : Array<{id: number, name : string}>) {
     Western: 'Вестерн',
   };
   const translatedGenres : Array<string> = [];
-  genres.forEach((genre) => translatedGenres.push(Genres[genre.name]));
+  genres.forEach((genre) => translatedGenres.push(Genres[genre.name].toLowerCase()));
   return translatedGenres;
 }
 
