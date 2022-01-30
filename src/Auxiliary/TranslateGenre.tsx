@@ -17,10 +17,11 @@ export function TranslateGenre(genres : Array<{id: number, name : string}> | und
     Music: 'Мюзикл',
     Mystery: 'Мистика',
     Romance: 'Романтика',
-    ScienceFiction: 'Научная фантастика',
+    'Science Fiction': 'Научная фантастика',
     Thriller: 'Триллер',
     War: 'Военное',
     Western: 'Вестерн',
+    'TV Movie': 'Телепередача',
   };
   const translatedGenres : Array<string> = [];
   genres.forEach((genre) => translatedGenres.push(Genres[genre.name].toLowerCase()));
@@ -42,8 +43,9 @@ interface genresStringTypes {
   Music: 'Мюзикл',
   Mystery: 'Мистика',
   Romance: 'Романтика',
-  ScienceFiction: 'Научная фантастика',
+  'Science Fiction': 'Научная фантастика',
   Thriller: 'Триллер',
   War: 'Военное',
   Western: 'Вестерн',
+  'TV Movie' : 'Телепередача'
 }

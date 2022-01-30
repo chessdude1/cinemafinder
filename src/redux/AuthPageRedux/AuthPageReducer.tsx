@@ -19,6 +19,17 @@ export function AuthPageReducer(
   switch (action.type) {
     case UserOperations.SETUSER:
       return { ...state, user: action.payload };
+    case UserOperations.SETFAVOURITEFILM:
+      const favoriteFilmsWithoutRepeats = Array.from(
+        new Set([...state.user.favorite_films, action.payload]),
+      );
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favorite_films: favoriteFilmsWithoutRepeats,
+        },
+      };
     default:
       return state;
   }

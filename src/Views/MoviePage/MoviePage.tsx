@@ -17,8 +17,10 @@ interface IMoviePage {
   flatrateWatchProviders : Array<onlineCinema> | undefined;
   rentWatchProviders : Array<onlineCinema> | undefined;
   overview : string | undefined;
-  notRepeatedProviders : Array<string>
-  similarFilms : Array<filmResponse> | undefined
+  notRepeatedProviders : Array<string>;
+  similarFilms : Array<filmResponse> | undefined;
+  AddFilmToUserFavourite : (filmId : string) => void;
+  currentMovieId : string
 }
 
 export function MoviePage({
@@ -35,6 +37,8 @@ export function MoviePage({
   overview,
   notRepeatedProviders,
   similarFilms,
+  AddFilmToUserFavourite,
+  currentMovieId,
 } : IMoviePage) {
   const translatedGenres = TranslateGenre(genres);
 
@@ -42,9 +46,9 @@ export function MoviePage({
     <main className='movie-page'>
       <section className='poster'>
         <div>
-          <img src={`https://image.tmdb.org/t/p/w342${backdropPath}`} alt='12' />
+          <img src={`https://image.tmdb.org/t/p/w342${backdropPath}`} alt='backdrop path' />
         </div>
-        <button type='submit'>Добавить в избранное</button>
+        <button onClick={() => { AddFilmToUserFavourite(currentMovieId); }} type='submit'>Добавить в избранное</button>
         <p>
           Rating :
           {voteAverage}
@@ -62,8 +66,8 @@ export function MoviePage({
           <h2>Смотрите прямо сейчас</h2>
           {adsWatchProviders ? <WatchProvidersList listName='Реклама' watchProviders={adsWatchProviders} /> : ''}
           { buyWatchProviders ? <WatchProvidersList listName='Купить' watchProviders={buyWatchProviders} /> : ''}
-          {flatrateWatchProviders ? <WatchProvidersList listName='Бесплатно' watchProviders={flatrateWatchProviders} /> : ''}
-          {rentWatchProviders ? <WatchProvidersList listName='Аренда' watchProviders={rentWatchProviders} /> : ''}
+          {flatrateWatchProviders ? <WatchProvidersList listName='Аренда' watchProviders={flatrateWatchProviders} /> : ''}
+          {rentWatchProviders ? <WatchProvidersList listName='Бесплатно' watchProviders={rentWatchProviders} /> : ''}
         </div>
         <div>
           <h2>Описание</h2>
@@ -73,14 +77,17 @@ export function MoviePage({
           <h2>
             Вы можете смотреть
             {title}
-            {adsWatchProviders ? 'С рекламой' : '' }
-            {flatrateWatchProviders ? 'Бесплатно' : '' }
-            {rentWatchProviders ? 'Арендовать' : '' }
+            {adsWatchProviders ? ' С рекламой' : '' }
+            {flatrateWatchProviders ? ' Бесплатно' : '' }
+            {rentWatchProviders ? ' Арендовать' : '' }
+            {buyWatchProviders ? ' Купить' : '' }
           </h2>
           {`В настоящее время вы можете смотреть ${title} на ${notRepeatedProviders.join(', ')}`}
         </div>
         <div>
-          <RecomendationsList similarFilms={similarFilms} />
+          <RecomendationsList
+            similarFilms={similarFilms}
+          />
         </div>
       </section>
     </main>
