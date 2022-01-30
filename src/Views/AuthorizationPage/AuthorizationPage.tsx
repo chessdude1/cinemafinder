@@ -1,87 +1,220 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import Grid from '@mui/material/Grid';
+import { createStyles, makeStyles } from '@mui/styles';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container';
+import { Formik, Form, FormikProps } from 'formik';
+import * as Yup from 'yup';
 
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 
-interface ISignInFormType {
-  email: string,
-  password: string,
+import { CustomTextField } from '../../Common/UI/CustomTextField';
+import { CustomButton } from '../../Common/UI/CustomButton';
+
+const useStyles = makeStyles(() => createStyles({
+  root: {
+    maxWidth: '450px',
+    display: 'block',
+    margin: '0 auto',
+  },
+  textField: {
+    '& > *': {
+      width: '100%',
+    },
+  },
+  submitButton: {
+    marginTop: '2.4rem',
+  },
+  title: { textAlign: 'center' },
+  successMessage: { color: 'green' },
+  errorMessage: { color: 'red' },
+}));
+
+interface ISignUpForm {
+    fullName: string
+    password: string
+    confirmPassword: string
+    email: string
 }
 
+interface IFormStatus {
+    message: string
+    type: string
+}
+
+interface IFormStatusProps {
+    [key: string]: IFormStatus
+}
+
+const formStatusProps: IFormStatusProps = {
+  success: {
+    message: 'Signed up successfully.',
+    type: 'success',
+  },
+  duplicate: {
+    message: 'Email-id already exist. Please use different email-id.',
+    type: 'error',
+  },
+  error: {
+    message: 'Something went wrong. Please try again.',
+    type: 'error',
+  },
+};
+
 export function AuthorizationPage() {
-  const dispatch = useDispatch();
-
-  function handleSignInForm(values:ISignInFormType) {
-    console.log('fuck');
-    dispatch(AuthPageActions.SetUser({
-      id: 7,
-      subscribes: ['ivi'],
-      favorite_films: ['192345'],
-      ...values,
-    }));
-  }
-
-  const authPage = useTypedSelector((store) => store.AuthPageReducer);
-
-  const formik = useFormik({
-    initialValues: {
-      password: '',
-      email: '',
-    },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .max(15, 'Must be 15 characters or less')
-        .required('Required'),
-      password: Yup.string()
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-    }),
-    onSubmit: (values) => {
-      handleSignInForm(values);
-      // alert(JSON.stringify(values, null, 2));
-    },
+  const classes = useStyles();
+  const [displayFormStatus, setDisplayFormStatus] = useState(false);
+  const [formStatus, setFormStatus] = useState<IFormStatus>({
+    message: '',
+    type: '',
   });
 
+  const formStatusContent = () => {
+    if (formStatus.type === 'error') {
+      return (
+        <p className={classes.errorMessage}>
+          {formStatus.message}
+        </p>
+      );
+    } if (formStatus.type === 'success') {
+      return (
+        <p className={classes.successMessage}>
+          {formStatus.message}
+        </p>
+      );
+    }
+    return null;
+  };
+
   return (
-    <Container maxWidth='md'>
-      <h2>Sign in to your account</h2>
-      <Box
-        component='form'
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          '& > :not(style)': { m: 1, width: '60%' },
+    <div className={classes.root}>
+      <Formik
+        initialValues={{
+          fullName: '',
+          password: '',
+          confirmPassword: '',
+          email: '',
         }}
-        noValidate
-        autoComplete='off'
-        onSubmit={formik.handleSubmit}
+        onSubmit={(values: ISignUpForm, actions) => {
+          setTimeout(() => {
+            actions.setSubmitting(false);
+          }, 500);
+        }}
+        validationSchema={Yup.object().shape({
+          email: Yup.string()
+            .email()
+            .required('Enter valid email-id'),
+          fullName: Yup.string().required('Please enter full name'),
+          password: Yup.string()
+            .matches(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+            )
+            .required(
+              'Please valid password. One uppercase, one lowercase, one special character and no spaces',
+            ),
+          confirmPassword: Yup.string()
+            .required('Required')
+            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        })}
       >
-        <TextField
-          id='email'
-          label='Email'
-          variant='filled'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-        />
-        <TextField
-          id='password'
-          label='Password'
-          variant='filled'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        />
-      </Box>
-    </Container>
+        {(props: FormikProps<ISignUpForm>) => {
+          const {
+            values,
+            touched,
+            errors,
+            handleBlur,
+            handleChange,
+            isSubmitting,
+          } = props;
+          return (
+            <Form>
+              <h1 className={classes.title}>Sign in</h1>
+              <Grid
+                container
+                spacing={2}
+                direction='row'
+              >
+                <Grid
+                  item
+                  lg={10}
+                  md={10}
+                  sm={10}
+                  xs={10}
+                  className={classes.textField}
+                >
+                  <CustomTextField
+                    name='password'
+                    id='password'
+                    label='Password'
+                    value={values.password}
+                    type='password'
+                    helperText={
+                      errors.password && touched.password
+                        ? 'Please valid password. One uppercase, one lowercase, one special character and no spaces'
+                        : 'One uppercase, one lowercase, one special character and no spaces'
+                    }
+                    error={
+                      !!(errors.password && touched.password)
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  lg={10}
+                  md={10}
+                  sm={10}
+                  xs={10}
+                  className={classes.textField}
+                >
+                  <CustomTextField
+                    name='email'
+                    id='email'
+                    label='Email-id'
+                    value={values.email}
+                    type='email'
+                    helperText={
+                      errors.email && touched.email
+                        ? errors.email
+                        : 'Enter email-id'
+                    }
+                    error={
+                      !!(errors.email && touched.email)
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  lg={10}
+                  md={10}
+                  sm={10}
+                  xs={10}
+                  className={classes.submitButton}
+                >
+                  <CustomButton
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    disabled={isSubmitting}
+                  >
+                    Sign in
+                  </CustomButton>
+                  {displayFormStatus && (
+                    <div className='formStatus'>
+                      {formStatusContent}
+                    </div>
+                  )}
+                </Grid>
+              </Grid>
+            </Form>
+          );
+        }}
+      </Formik>
+    </div>
   );
 }
