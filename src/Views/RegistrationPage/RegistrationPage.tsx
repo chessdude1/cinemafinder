@@ -33,19 +33,19 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 interface ISignUpForm {
-    fullName: string
-    password: string
-    confirmPassword: string
-    email: string
+  fullName: string;
+  password: string;
+  confirmPassword: string;
+  email: string;
 }
 
 interface IFormStatus {
-    message: string
-    type: string
+  message: string;
+  type: string;
 }
 
 interface IFormStatusProps {
-    [key: string]: IFormStatus
+  [key: string]: IFormStatus;
 }
 
 const formStatusProps: IFormStatusProps = {
@@ -77,31 +77,24 @@ export function RegistrationPage() {
     data: ISignUpForm,
     resetForm: (emptyForm: Record<string, never>) => void,
   ) {
-    console.log('fuck');
-    dispatch(AuthPageActions.SetUser({
-      id: 7,
-      subscribes: ['ivi'],
-      favorite_films: ['192345'],
-      ...data,
-    }));
+    dispatch(
+      AuthPageActions.SetUser({
+        id: 7,
+        subscribes: ['ivi'],
+        favorite_films: ['192345'],
+        ...data,
+      }),
+    );
   }
 
   const authPage = useTypedSelector((store) => store.AuthPageReducer);
-  console.log(authPage);
 
   const formStatusContent = () => {
     if (formStatus.type === 'error') {
-      return (
-        <p className={classes.errorMessage}>
-          {formStatus.message}
-        </p>
-      );
-    } if (formStatus.type === 'success') {
-      return (
-        <p className={classes.successMessage}>
-          {formStatus.message}
-        </p>
-      );
+      return <p className={classes.errorMessage}>{formStatus.message}</p>;
+    }
+    if (formStatus.type === 'success') {
+      return <p className={classes.successMessage}>{formStatus.message}</p>;
     }
     return null;
   };
@@ -122,9 +115,7 @@ export function RegistrationPage() {
           }, 500);
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email()
-            .required('Enter valid email-id'),
+          email: Yup.string().email().required('Enter valid email-id'),
           fullName: Yup.string().required('Please enter full name'),
           password: Yup.string()
             .matches(
@@ -150,11 +141,7 @@ export function RegistrationPage() {
           return (
             <Form>
               <h1 className={classes.title}>Sign up</h1>
-              <Grid
-                container
-                spacing={2}
-                direction='row'
-              >
+              <Grid container spacing={2} direction='row'>
                 <Grid
                   item
                   lg={10}
@@ -174,9 +161,7 @@ export function RegistrationPage() {
                         ? errors.fullName
                         : 'Enter your full name.'
                     }
-                    error={
-                      !!(errors.fullName && touched.fullName)
-                    }
+                    error={!!(errors.fullName && touched.fullName)}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -200,9 +185,7 @@ export function RegistrationPage() {
                         ? 'Please valid password. One uppercase, one lowercase, one special character and no spaces'
                         : 'One uppercase, one lowercase, one special character and no spaces'
                     }
-                    error={
-                      !!(errors.password && touched.password)
-                    }
+                    error={!!(errors.password && touched.password)}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -222,14 +205,12 @@ export function RegistrationPage() {
                     value={values.confirmPassword}
                     type='password'
                     helperText={
-                      errors.confirmPassword
-                          && touched.confirmPassword
+                      errors.confirmPassword && touched.confirmPassword
                         ? errors.confirmPassword
                         : 'Re-enter password to confirm'
                     }
                     error={
-                      !!(errors.confirmPassword
-                          && touched.confirmPassword)
+                      !!(errors.confirmPassword && touched.confirmPassword)
                     }
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -254,9 +235,7 @@ export function RegistrationPage() {
                         ? errors.email
                         : 'Enter email-id'
                     }
-                    error={
-                      !!(errors.email && touched.email)
-                    }
+                    error={!!(errors.email && touched.email)}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -278,9 +257,7 @@ export function RegistrationPage() {
                     Submit
                   </CustomButton>
                   {displayFormStatus && (
-                    <div className='formStatus'>
-                      {formStatusContent}
-                    </div>
+                    <div className='formStatus'>{formStatusContent}</div>
                   )}
                 </Grid>
               </Grid>
