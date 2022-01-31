@@ -4,7 +4,6 @@ export enum UserOperations {
 
 interface UserType {
   id : number,
-  name : string,
   password : string,
   email : string,
   subscribes : Array<string>,

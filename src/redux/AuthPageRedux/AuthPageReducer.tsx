@@ -4,7 +4,6 @@ const initialState = {
   isLogin: true,
   user: {
     id: 1,
-    name: 'user',
     password: 'user',
     email: 'test@test.ru',
     subscribes: ['More TV', 'Кинопоиск HD'],
@@ -13,8 +12,10 @@ const initialState = {
   // mock user
 };
 
-export function AuthPageReducer(state = initialState, action : AuthPageActionsTypes)
- : typeof initialState {
+export function AuthPageReducer(
+  state = initialState,
+  action: AuthPageActionsTypes,
+): typeof initialState {
   switch (action.type) {
     case UserOperations.SETUSER:
       return { ...state, user: action.payload };
