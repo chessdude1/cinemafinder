@@ -30,7 +30,7 @@ export function MoviePageAux() {
   }, [currentMovieId]);
 
   const user = useTypedSelector((store) => store.AuthPageReducer.user);
-  console.log(user);
+
   return (
     <div>
       <MoviePage
