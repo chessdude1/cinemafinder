@@ -52,7 +52,15 @@ function* workerFetchFiltered() {
       return '';
     })
     .join(',');
-  const filtered: Movie[] = yield getMoviesWithFilter(genres);
+  const years = storeSaga.SearchPageReducer.year;
+  const rating = storeSaga.SearchPageReducer.rating;
+  const filtered: Movie[] = yield getMoviesWithFilter(
+    genres,
+    years[0],
+    years[1],
+    rating[0],
+    rating[1],
+  );
   yield put(SearchPageActions.FetchFilteredMovies(filtered));
 }
 

@@ -30,10 +30,8 @@ const initialState: SearchPageStateType = {
     { id: 10752, name: 'War', applied: false },
     { id: 37, name: 'Western', applied: false },
   ],
-  year: {
-    start: 1900,
-    end: 2022,
-  },
+  year: [1900, 2022],
+  rating: [0, 10],
 };
 
 export function SearchPageReducer(
@@ -45,6 +43,16 @@ export function SearchPageReducer(
       return {
         ...state,
         genre: action.payload,
+      };
+    case SearchPageActionTypes.UPDATE_YEARS_FILTER:
+      return {
+        ...state,
+        year: action.payload,
+      };
+    case SearchPageActionTypes.UPDATE_RATING_FILTER:
+      return {
+        ...state,
+        rating: action.payload,
       };
     case SearchPageActionTypes.FETCH_FILTERD_MOVIES:
       return { ...state, movies: action.payload };

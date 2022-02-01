@@ -1,11 +1,9 @@
-import {
-  genre,
-  genreFilter,
-  yearFilter,
-} from '../../Views/SearchPage/SearchQueryTypes';
+import { genre, genreFilter, yearFilter } from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
   UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
+  UPDATE_YEARS_FILTER = 'UPDATE_YEARS_FILTER',
+  UPDATE_RATING_FILTER = 'UPDATE_RATING_FILTER',
   FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
@@ -21,6 +19,14 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.UPDATE_GENRES_FILTER,
     payload: filter,
   }),
+  UpdateYearsFilter: (filter: number[]): UpdateYearsFilter => ({
+    type: SearchPageActionTypes.UPDATE_YEARS_FILTER,
+    payload: filter,
+  }),
+  UpdateRatingFilter: (filter: number[]): UpdateRatingFilter => ({
+    type: SearchPageActionTypes.UPDATE_RATING_FILTER,
+    payload: filter,
+  }),
   FetchPopular: (movie: Movie[]): FetchPopular => ({
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
@@ -30,12 +36,13 @@ export const SearchPageActions = {
 export interface SearchPageStateType {
   movies: Movie[];
   genre: genre[];
-  year: yearFilter;
+  year: number[];
+  rating: number[];
 }
 
 export type Filters = {
   genre: genre[];
-  year: yearFilter;
+  year: number[];
 };
 
 export interface Movie {
@@ -60,7 +67,14 @@ interface UpdateGenresFilter {
   type: SearchPageActionTypes.UPDATE_GENRES_FILTER;
   payload: genre[];
 }
-
+interface UpdateYearsFilter {
+  type: SearchPageActionTypes.UPDATE_YEARS_FILTER;
+  payload: number[];
+}
+interface UpdateRatingFilter {
+  type: SearchPageActionTypes.UPDATE_RATING_FILTER;
+  payload: number[];
+}
 interface FetchPopular {
   type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
   payload: Movie[];
@@ -78,4 +92,6 @@ interface FetchFilteredMovies {
 export type SearchPageActionsType =
   | UpdateGenresFilter
   | FetchPopular
-  | FetchFilteredMovies;
+  | FetchFilteredMovies
+  | UpdateYearsFilter
+  | UpdateRatingFilter;

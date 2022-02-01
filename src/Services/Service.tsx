@@ -10,11 +10,24 @@ export async function getPopularMovies(timespan = 'week', language = 'en-US', ap
   return movieResponse.data.results;
 }
 
-export async function getMoviesWithFilter(withGenres = '', sortBy = 'popularity.desc', language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf', pageNum = 1) {
-  const movieResponse = await instance.get(`discover/movie?api_key=${apiKey}&language=${language}&with_genres=${withGenres}&sort_by=${sortBy}&page=${pageNum}`);
-  console.log(movieResponse.data);
+export async function getMoviesWithFilter(
+  withGenres = '',
+  startYear = 1900,
+  endYear = 2022,
+  bottomRating = 0,
+  topRating = 10,
+  sortBy = 'popularity.desc',
+  language = 'en-US',
+  apiKey = 'a48c1568134ff7732653e3df2aee4eaf',
+  pageNum = 1,
+) {
+  const movieResponse = await instance.get(
+    `discover/movie?api_key=${apiKey}&language=${language}&with_genres=${withGenres}&vote_average.gte=${bottomRating}&vote_average.lte=${topRating}&include_adult=false&release_date.gte=${startYear}&release_date.lte=${endYear}&sort_by=${sortBy}&page=${pageNum}`,
+  );
+
   return movieResponse.data.results;
 }
+
 export async function getMovie(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const movieResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);
   return movieResponse.data;

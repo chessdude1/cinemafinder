@@ -3,7 +3,6 @@ import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox';
 import { genre } from '../SearchQueryTypes';
 
 export interface GenreFiltersType {
-  // updateFilterOfGenres: (prev: genre[], id: number, applied: boolean) => void;
   setFilterOfGenres: React.Dispatch<React.SetStateAction<genre[]>>;
   genreFilter: genre[];
 }
