@@ -1,12 +1,21 @@
-import { genre, genreFilter, yearFilter } from '../../Views/SearchPage/SearchQueryTypes';
+import {
+  genre,
+  genreFilter,
+  providerFilter,
+  watchProvider,
+  yearFilter,
+} from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
   UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
   UPDATE_YEARS_FILTER = 'UPDATE_YEARS_FILTER',
   UPDATE_RATING_FILTER = 'UPDATE_RATING_FILTER',
+  UPDATE_PROVIDERS_FILTER = 'UPDATE_PROVIDERS_FILTER',
+  UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER',
   FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
+  LOAD_PROVIDERS_LIST = 'LOAD_PROVIDERS_LIST',
   LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
 }
 
@@ -14,6 +23,10 @@ export const SearchPageActions = {
   FetchFilteredMovies: (movie: Movie[]): FetchFilteredMovies => ({
     type: SearchPageActionTypes.FETCH_FILTERD_MOVIES,
     payload: movie,
+  }),
+  FetchProvidersList: (providers: watchProvider[]): FetchProvidersList => ({
+    type: SearchPageActionTypes.LOAD_PROVIDERS_LIST,
+    payload: providers,
   }),
   UpdateGenresFilter: (filter: genre[]): UpdateGenresFilter => ({
     type: SearchPageActionTypes.UPDATE_GENRES_FILTER,
@@ -27,6 +40,14 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.UPDATE_RATING_FILTER,
     payload: filter,
   }),
+  UpdateProvidersFilter: (filter: providerFilter[]): UpdateProvidersFilter => ({
+    type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER,
+    payload: filter,
+  }),
+  UpdateSortOrder: (filter: string): UpdateSortOrder => ({
+    type: SearchPageActionTypes.UPDATE_SORT_ORDER,
+    payload: filter,
+  }),
   FetchPopular: (movie: Movie[]): FetchPopular => ({
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
@@ -38,6 +59,10 @@ export interface SearchPageStateType {
   genre: genre[];
   year: number[];
   rating: number[];
+  providersList: watchProvider[];
+  providers: providerFilter[];
+  region: string;
+  sortOrder: string;
 }
 
 export type Filters = {
@@ -63,6 +88,10 @@ export interface Movie {
   vote_count: number;
 }
 
+interface UpdateSortOrder {
+  type: SearchPageActionTypes.UPDATE_SORT_ORDER;
+  payload: string;
+}
 interface UpdateGenresFilter {
   type: SearchPageActionTypes.UPDATE_GENRES_FILTER;
   payload: genre[];
@@ -75,6 +104,10 @@ interface UpdateRatingFilter {
   type: SearchPageActionTypes.UPDATE_RATING_FILTER;
   payload: number[];
 }
+interface UpdateProvidersFilter {
+  type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER;
+  payload: providerFilter[];
+}
 interface FetchPopular {
   type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
   payload: Movie[];
@@ -84,14 +117,17 @@ interface FetchFilteredMovies {
   type: SearchPageActionTypes.FETCH_FILTERD_MOVIES;
   payload: Movie[];
 }
-// interface LoadedError {
-//   type: SearchPageActionTypes.LOAD_POPULAR_ERROR;
-//   payload: Movie;
-// }
+interface FetchProvidersList {
+  type: SearchPageActionTypes.LOAD_PROVIDERS_LIST;
+  payload: watchProvider[];
+}
 
 export type SearchPageActionsType =
   | UpdateGenresFilter
   | FetchPopular
   | FetchFilteredMovies
   | UpdateYearsFilter
-  | UpdateRatingFilter;
+  | UpdateRatingFilter
+  | FetchProvidersList
+  | UpdateProvidersFilter
+  | UpdateSortOrder;

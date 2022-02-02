@@ -18,3 +18,15 @@ export interface yearFilter {
 export interface genreFilter {
   genres: genre[];
 }
+
+export interface watchProvider {
+  display_priority: number;
+  logo_path: string;
+  provider_name: string;
+  provider_id: number;
+}
+
+export interface providerFilter {
+  id: number;
+  isApplied: boolean;
+}
