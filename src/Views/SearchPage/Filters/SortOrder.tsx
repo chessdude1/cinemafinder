@@ -9,7 +9,7 @@ export interface SortOrderType {
 export function SortOrder({ setSortOrder, sortOrder, sortsList }: SortOrderType) {
   return (
     <section>
-      <h4>Sort Order</h4>
+      <h2>Sort Order</h2>
       <div className='sort'>
         {sortsList.map((sort) => (
           <div key={sort}>

@@ -12,11 +12,7 @@ export function SearchPage({ movies }: SearchPageType) {
       <h2>search</h2>
       <div className='movie-table'>
         {movies.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            title={movie.title}
-            posterPath={movie.poster_path}
-          />
+          <MovieCard key={movie.id} id={movie.id} title={movie.title} posterPath={movie.poster_path} />
         ))}
       </div>
     </section>

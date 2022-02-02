@@ -6,10 +6,7 @@ export interface GenreFiltersType {
   setFilterOfGenres: React.Dispatch<React.SetStateAction<genre[]>>;
   genreFilter: genre[];
 }
-export function GenreFilters({
-  setFilterOfGenres,
-  genreFilter,
-}: GenreFiltersType) {
+export function GenreFilters({ setFilterOfGenres, genreFilter }: GenreFiltersType) {
   function updateFieldChanged(prev: genre[], id: number, applied: boolean) {
     const newArr = prev.map((obj) => {
       if (obj.id !== id) {
@@ -22,7 +19,7 @@ export function GenreFilters({
   }
   return (
     <section>
-      <h2>search</h2>
+      <h2>Genres</h2>
       <div className='filters__genre'>
         {genreFilter.map((filter) => (
           <div key={filter.id}>

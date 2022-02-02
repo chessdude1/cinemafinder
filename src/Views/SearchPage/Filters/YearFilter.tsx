@@ -8,7 +8,6 @@ export interface YearFilterType {
 export function YearFilter({ setFilterOfYears, filterOfYears }: YearFilterType) {
   return (
     <section>
-      <h2>search</h2>
       <div className='filters__year'>
         <CustomSlider
           onChange={(value) => {

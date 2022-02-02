@@ -11,6 +11,7 @@ import { YearFilter } from './Filters/YearFilter';
 import { updateFilterGenresState, updateFilterYearsState, updateFilterRatingsState, updateFilterProvidersState, updateSortOrderState } from './FilterStateUpdates';
 import { SearchPage } from './SearchPage';
 import { genre, providerFilter, watchProvider } from './SearchQueryTypes';
+import './SearchPage.scss';
 
 export function SearchPageAux() {
   const sortTypes: string[] = ['popularity.desc', 'popularity.asc', 'release_date.desc', 'release_date.asc', 'original_title.desc', 'original_title.asc'];
@@ -67,14 +68,17 @@ export function SearchPageAux() {
     getProvidersList();
   }, []);
   return (
-    <section>
+    <section className='search-page'>
       <SearchPage movies={movies} />
-      <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-      <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-      <div className='filters'>
+      <div className='search-features'>
+        <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+        <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+
         <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-        <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
-        <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+        <div className='filters'>
+          <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+          <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+        </div>
       </div>
     </section>
   );
