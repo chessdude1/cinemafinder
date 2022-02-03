@@ -4,7 +4,7 @@ export interface sortOrderTypes {
   rating: boolean;
 }
 
-export interface genre {
+export interface IGenre {
   id: number;
   name: string;
   applied: boolean;
@@ -16,7 +16,7 @@ export interface yearFilter {
 }
 
 export interface genreFilter {
-  genres: genre[];
+  genres: IGenre[];
 }
 
 export interface watchProvider {

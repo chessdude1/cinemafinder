@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomRadioInput from '../../../Common/UI/CustomRadioInput';
 import { providerFilter, watchProvider } from '../SearchQueryTypes';
 
 export interface SortOrderType {
@@ -10,14 +11,9 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList }: SortOrderType)
   return (
     <section>
       <h2>Sort Order</h2>
-      <div className='sort'>
+      <div className='sort-options'>
         {sortsList.map((sort) => (
-          <div key={sort}>
-            <label htmlFor={sort}>
-              {sort}
-              <input type='radio' name='sort' value={sort} id={sort} onClick={() => setSortOrder(sort)} />
-            </label>
-          </div>
+          <CustomRadioInput key={sort} label={sort} name='sort' onChange={setSortOrder} />
         ))}
       </div>
     </section>

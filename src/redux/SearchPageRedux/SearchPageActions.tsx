@@ -1,10 +1,4 @@
-import {
-  genre,
-  genreFilter,
-  providerFilter,
-  watchProvider,
-  yearFilter,
-} from '../../Views/SearchPage/SearchQueryTypes';
+import { IGenre, genreFilter, providerFilter, watchProvider, yearFilter } from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
   UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
@@ -28,7 +22,7 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.LOAD_PROVIDERS_LIST,
     payload: providers,
   }),
-  UpdateGenresFilter: (filter: genre[]): UpdateGenresFilter => ({
+  UpdateGenresFilter: (filter: string): UpdateGenresFilter => ({
     type: SearchPageActionTypes.UPDATE_GENRES_FILTER,
     payload: filter,
   }),
@@ -40,7 +34,7 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.UPDATE_RATING_FILTER,
     payload: filter,
   }),
-  UpdateProvidersFilter: (filter: providerFilter[]): UpdateProvidersFilter => ({
+  UpdateProvidersFilter: (filter: string): UpdateProvidersFilter => ({
     type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER,
     payload: filter,
   }),
@@ -56,17 +50,17 @@ export const SearchPageActions = {
 
 export interface SearchPageStateType {
   movies: Movie[];
-  genre: genre[];
+  genre: string;
   year: number[];
   rating: number[];
   providersList: watchProvider[];
-  providers: providerFilter[];
+  providers: string;
   region: string;
   sortOrder: string;
 }
 
 export type Filters = {
-  genre: genre[];
+  genre: IGenre[];
   year: number[];
 };
 
@@ -94,7 +88,7 @@ interface UpdateSortOrder {
 }
 interface UpdateGenresFilter {
   type: SearchPageActionTypes.UPDATE_GENRES_FILTER;
-  payload: genre[];
+  payload: string;
 }
 interface UpdateYearsFilter {
   type: SearchPageActionTypes.UPDATE_YEARS_FILTER;
@@ -106,7 +100,7 @@ interface UpdateRatingFilter {
 }
 interface UpdateProvidersFilter {
   type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER;
-  payload: providerFilter[];
+  payload: string;
 }
 interface FetchPopular {
   type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
@@ -122,12 +116,4 @@ interface FetchProvidersList {
   payload: watchProvider[];
 }
 
-export type SearchPageActionsType =
-  | UpdateGenresFilter
-  | FetchPopular
-  | FetchFilteredMovies
-  | UpdateYearsFilter
-  | UpdateRatingFilter
-  | FetchProvidersList
-  | UpdateProvidersFilter
-  | UpdateSortOrder;
+export type SearchPageActionsType = UpdateGenresFilter | FetchPopular | FetchFilteredMovies | UpdateYearsFilter | UpdateRatingFilter | FetchProvidersList | UpdateProvidersFilter | UpdateSortOrder;

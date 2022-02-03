@@ -2,7 +2,7 @@ import { put, select, takeEvery } from '@redux-saga/core/effects';
 import { ErrorMessage } from 'formik';
 import { getMovie, getWatchProviders, getPopularMovies, getMoviesWithFilter, getWatchProvidersList } from '../../Services/Service';
 import { ListOfWatchProvidersType } from '../../Services/ServiceTypes';
-import { genre, providerFilter, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
+import { IGenre, providerFilter, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
 import { Movie, SearchPageActions, SearchPageActionTypes } from '../SearchPageRedux/SearchPageActions';
 import { RootState } from '../store';
 
@@ -37,10 +37,6 @@ export function* watchFetchPopular() {
 function* workerFetchProviders() {
   const list: watchProvider[] = yield getWatchProvidersList();
   yield put(SearchPageActions.FetchProvidersList(list));
-  const p: providerFilter[] = [];
-  list.forEach((item) => p.push({ id: item.provider_id, isApplied: false }));
-  console.log(p);
-  // yield put(SearchPageActions.UpdateProvidersFilter(p));
 }
 
 export function* watchFetchProviders() {
@@ -49,23 +45,8 @@ export function* watchFetchProviders() {
 
 function* workerFetchFiltered() {
   const storeSaga: RootState = yield select((store) => store);
-  const genres = storeSaga.SearchPageReducer.genre
-    .map((obj) => {
-      if (obj.applied === true) {
-        return obj.id;
-      }
-      return null;
-    })
-    .filter((obj) => obj !== null)
-    .join(',');
-  const years = storeSaga.SearchPageReducer.year;
-  const rating = storeSaga.SearchPageReducer.rating;
-  const providers = storeSaga.SearchPageReducer.providers
-    .map((item) => (item.isApplied ? item.id : null))
-    .filter((obj) => obj !== null)
-    .join(',');
-  const sortOrder = storeSaga.SearchPageReducer.sortOrder;
-  const filtered: Movie[] = yield getMoviesWithFilter(genres, years[0], years[1], rating[0], rating[1], providers, sortOrder);
+  const { genre, year, rating, providers, sortOrder } = storeSaga.SearchPageReducer;
+  const filtered: Movie[] = yield getMoviesWithFilter(genre, year[0], year[1], rating[0], rating[1], providers, sortOrder);
   yield put(SearchPageActions.FetchFilteredMovies(filtered));
 }
 

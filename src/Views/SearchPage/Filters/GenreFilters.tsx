@@ -1,13 +1,13 @@
 import React from 'react';
 import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox';
-import { genre } from '../SearchQueryTypes';
+import { IGenre } from '../SearchQueryTypes';
 
 export interface GenreFiltersType {
-  setFilterOfGenres: React.Dispatch<React.SetStateAction<genre[]>>;
-  genreFilter: genre[];
+  setFilterOfGenres: React.Dispatch<React.SetStateAction<IGenre[]>>;
+  genreFilter: IGenre[];
 }
 export function GenreFilters({ setFilterOfGenres, genreFilter }: GenreFiltersType) {
-  function updateFieldChanged(prev: genre[], id: number, applied: boolean) {
+  function updateFieldChanged(prev: IGenre[], id: number, applied: boolean) {
     const newArr = prev.map((obj) => {
       if (obj.id !== id) {
         return obj;
