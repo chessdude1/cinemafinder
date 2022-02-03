@@ -3,11 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "airbnb"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "airbnb"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -16,14 +12,11 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
     "no-case-declarations": "off",
     "no-prototype-builtins": "off",
+    "max-len": [1, 200],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": "warn",
@@ -33,24 +26,17 @@
     "no-shadow": "off",
     "require-yield": "warn",
     "default-param-last": "off",
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
-    "@typescript-eslint/no-use-before-define": [
-      "error"
-    ],
+    "object-curly-newline": "off",
+    "linebreak-style": ["off"],
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
-    "jsx-quotes": [
-      "warn",
-      "prefer-single"
-    ],
+    "jsx-quotes": ["warn", "prefer-single"],
     "import/extensions": [
       "error",
       "ignorePackages",

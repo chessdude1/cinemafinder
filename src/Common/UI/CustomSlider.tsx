@@ -11,8 +11,13 @@ interface CustomSliderType {
 }
 
 export function CustomSlider({
-  step, min, max, title, onChange, value,
-} : CustomSliderType) {
+  step,
+  min,
+  max,
+  title,
+  onChange,
+  value,
+}: CustomSliderType) {
   return (
     <>
       <h2>{title}</h2>
