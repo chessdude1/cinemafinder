@@ -11,6 +11,7 @@ const initialState: SearchPageStateType = {
   providers: '',
   region: 'RU',
   sortOrder: 'popularity.desc',
+  pageNumber: 1,
 };
 
 export function SearchPageReducer(state: SearchPageStateType = initialState, action: SearchPageActionsType) {
@@ -19,29 +20,36 @@ export function SearchPageReducer(state: SearchPageStateType = initialState, act
       return {
         ...state,
         genre: action.payload,
+        pageNumber: 1,
       };
     case SearchPageActionTypes.UPDATE_SORT_ORDER:
       return {
         ...state,
         sortOrder: action.payload,
+        pageNumber: 1,
       };
     case SearchPageActionTypes.UPDATE_YEARS_FILTER:
       return {
         ...state,
         year: action.payload,
+        pageNumber: 1,
       };
     case SearchPageActionTypes.UPDATE_RATING_FILTER:
       return {
         ...state,
         rating: action.payload,
+        pageNumber: 1,
       };
     case SearchPageActionTypes.UPDATE_PROVIDERS_FILTER:
       return {
         ...state,
         providers: action.payload,
+        pageNumber: 1,
       };
     case SearchPageActionTypes.FETCH_FILTERD_MOVIES:
       return { ...state, movies: action.payload };
+    case SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES:
+      return { ...state, movies: [...state.movies, ...action.payload], pageNumber: state.pageNumber + 1 };
     case SearchPageActionTypes.LOAD_POPULAR_SUCCESS:
       return { ...state, movies: action.payload };
     case SearchPageActionTypes.LOAD_PROVIDERS_LIST: {

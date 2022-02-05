@@ -7,6 +7,7 @@ export enum SearchPageActionTypes {
   UPDATE_PROVIDERS_FILTER = 'UPDATE_PROVIDERS_FILTER',
   UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER',
   FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
+  FETCH_NEXT_PAGE_MOVIES = 'FETCH_NEXT_PAGE_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
   LOAD_PROVIDERS_LIST = 'LOAD_PROVIDERS_LIST',
@@ -16,6 +17,10 @@ export enum SearchPageActionTypes {
 export const SearchPageActions = {
   FetchFilteredMovies: (movie: Movie[]): FetchFilteredMovies => ({
     type: SearchPageActionTypes.FETCH_FILTERD_MOVIES,
+    payload: movie,
+  }),
+  FetchNextPageMovies: (movie: Movie[]): FetchFilteredMovies => ({
+    type: SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES,
     payload: movie,
   }),
   FetchProvidersList: (providers: watchProvider[]): FetchProvidersList => ({
@@ -57,6 +62,7 @@ export interface SearchPageStateType {
   providers: string;
   region: string;
   sortOrder: string;
+  pageNumber: number;
 }
 
 export type Filters = {
@@ -108,7 +114,7 @@ interface FetchPopular {
 }
 
 interface FetchFilteredMovies {
-  type: SearchPageActionTypes.FETCH_FILTERD_MOVIES;
+  type: SearchPageActionTypes.FETCH_FILTERD_MOVIES | SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES;
   payload: Movie[];
 }
 interface FetchProvidersList {
