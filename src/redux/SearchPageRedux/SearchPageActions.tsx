@@ -1,4 +1,4 @@
-import { IGenre, genreFilter, providerFilter, watchProvider, yearFilter } from '../../Views/SearchPage/SearchQueryTypes';
+import { IGenre, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
   UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
@@ -6,12 +6,14 @@ export enum SearchPageActionTypes {
   UPDATE_RATING_FILTER = 'UPDATE_RATING_FILTER',
   UPDATE_PROVIDERS_FILTER = 'UPDATE_PROVIDERS_FILTER',
   UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER',
+
   FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_NEXT_PAGE_MOVIES = 'FETCH_NEXT_PAGE_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
   LOAD_PROVIDERS_LIST = 'LOAD_PROVIDERS_LIST',
   LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
+  CHANGE_LOADING_STATUS = 'CHANGE_LOADING_STATUS',
 }
 
 export const SearchPageActions = {
@@ -47,6 +49,7 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.UPDATE_SORT_ORDER,
     payload: filter,
   }),
+  UpdateLoadingStatus: (): UpdateLoadingStatus => ({ type: SearchPageActionTypes.CHANGE_LOADING_STATUS }),
   FetchPopular: (movie: Movie[]): FetchPopular => ({
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
@@ -63,6 +66,8 @@ export interface SearchPageStateType {
   region: string;
   sortOrder: string;
   pageNumber: number;
+  isLoading: boolean;
+  isAllLoaded: boolean;
 }
 
 export type Filters = {
@@ -86,6 +91,10 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+interface UpdateLoadingStatus {
+  type: SearchPageActionTypes.CHANGE_LOADING_STATUS;
 }
 
 interface UpdateSortOrder {
@@ -122,4 +131,13 @@ interface FetchProvidersList {
   payload: watchProvider[];
 }
 
-export type SearchPageActionsType = UpdateGenresFilter | FetchPopular | FetchFilteredMovies | UpdateYearsFilter | UpdateRatingFilter | FetchProvidersList | UpdateProvidersFilter | UpdateSortOrder;
+export type SearchPageActionsType =
+  | UpdateLoadingStatus
+  | UpdateGenresFilter
+  | FetchPopular
+  | FetchFilteredMovies
+  | UpdateYearsFilter
+  | UpdateRatingFilter
+  | FetchProvidersList
+  | UpdateProvidersFilter
+  | UpdateSortOrder;

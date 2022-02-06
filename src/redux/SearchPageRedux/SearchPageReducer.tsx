@@ -12,6 +12,8 @@ const initialState: SearchPageStateType = {
   region: 'RU',
   sortOrder: 'popularity.desc',
   pageNumber: 1,
+  isLoading: false,
+  isAllLoaded: false,
 };
 
 export function SearchPageReducer(state: SearchPageStateType = initialState, action: SearchPageActionsType) {
@@ -19,39 +21,51 @@ export function SearchPageReducer(state: SearchPageStateType = initialState, act
     case SearchPageActionTypes.UPDATE_GENRES_FILTER:
       return {
         ...state,
+        movies: [],
         genre: action.payload,
         pageNumber: 1,
+        isAllLoaded: false,
       };
     case SearchPageActionTypes.UPDATE_SORT_ORDER:
       return {
         ...state,
+        movies: [],
         sortOrder: action.payload,
         pageNumber: 1,
+        isAllLoaded: false,
       };
     case SearchPageActionTypes.UPDATE_YEARS_FILTER:
       return {
         ...state,
+        movies: [],
         year: action.payload,
         pageNumber: 1,
+        isAllLoaded: false,
       };
     case SearchPageActionTypes.UPDATE_RATING_FILTER:
       return {
         ...state,
+        movies: [],
         rating: action.payload,
         pageNumber: 1,
+        isAllLoaded: false,
       };
     case SearchPageActionTypes.UPDATE_PROVIDERS_FILTER:
       return {
         ...state,
+        movies: [],
         providers: action.payload,
         pageNumber: 1,
+        isAllLoaded: false,
       };
     case SearchPageActionTypes.FETCH_FILTERD_MOVIES:
-      return { ...state, movies: action.payload };
-    case SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES:
-      return { ...state, movies: [...state.movies, ...action.payload], pageNumber: state.pageNumber + 1 };
+      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
+    // case SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES:
+    //   return { ...state, movies: };
     case SearchPageActionTypes.LOAD_POPULAR_SUCCESS:
-      return { ...state, movies: action.payload };
+      return { ...state, movies: [...state.movies, ...action.payload] };
+    case SearchPageActionTypes.CHANGE_LOADING_STATUS:
+      return { ...state, isLoading: true, pageNumber: state.pageNumber + 1 };
     case SearchPageActionTypes.LOAD_PROVIDERS_LIST: {
       return {
         ...state,

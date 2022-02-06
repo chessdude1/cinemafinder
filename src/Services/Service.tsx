@@ -18,10 +18,10 @@ export async function getMoviesWithFilter(
   topRating = 10,
   watchProviders = '',
   sortBy = 'popularity.desc',
+  pageNum = 1,
   watchRegion = 'RU',
   language = 'en-US',
   apiKey = 'a48c1568134ff7732653e3df2aee4eaf',
-  pageNum = 1,
 ) {
   let gstr = '';
   if (withGenres) {
@@ -33,7 +33,7 @@ export async function getMoviesWithFilter(
   }
 
   const movieResponse = await instance.get(
-    `discover/movie?api_key=${apiKey}&language=${language}${gstr}${withGenres}&vote_average.gte=${bottomRating}&vote_average.lte=${topRating}&include_adult=false&release_date.gte=${startYear}&release_date.lte=${endYear}&vote_count.gte=100${pstr}${watchProviders}&watch_region=${watchRegion}&sort_by=${sortBy}&page=${pageNum}`,
+    `discover/movie?api_key=${apiKey}&language=${language}${gstr}${withGenres}&vote_average.gte=${bottomRating}&vote_average.lte=${topRating}&include_adult=false&release_date.gte=${startYear}&release_date.lte=${endYear}&vote_count.gte=1000${pstr}${watchProviders}&watch_region=${watchRegion}&sort_by=${sortBy}&page=${pageNum}`,
   );
 
   return movieResponse.data.results;

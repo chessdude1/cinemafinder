@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
-import { SearchPageActions } from '../../redux/SearchPageRedux/SearchPageActions';
+import { SearchPageActions, SearchPageActionTypes } from '../../redux/SearchPageRedux/SearchPageActions';
 import { GenreFilters } from './Filters/GenreFilters';
 import { ProviderFilter } from './Filters/ProviderFilter';
 import { RatingFilter } from './Filters/RatingFilter';
@@ -71,6 +71,9 @@ export function SearchPageAux() {
   ];
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
+  const pageNumber = useTypedSelector((store) => store.SearchPageReducer.pageNumber);
+  const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
+  const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
 
   const filterOfGenresInStore = useTypedSelector((store) => store.SearchPageReducer.genre);
   const filterOfYearsInStore = useTypedSelector((store) => store.SearchPageReducer.year);
@@ -111,14 +114,31 @@ export function SearchPageAux() {
   useEffect(() => {
     dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
   }, [filterOfGenresInStore, filterOfYearsInStore, filterOfRatingInStore, filterOfProvidersInStore, sortOrderInStore]);
-
+  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight;
+  const trackScrolling = useCallback(() => {
+    const el = document.getElementById('movies-filtered-list') as HTMLElement;
+    if (isBottom(el) && !loading) {
+      dispatch({ type: SearchPageActionTypes.CHANGE_LOADING_STATUS });
+      dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
+    }
+  }, [pageNumber, loading, dispatch]);
   useEffect(() => {
-    getPopularMovies();
+    // getPopularMovies();
     getProvidersList();
   }, []);
+  useEffect(() => {
+    if (!allLoaded) {
+      document.addEventListener('scroll', trackScrolling);
+    }
+    return () => {
+      document.removeEventListener('scroll', trackScrolling);
+    };
+  }, [allLoaded, trackScrolling, dispatch]);
   return (
     <section className='search-page'>
-      <SearchPage movies={movies} />
+      <div id='movies-filtered-list'>
+        <SearchPage movies={movies} />
+      </div>
       <div className='search-features'>
         <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
         <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
