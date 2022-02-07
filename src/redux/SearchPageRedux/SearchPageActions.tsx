@@ -1,19 +1,15 @@
 import { IGenre, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
-  UPDATE_GENRES_FILTER = 'UPDATE_GENRES_FILTER',
-  UPDATE_YEARS_FILTER = 'UPDATE_YEARS_FILTER',
-  UPDATE_RATING_FILTER = 'UPDATE_RATING_FILTER',
-  UPDATE_PROVIDERS_FILTER = 'UPDATE_PROVIDERS_FILTER',
-  UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER',
-
+  UPDATE_FILTERS_STATE = 'UPDATE_FILTERS_STATE',
   FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_NEXT_PAGE_MOVIES = 'FETCH_NEXT_PAGE_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
   LOAD_PROVIDERS_LIST = 'LOAD_PROVIDERS_LIST',
   LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
-  CHANGE_LOADING_STATUS = 'CHANGE_LOADING_STATUS',
+  UPDATE_LOADING_STATUS = 'UPDATE_LOADING_STATUS',
+  UPDATE_PAGE_NUMBER = 'UPDATE_PAGE_NUMBER',
 }
 
 export const SearchPageActions = {
@@ -29,27 +25,12 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.LOAD_PROVIDERS_LIST,
     payload: providers,
   }),
-  UpdateGenresFilter: (filter: string): UpdateGenresFilter => ({
-    type: SearchPageActionTypes.UPDATE_GENRES_FILTER,
-    payload: filter,
+  UpdateFiltersState: (filters: FiltersType): UpdateFiltersState => ({
+    type: SearchPageActionTypes.UPDATE_FILTERS_STATE,
+    payload: filters,
   }),
-  UpdateYearsFilter: (filter: number[]): UpdateYearsFilter => ({
-    type: SearchPageActionTypes.UPDATE_YEARS_FILTER,
-    payload: filter,
-  }),
-  UpdateRatingFilter: (filter: number[]): UpdateRatingFilter => ({
-    type: SearchPageActionTypes.UPDATE_RATING_FILTER,
-    payload: filter,
-  }),
-  UpdateProvidersFilter: (filter: string): UpdateProvidersFilter => ({
-    type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER,
-    payload: filter,
-  }),
-  UpdateSortOrder: (filter: string): UpdateSortOrder => ({
-    type: SearchPageActionTypes.UPDATE_SORT_ORDER,
-    payload: filter,
-  }),
-  UpdateLoadingStatus: (): UpdateLoadingStatus => ({ type: SearchPageActionTypes.CHANGE_LOADING_STATUS }),
+
+  UpdateLoadingStatus: (): UpdateLoadingStatus => ({ type: SearchPageActionTypes.UPDATE_LOADING_STATUS }),
   FetchPopular: (movie: Movie[]): FetchPopular => ({
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
@@ -58,21 +39,21 @@ export const SearchPageActions = {
 
 export interface SearchPageStateType {
   movies: Movie[];
-  genre: string;
-  year: number[];
-  rating: number[];
+  filters: FiltersType;
   providersList: watchProvider[];
-  providers: string;
-  region: string;
-  sortOrder: string;
   pageNumber: number;
   isLoading: boolean;
   isAllLoaded: boolean;
 }
 
-export type Filters = {
-  genre: IGenre[];
+export type FiltersType = {
+  genre: string;
   year: number[];
+  rating: number[];
+
+  providers: string;
+  region: string;
+  sortOrder: string;
 };
 
 export interface Movie {
@@ -94,29 +75,17 @@ export interface Movie {
 }
 
 interface UpdateLoadingStatus {
-  type: SearchPageActionTypes.CHANGE_LOADING_STATUS;
+  type: SearchPageActionTypes.UPDATE_LOADING_STATUS;
+}
+interface UpdatePageNumber {
+  type: SearchPageActionTypes.UPDATE_PAGE_NUMBER;
 }
 
-interface UpdateSortOrder {
-  type: SearchPageActionTypes.UPDATE_SORT_ORDER;
-  payload: string;
+interface UpdateFiltersState {
+  type: SearchPageActionTypes.UPDATE_FILTERS_STATE;
+  payload: FiltersType;
 }
-interface UpdateGenresFilter {
-  type: SearchPageActionTypes.UPDATE_GENRES_FILTER;
-  payload: string;
-}
-interface UpdateYearsFilter {
-  type: SearchPageActionTypes.UPDATE_YEARS_FILTER;
-  payload: number[];
-}
-interface UpdateRatingFilter {
-  type: SearchPageActionTypes.UPDATE_RATING_FILTER;
-  payload: number[];
-}
-interface UpdateProvidersFilter {
-  type: SearchPageActionTypes.UPDATE_PROVIDERS_FILTER;
-  payload: string;
-}
+
 interface FetchPopular {
   type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
   payload: Movie[];
@@ -131,13 +100,4 @@ interface FetchProvidersList {
   payload: watchProvider[];
 }
 
-export type SearchPageActionsType =
-  | UpdateLoadingStatus
-  | UpdateGenresFilter
-  | FetchPopular
-  | FetchFilteredMovies
-  | UpdateYearsFilter
-  | UpdateRatingFilter
-  | FetchProvidersList
-  | UpdateProvidersFilter
-  | UpdateSortOrder;
+export type SearchPageActionsType = UpdatePageNumber | UpdateLoadingStatus | UpdateFiltersState | FetchPopular | FetchFilteredMovies | FetchProvidersList;

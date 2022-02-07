@@ -4,13 +4,16 @@ import { SearchPageActionTypes, SearchPageActionsType, SearchPageStateType, Movi
 
 const initialState: SearchPageStateType = {
   movies: [],
-  genre: '',
-  year: [1900, 2022],
-  rating: [0, 10],
+  filters: {
+    genre: '',
+    year: [1900, 2022],
+    rating: [0, 10],
+
+    providers: '',
+    region: 'RU',
+    sortOrder: 'popularity.desc',
+  },
   providersList: [],
-  providers: '',
-  region: 'RU',
-  sortOrder: 'popularity.desc',
   pageNumber: 1,
   isLoading: false,
   isAllLoaded: false,
@@ -18,54 +21,22 @@ const initialState: SearchPageStateType = {
 
 export function SearchPageReducer(state: SearchPageStateType = initialState, action: SearchPageActionsType) {
   switch (action.type) {
-    case SearchPageActionTypes.UPDATE_GENRES_FILTER:
+    case SearchPageActionTypes.UPDATE_FILTERS_STATE:
       return {
         ...state,
         movies: [],
-        genre: action.payload,
-        pageNumber: 1,
-        isAllLoaded: false,
-      };
-    case SearchPageActionTypes.UPDATE_SORT_ORDER:
-      return {
-        ...state,
-        movies: [],
-        sortOrder: action.payload,
-        pageNumber: 1,
-        isAllLoaded: false,
-      };
-    case SearchPageActionTypes.UPDATE_YEARS_FILTER:
-      return {
-        ...state,
-        movies: [],
-        year: action.payload,
-        pageNumber: 1,
-        isAllLoaded: false,
-      };
-    case SearchPageActionTypes.UPDATE_RATING_FILTER:
-      return {
-        ...state,
-        movies: [],
-        rating: action.payload,
-        pageNumber: 1,
-        isAllLoaded: false,
-      };
-    case SearchPageActionTypes.UPDATE_PROVIDERS_FILTER:
-      return {
-        ...state,
-        movies: [],
-        providers: action.payload,
+        filters: action.payload,
         pageNumber: 1,
         isAllLoaded: false,
       };
     case SearchPageActionTypes.FETCH_FILTERD_MOVIES:
       return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
-    // case SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES:
-    //   return { ...state, movies: };
     case SearchPageActionTypes.LOAD_POPULAR_SUCCESS:
       return { ...state, movies: [...state.movies, ...action.payload] };
-    case SearchPageActionTypes.CHANGE_LOADING_STATUS:
-      return { ...state, isLoading: true, pageNumber: state.pageNumber + 1 };
+    case SearchPageActionTypes.UPDATE_LOADING_STATUS:
+      return { ...state, isLoading: true };
+    case SearchPageActionTypes.UPDATE_PAGE_NUMBER:
+      return { ...state, pageNumber: state.pageNumber + 1 };
     case SearchPageActionTypes.LOAD_PROVIDERS_LIST: {
       return {
         ...state,

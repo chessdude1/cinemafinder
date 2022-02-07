@@ -8,7 +8,7 @@ import { ProviderFilter } from './Filters/ProviderFilter';
 import { RatingFilter } from './Filters/RatingFilter';
 import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
-import { updateFilterGenresState, updateFilterYearsState, updateFilterRatingsState, updateFilterProvidersState, updateSortOrderState } from './FilterStateUpdates';
+import { sendUpdateFilterState } from './FilterStateUpdates';
 import { SearchPage } from './SearchPage';
 import { IGenre, providerFilter, watchProvider } from './SearchQueryTypes';
 import './SearchPage.scss';
@@ -74,19 +74,20 @@ export function SearchPageAux() {
   const pageNumber = useTypedSelector((store) => store.SearchPageReducer.pageNumber);
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
   const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
+  const filtersInStore = useTypedSelector((store) => store.SearchPageReducer.filters);
 
-  const filterOfGenresInStore = useTypedSelector((store) => store.SearchPageReducer.genre);
-  const filterOfYearsInStore = useTypedSelector((store) => store.SearchPageReducer.year);
-  const filterOfRatingInStore = useTypedSelector((store) => store.SearchPageReducer.rating);
-  const filterOfProvidersInStore = useTypedSelector((store) => store.SearchPageReducer.providers);
-  const sortOrderInStore = useTypedSelector((store) => store.SearchPageReducer.sortOrder);
+  // const filterOfGenresInStore = useTypedSelector((store) => store.SearchPageReducer.filters.genre);
+  // const filterOfYearsInStore = useTypedSelector((store) => store.SearchPageReducer.filters.year);
+  // const filterOfRatingInStore = useTypedSelector((store) => store.SearchPageReducer.filters.rating);
+  // const filterOfProvidersInStore = useTypedSelector((store) => store.SearchPageReducer.filters.providers);
+  // const sortOrderInStore = useTypedSelector((store) => store.SearchPageReducer.filters.sortOrder);
 
   const [filterOfGenres, setFilterOfGenres] = useState(initGenresState);
   const [filterOfProviders, setFilterOfProviders] = useState<providerFilter[]>(initProvidersState);
 
-  const [filterOfYears, setFilterOfYears] = useState<number[]>(filterOfYearsInStore);
-  const [filterOfRatings, setFilterOfRatings] = useState<number[]>(filterOfRatingInStore);
-  const [sortOrder, setSortOrder] = useState(sortOrderInStore);
+  const [filterOfYears, setFilterOfYears] = useState<number[]>(filtersInStore.year);
+  const [filterOfRatings, setFilterOfRatings] = useState<number[]>(filtersInStore.rating);
+  const [sortOrder, setSortOrder] = useState(filtersInStore.sortOrder);
   const dispatch = useDispatch();
 
   function getPopularMovies() {
@@ -95,30 +96,34 @@ export function SearchPageAux() {
   function getProvidersList() {
     dispatch({ type: SearchPageSagaTypes.FETCHPROVIDERSSAGA });
   }
+  // useEffect(() => {
+  //   dispatch(updateFilterGenresState(filtersInStore, filterOfGenres));
+  // }, filterOfGenres);
+  // useEffect(() => {
+  //   dispatch(updateFilterYearsState(filtersInStore, filterOfYears));
+  // }, filterOfYears);
+  // useEffect(() => {
+  //   dispatch(updateFilterRatingsState(filtersInStore, filterOfRatings));
+  // }, filterOfRatings);
+  // useEffect(() => {
+  //   dispatch(updateFilterProvidersState(filtersInStore, filterOfProviders));
+  // }, filterOfProviders);
   useEffect(() => {
-    dispatch(updateFilterGenresState(filterOfGenres));
-  }, filterOfGenres);
+    if (!loading) {
+      dispatch({ type: SearchPageActionTypes.UPDATE_LOADING_STATUS });
+      dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
+    }
+  }, [filtersInStore]);
   useEffect(() => {
-    dispatch(updateFilterYearsState(filterOfYears));
-  }, filterOfYears);
-  useEffect(() => {
-    dispatch(updateFilterRatingsState(filterOfRatings));
-  }, filterOfRatings);
-  useEffect(() => {
-    dispatch(updateFilterProvidersState(filterOfProviders));
-  }, filterOfProviders);
-  useEffect(() => {
-    dispatch(updateSortOrderState(sortOrder));
-  }, [sortOrder]);
+    dispatch(sendUpdateFilterState(filtersInStore, sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres));
+  }, [sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres]);
 
-  useEffect(() => {
-    dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
-  }, [filterOfGenresInStore, filterOfYearsInStore, filterOfRatingInStore, filterOfProvidersInStore, sortOrderInStore]);
   const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight;
   const trackScrolling = useCallback(() => {
     const el = document.getElementById('movies-filtered-list') as HTMLElement;
     if (isBottom(el) && !loading) {
-      dispatch({ type: SearchPageActionTypes.CHANGE_LOADING_STATUS });
+      dispatch({ type: SearchPageActionTypes.UPDATE_LOADING_STATUS });
+      dispatch({ type: SearchPageActionTypes.UPDATE_PAGE_NUMBER });
       dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
     }
   }, [pageNumber, loading, dispatch]);

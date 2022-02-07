@@ -1,8 +1,8 @@
-import { SearchPageActions } from '../../redux/SearchPageRedux/SearchPageActions';
+import { FiltersType, SearchPageActions } from '../../redux/SearchPageRedux/SearchPageActions';
 import { IGenre, providerFilter, watchProvider } from './SearchQueryTypes';
 
-export function updateFilterGenresState(filter: IGenre[]) {
-  const genres = filter
+export function sendUpdateFilterState(filtersState: FiltersType, order: string, filterOfProviders: providerFilter[], filterOfRatings: number[], filterOfYears: number[], filterOfGenres: IGenre[]) {
+  const genres = filterOfGenres
     .map((obj) => {
       if (obj.applied === true) {
         return obj.id;
@@ -11,21 +11,9 @@ export function updateFilterGenresState(filter: IGenre[]) {
     })
     .filter((obj) => obj !== null)
     .join(',');
-  return SearchPageActions.UpdateGenresFilter(genres);
-}
-export function updateFilterYearsState(filter: number[]) {
-  return SearchPageActions.UpdateYearsFilter(filter);
-}
-export function updateFilterRatingsState(filter: number[]) {
-  return SearchPageActions.UpdateRatingFilter(filter);
-}
-export function updateFilterProvidersState(filter: providerFilter[]) {
-  const providersStr = filter
+  const providersStr = filterOfProviders
     .map((item) => (item.isApplied ? item.id : null))
     .filter((obj) => obj !== null)
     .join(',');
-  return SearchPageActions.UpdateProvidersFilter(providersStr);
-}
-export function updateSortOrderState(filter: string) {
-  return SearchPageActions.UpdateSortOrder(filter);
+  return SearchPageActions.UpdateFiltersState({ ...filtersState, sortOrder: order, providers: providersStr, genre: genres, rating: filterOfRatings, year: filterOfYears });
 }
