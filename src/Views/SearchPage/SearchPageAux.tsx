@@ -4,39 +4,39 @@ import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
 import { SearchPageActions, SearchPageActionTypes } from '../../redux/SearchPageRedux/SearchPageActions';
 import { GenreFilters } from './Filters/GenreFilters';
-import { ProviderFilter } from './Filters/ProviderFilter';
+import { ProviderFilter, ProviderFilterType } from './Filters/ProviderFilter';
 import { RatingFilter } from './Filters/RatingFilter';
 import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
-import { sendUpdateFilterState } from './FilterStateUpdates';
+import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
 import { SearchPage } from './SearchPage';
 import { IGenre, providerFilter, watchProvider } from './SearchQueryTypes';
 import './SearchPage.scss';
 
 export function SearchPageAux() {
   const sortTypes: string[] = ['popularity.desc', 'popularity.asc', 'release_date.desc', 'release_date.asc', 'original_title.desc', 'original_title.asc'];
-  const initGenresState: IGenre[] = [
-    { id: 28, name: 'Action', applied: false },
-    { id: 12, name: 'Adventure', applied: false },
-    { id: 16, name: 'Animation', applied: false },
-    { id: 35, name: 'Comedy', applied: false },
-    { id: 80, name: 'Crime', applied: false },
-    { id: 99, name: 'Documentary', applied: false },
-    { id: 18, name: 'Drama', applied: false },
-    { id: 10751, name: 'Family', applied: false },
-    { id: 14, name: 'Fantasy', applied: false },
-    { id: 36, name: 'History', applied: false },
-    { id: 27, name: 'Horror', applied: false },
-    { id: 10402, name: 'Music', applied: false },
-    { id: 9648, name: 'Mystery', applied: false },
-    { id: 10749, name: 'Romance', applied: false },
-    { id: 878, name: 'Science Fiction', applied: false },
-    { id: 10770, name: 'TV Movie', applied: false },
-    { id: 53, name: 'Thriller', applied: false },
-    { id: 10752, name: 'War', applied: false },
-    { id: 37, name: 'Western', applied: false },
+  let initGenresState: IGenre[] = [
+    { id: 28, name: 'Action', isApplied: false },
+    { id: 12, name: 'Adventure', isApplied: false },
+    { id: 16, name: 'Animation', isApplied: false },
+    { id: 35, name: 'Comedy', isApplied: false },
+    { id: 80, name: 'Crime', isApplied: false },
+    { id: 99, name: 'Documentary', isApplied: false },
+    { id: 18, name: 'Drama', isApplied: false },
+    { id: 10751, name: 'Family', isApplied: false },
+    { id: 14, name: 'Fantasy', isApplied: false },
+    { id: 36, name: 'History', isApplied: false },
+    { id: 27, name: 'Horror', isApplied: false },
+    { id: 10402, name: 'Music', isApplied: false },
+    { id: 9648, name: 'Mystery', isApplied: false },
+    { id: 10749, name: 'Romance', isApplied: false },
+    { id: 878, name: 'Science Fiction', isApplied: false },
+    { id: 10770, name: 'TV Movie', isApplied: false },
+    { id: 53, name: 'Thriller', isApplied: false },
+    { id: 10752, name: 'War', isApplied: false },
+    { id: 37, name: 'Western', isApplied: false },
   ];
-  const initProvidersState: providerFilter[] = [
+  let initProvidersState: providerFilter[] = [
     { id: 8, isApplied: false },
     { id: 119, isApplied: false },
     { id: 2, isApplied: false },
@@ -76,11 +76,15 @@ export function SearchPageAux() {
   const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
   const filtersInStore = useTypedSelector((store) => store.SearchPageReducer.filters);
 
-  // const filterOfGenresInStore = useTypedSelector((store) => store.SearchPageReducer.filters.genre);
-  // const filterOfYearsInStore = useTypedSelector((store) => store.SearchPageReducer.filters.year);
-  // const filterOfRatingInStore = useTypedSelector((store) => store.SearchPageReducer.filters.rating);
-  // const filterOfProvidersInStore = useTypedSelector((store) => store.SearchPageReducer.filters.providers);
-  // const sortOrderInStore = useTypedSelector((store) => store.SearchPageReducer.filters.sortOrder);
+  const genresFromStore = filtersInStore.genre;
+  const providersFromStore = filtersInStore.providers;
+  if (genresFromStore.length !== 0) {
+    initGenresState = getStateFromStore(genresFromStore, initGenresState) as IGenre[];
+  }
+
+  if (providersFromStore.length !== 0) {
+    initProvidersState = getStateFromStore(providersFromStore, initProvidersState) as providerFilter[];
+  }
 
   const [filterOfGenres, setFilterOfGenres] = useState(initGenresState);
   const [filterOfProviders, setFilterOfProviders] = useState<providerFilter[]>(initProvidersState);
@@ -96,29 +100,17 @@ export function SearchPageAux() {
   function getProvidersList() {
     dispatch({ type: SearchPageSagaTypes.FETCHPROVIDERSSAGA });
   }
-  // useEffect(() => {
-  //   dispatch(updateFilterGenresState(filtersInStore, filterOfGenres));
-  // }, filterOfGenres);
-  // useEffect(() => {
-  //   dispatch(updateFilterYearsState(filtersInStore, filterOfYears));
-  // }, filterOfYears);
-  // useEffect(() => {
-  //   dispatch(updateFilterRatingsState(filtersInStore, filterOfRatings));
-  // }, filterOfRatings);
-  // useEffect(() => {
-  //   dispatch(updateFilterProvidersState(filtersInStore, filterOfProviders));
-  // }, filterOfProviders);
+
+  useEffect(() => {
+    dispatch(sendUpdateFilterState(filtersInStore, sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres));
+  }, [sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres]);
   useEffect(() => {
     if (!loading) {
       dispatch({ type: SearchPageActionTypes.UPDATE_LOADING_STATUS });
       dispatch({ type: SearchPageSagaTypes.FETCHFILTEREDSAGA });
     }
   }, [filtersInStore]);
-  useEffect(() => {
-    dispatch(sendUpdateFilterState(filtersInStore, sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres));
-  }, [sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres]);
-
-  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight;
+  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight - 200;
   const trackScrolling = useCallback(() => {
     const el = document.getElementById('movies-filtered-list') as HTMLElement;
     if (isBottom(el) && !loading) {
@@ -128,7 +120,6 @@ export function SearchPageAux() {
     }
   }, [pageNumber, loading, dispatch]);
   useEffect(() => {
-    // getPopularMovies();
     getProvidersList();
   }, []);
   useEffect(() => {

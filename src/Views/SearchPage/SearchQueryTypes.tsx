@@ -7,7 +7,7 @@ export interface sortOrderTypes {
 export interface IGenre {
   id: number;
   name: string;
-  applied: boolean;
+  isApplied: boolean;
 }
 
 export interface yearFilter {
