@@ -1,4 +1,5 @@
 import { act } from 'react-dom/test-utils';
+import { INIT_RATING_STATE, INIT_REGION, INIT_SORT_ORDER, INIT_YEARS_STATE } from '../../Views/SearchPage/Filters/InitialStates';
 import { SearchPageSagaTypes } from '../Sages/SearchPageSaga';
 import { SearchPageActionTypes, SearchPageActionsType, SearchPageStateType, Movie } from './SearchPageActions';
 
@@ -6,12 +7,11 @@ const initialState: SearchPageStateType = {
   movies: [],
   filters: {
     genre: '',
-    year: [1900, 2022],
-    rating: [0, 10],
-
+    year: INIT_YEARS_STATE,
+    rating: INIT_RATING_STATE,
     providers: '',
-    region: 'RU',
-    sortOrder: 'popularity.desc',
+    region: INIT_REGION,
+    sortOrder: INIT_SORT_ORDER,
   },
   providersList: [],
   pageNumber: 1,
@@ -29,10 +29,10 @@ export function SearchPageReducer(state: SearchPageStateType = initialState, act
         pageNumber: 1,
         isAllLoaded: false,
       };
-    case SearchPageActionTypes.FETCH_FILTERD_MOVIES:
+    case SearchPageActionTypes.FETCH_FILTERED_MOVIES:
       return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
     case SearchPageActionTypes.LOAD_POPULAR_SUCCESS:
-      return { ...state, movies: [...state.movies, ...action.payload] };
+      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
     case SearchPageActionTypes.UPDATE_LOADING_STATUS:
       return { ...state, isLoading: true };
     case SearchPageActionTypes.UPDATE_PAGE_NUMBER:

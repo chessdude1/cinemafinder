@@ -26,7 +26,9 @@ interface MovieRequest {
 }
 
 function* workerFetchPopular() {
-  const popular: Movie[] = yield getPopularMovies();
+  const storeSaga: RootState = yield select((store) => store);
+  const { pageNumber } = storeSaga.SearchPageReducer;
+  const popular: Movie[] = yield getPopularMovies(pageNumber);
   yield put(SearchPageActions.FetchPopular(popular));
 }
 

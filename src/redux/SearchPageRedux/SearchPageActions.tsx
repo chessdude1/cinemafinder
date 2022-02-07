@@ -2,7 +2,7 @@ import { IGenre, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
 
 export enum SearchPageActionTypes {
   UPDATE_FILTERS_STATE = 'UPDATE_FILTERS_STATE',
-  FETCH_FILTERD_MOVIES = 'FETCH_FILTERD_MOVIES',
+  FETCH_FILTERED_MOVIES = 'FETCH_FILTERD_MOVIES',
   FETCH_NEXT_PAGE_MOVIES = 'FETCH_NEXT_PAGE_MOVIES',
   FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
@@ -14,7 +14,7 @@ export enum SearchPageActionTypes {
 
 export const SearchPageActions = {
   FetchFilteredMovies: (movie: Movie[]): FetchFilteredMovies => ({
-    type: SearchPageActionTypes.FETCH_FILTERD_MOVIES,
+    type: SearchPageActionTypes.FETCH_FILTERED_MOVIES,
     payload: movie,
   }),
   FetchNextPageMovies: (movie: Movie[]): FetchFilteredMovies => ({
@@ -92,7 +92,7 @@ interface FetchPopular {
 }
 
 interface FetchFilteredMovies {
-  type: SearchPageActionTypes.FETCH_FILTERD_MOVIES | SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES;
+  type: SearchPageActionTypes.FETCH_FILTERED_MOVIES | SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES;
   payload: Movie[];
 }
 interface FetchProvidersList {
