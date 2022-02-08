@@ -5,6 +5,7 @@ import { SearchPageActionTypes, SearchPageActionsType, SearchPageStateType, Movi
 
 const initialState: SearchPageStateType = {
   movies: [],
+  query: '',
   filters: {
     genre: '',
     year: INIT_YEARS_STATE,

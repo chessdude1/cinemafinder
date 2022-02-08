@@ -4,6 +4,7 @@ import { FavouritesPageReducer } from './FavouritesPageRedux/FavouritesPageReduc
 import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
 import { SearchPageReducer } from './SearchPageRedux/SearchPageReducer';
 import rootSaga from './Sages/rootSaga';
+import { SearchQueryReducer } from './SearchPageRedux/SearchQueryRedux/SearchQueryReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   FavouritesPageReducer,
   AuthPageReducer,
   SearchPageReducer,
+  SearchQueryReducer,
 });
 
 declare global {
@@ -21,10 +23,7 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const store = createStore(
-  reducers,
-  composeEnhancers(applyMiddleware(sagaMiddleware)),
-);
+export const store = createStore(reducers, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
 

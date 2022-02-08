@@ -9,10 +9,13 @@ import { RatingFilter } from './Filters/RatingFilter';
 import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
 import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
-import { SearchPage } from './SearchPage';
+import { SearchPage } from './Movie/SearchPage';
 import { IGenre, providerFilter, sortTypes, watchProvider } from './SearchQueryTypes';
 import './SearchPage.scss';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
+import { CustomTextField } from '../../Common/UI/CustomTextField';
+import { CustomButton } from '../../Common/UI/CustomButton';
+import { SearchQueryAux } from './SearchQuery/QueryAux';
 
 export function SearchPageAux() {
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
@@ -21,7 +24,7 @@ export function SearchPageAux() {
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
   const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
   const filtersInStore = useTypedSelector((store) => store.SearchPageReducer.filters);
-  const footerIndent = 200;
+  const footerIndent = 150;
 
   const initGenresState = getStateFromStore(filtersInStore.genre, INIT_GENRES_STATE) as IGenre[];
   const initProvidersState = getStateFromStore(filtersInStore.providers, INIT_PROVIDERS_STATE) as providerFilter[];
@@ -31,6 +34,7 @@ export function SearchPageAux() {
   const [filterOfYears, setFilterOfYears] = useState<number[]>(filtersInStore.year);
   const [filterOfRatings, setFilterOfRatings] = useState<number[]>(filtersInStore.rating);
   const [sortOrder, setSortOrder] = useState(filtersInStore.sortOrder);
+
   const dispatch = useDispatch();
 
   function getPopularMovies() {
@@ -39,6 +43,7 @@ export function SearchPageAux() {
   function getProvidersList() {
     dispatch({ type: SearchPageSagaTypes.FETCHPROVIDERSSAGA });
   }
+
   function isNoFilterApplied() {
     const years = filterOfYears[0] === INIT_YEARS_STATE[0] && filterOfYears[1] === INIT_YEARS_STATE[1];
     const rating = filterOfRatings[0] === INIT_RATING_STATE[0] && filterOfRatings[1] === INIT_RATING_STATE[1];
@@ -81,20 +86,26 @@ export function SearchPageAux() {
       document.removeEventListener('scroll', trackScrolling);
     };
   }, [allLoaded, trackScrolling, dispatch]);
+
   return (
     <section className='search-page'>
-      <div id='movies-filtered-list'>
-        <SearchPage movies={movies} />
-      </div>
-      <div className='search-features'>
-        <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-        <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-
-        <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-        <div className='filters'>
+      {/* <SearchQueryAux /> */}
+      <CustomButton type='button' color='primary' variant='outlined' disabled={false}>
+        Фильтры
+      </CustomButton>
+      <div className='filters hidden'>
+        <div className='filters__checkbox'>
+          <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+          <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+          <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+        </div>
+        <div className='filters__slider'>
           <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
           <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
         </div>
+      </div>
+      <div id='movies-filtered-list'>
+        <SearchPage movies={movies} />
       </div>
     </section>
   );

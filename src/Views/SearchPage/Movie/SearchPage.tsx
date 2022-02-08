@@ -1,6 +1,7 @@
 import React from 'react';
-import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
-import { FavoriteFilmCard } from '../FavouritesPage/FavoriteFilmCard/FavoriteFilmCard';
+import { Movie } from '../../../redux/SearchPageRedux/SearchPageActions';
+import { FavoriteFilmCard } from '../../FavouritesPage/FavoriteFilmCard/FavoriteFilmCard';
+import './style.scss';
 
 export interface SearchPageType {
   movies: Movie[];

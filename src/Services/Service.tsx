@@ -38,7 +38,10 @@ export async function getMoviesWithFilter(
 
   return movieResponse.data.results;
 }
-
+export async function getMovieByQuery(query: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
+  const movieResponse = await instance.get(`search/movie?api_key=${apiKey}&language=${language}&query=${query}`);
+  return movieResponse.data.results;
+}
 export async function getMovie(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const movieResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);
   return movieResponse.data;

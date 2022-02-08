@@ -12,19 +12,6 @@ export enum SearchPageSagaTypes {
   FETCHPROVIDERSSAGA = 'FETCHPROVIDERSSAGA',
 }
 
-interface MovieRequest {
-  id: number;
-  original_language: string;
-  original_title: string;
-  poster_path: string;
-  genres: Array<{ id: number; name: string }>;
-  backdrop_path: string;
-  popularity: number;
-  release_date: string;
-  status: string;
-  vote_average: number;
-}
-
 function* workerFetchPopular() {
   const storeSaga: RootState = yield select((store) => store);
   const { pageNumber } = storeSaga.SearchPageReducer;

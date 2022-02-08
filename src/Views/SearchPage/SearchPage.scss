@@ -1,12 +1,10 @@
-.search-page {
-  display: flex;
-  //gap: 10rem;
-}
-
 .search-features {
   display: flex;
   gap: 1rem;
 }
 .search-page {
-  margin-bottom: 20rem;
+  padding: 2rem 0 20rem 0;
+}
+.hidden {
+  display: none;
 }
