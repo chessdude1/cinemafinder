@@ -26,7 +26,9 @@ interface MovieRequest {
 }
 
 function* workerFetchPopular() {
-  const popular: Movie[] = yield getPopularMovies();
+  const storeSaga: RootState = yield select((store) => store);
+  const { pageNumber } = storeSaga.SearchPageReducer;
+  const popular: Movie[] = yield getPopularMovies(pageNumber);
   yield put(SearchPageActions.FetchPopular(popular));
 }
 
@@ -45,8 +47,9 @@ export function* watchFetchProviders() {
 
 function* workerFetchFiltered() {
   const storeSaga: RootState = yield select((store) => store);
-  const { genre, year, rating, providers, sortOrder } = storeSaga.SearchPageReducer;
-  const filtered: Movie[] = yield getMoviesWithFilter(genre, year[0], year[1], rating[0], rating[1], providers, sortOrder);
+  const { pageNumber } = storeSaga.SearchPageReducer;
+  const { genre, year, rating, providers, sortOrder } = storeSaga.SearchPageReducer.filters;
+  const filtered: Movie[] = yield getMoviesWithFilter(genre, year[0], year[1], rating[0], rating[1], providers, sortOrder, pageNumber);
   yield put(SearchPageActions.FetchFilteredMovies(filtered));
 }
 

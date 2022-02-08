@@ -1,31 +1,23 @@
-import { SearchPageActions } from '../../redux/SearchPageRedux/SearchPageActions';
+import { FiltersType, SearchPageActions } from '../../redux/SearchPageRedux/SearchPageActions';
 import { IGenre, providerFilter, watchProvider } from './SearchQueryTypes';
 
-export function updateFilterGenresState(filter: IGenre[]) {
-  const genres = filter
-    .map((obj) => {
-      if (obj.applied === true) {
-        return obj.id;
-      }
-      return null;
-    })
-    .filter((obj) => obj !== null)
+export function sendUpdateFilterState(filtersState: FiltersType, order: string, filterOfProviders: providerFilter[], filterOfRatings: number[], filterOfYears: number[], filterOfGenres: IGenre[]) {
+  const genres = filterOfGenres
+    .map((genre) => (genre.isApplied ? genre.id : null))
+    .filter((genre) => genre !== null)
     .join(',');
-  return SearchPageActions.UpdateGenresFilter(genres);
+  const providersStr = filterOfProviders
+    .map((provider) => (provider.isApplied ? provider.id : null))
+    .filter((provider) => provider !== null)
+    .join('+');
+  return SearchPageActions.UpdateFiltersState({ ...filtersState, sortOrder: order, providers: providersStr, genre: genres, rating: filterOfRatings, year: filterOfYears });
 }
-export function updateFilterYearsState(filter: number[]) {
-  return SearchPageActions.UpdateYearsFilter(filter);
-}
-export function updateFilterRatingsState(filter: number[]) {
-  return SearchPageActions.UpdateRatingFilter(filter);
-}
-export function updateFilterProvidersState(filter: providerFilter[]) {
-  const providersStr = filter
-    .map((item) => (item.isApplied ? item.id : null))
-    .filter((obj) => obj !== null)
-    .join(',');
-  return SearchPageActions.UpdateProvidersFilter(providersStr);
-}
-export function updateSortOrderState(filter: string) {
-  return SearchPageActions.UpdateSortOrder(filter);
+
+export function getStateFromStore(source: string, array: providerFilter[] | IGenre[]) {
+  return array.map((filter) => {
+    if (source.split(/[+,]/).includes(filter.id.toString())) {
+      return { ...filter, isApplied: true };
+    }
+    return filter;
+  });
 }

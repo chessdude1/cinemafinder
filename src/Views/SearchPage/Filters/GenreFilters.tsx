@@ -13,7 +13,7 @@ export function GenreFilters({ setFilterOfGenres, genreFilter }: GenreFiltersTyp
         return obj;
       }
       const { name } = obj;
-      return { id, name, applied };
+      return { id, name, isApplied: applied };
     });
     setFilterOfGenres(newArr);
   }
@@ -26,7 +26,7 @@ export function GenreFilters({ setFilterOfGenres, genreFilter }: GenreFiltersTyp
             {filter.name}
             <input
               type='checkbox'
-              checked={filter.applied}
+              checked={filter.isApplied}
               onChange={(e) => {
                 updateFieldChanged(genreFilter, filter.id, e.target.checked);
               }}
