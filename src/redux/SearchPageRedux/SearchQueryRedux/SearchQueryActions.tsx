@@ -11,7 +11,6 @@ export const SearchQueryActions = {
 
 export interface SearchQueryStateType {
   movies: Movie[];
-  query: string;
 }
 
 export interface Movie {

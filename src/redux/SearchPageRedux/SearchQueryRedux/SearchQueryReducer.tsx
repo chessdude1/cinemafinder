@@ -3,7 +3,6 @@ import { SearchQueryActionsType, SearchQueryActionTypes, SearchQueryStateType } 
 
 const initialState: SearchQueryStateType = {
   movies: [],
-  query: '',
 };
 
 export function SearchQueryReducer(state: SearchQueryStateType = initialState, action: SearchQueryActionsType) {

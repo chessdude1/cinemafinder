@@ -2,22 +2,24 @@ import React, { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
 import { Formik, Form, FormikProps } from 'formik';
+import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   // onBlur: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   value: string;
+  dependentValue: Movie[];
   placeholder: string;
   id: string;
 }
 
-export function CustomSearchField({ onChange, value, placeholder, id }: ICustomSearchFieldType) {
+export function CustomSearchField({ onChange, dependentValue, value, placeholder, id }: ICustomSearchFieldType) {
   const searchInput = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (searchInput.current !== null) {
       searchInput.current.focus();
     }
-  }, [value]);
+  }, [value, dependentValue]);
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -59,7 +61,7 @@ export function CustomSearchField({ onChange, value, placeholder, id }: ICustomS
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase inputRef={searchInput} id={id} onChange={onChange} value={value} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
+      <StyledInputBase key={id} inputRef={searchInput} id={id} onChange={onChange} value={value} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
     </Search>
   );
 }
