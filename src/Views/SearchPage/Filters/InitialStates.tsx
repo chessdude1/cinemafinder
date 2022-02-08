@@ -1,5 +1,6 @@
 import { IGenre, providerFilter } from '../SearchQueryTypes';
 
+export const ITEMS_ON_PAGE = 20;
 export const INIT_SORT_ORDER = 'popularity.desc';
 export const INIT_YEARS_STATE = [1900, 2022];
 export const INIT_RATING_STATE = [0, 10];

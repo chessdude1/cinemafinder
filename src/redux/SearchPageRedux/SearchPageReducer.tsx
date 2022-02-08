@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { INIT_RATING_STATE, INIT_REGION, INIT_SORT_ORDER, INIT_YEARS_STATE } from '../../Views/SearchPage/Filters/InitialStates';
+import { INIT_RATING_STATE, INIT_REGION, INIT_SORT_ORDER, INIT_YEARS_STATE, ITEMS_ON_PAGE } from '../../Views/SearchPage/Filters/InitialStates';
 import { SearchPageSagaTypes } from '../Sages/SearchPageSaga';
 import { SearchPageActionTypes, SearchPageActionsType, SearchPageStateType, Movie } from './SearchPageActions';
 
@@ -30,9 +30,9 @@ export function SearchPageReducer(state: SearchPageStateType = initialState, act
         isAllLoaded: false,
       };
     case SearchPageActionTypes.FETCH_FILTERED_MOVIES:
-      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
+      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < ITEMS_ON_PAGE };
     case SearchPageActionTypes.LOAD_POPULAR_SUCCESS:
-      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < 20 };
+      return { ...state, movies: [...state.movies, ...action.payload], isLoading: false, isAllLoaded: action.payload.length < ITEMS_ON_PAGE };
     case SearchPageActionTypes.UPDATE_LOADING_STATUS:
       return { ...state, isLoading: true };
     case SearchPageActionTypes.UPDATE_PAGE_NUMBER:

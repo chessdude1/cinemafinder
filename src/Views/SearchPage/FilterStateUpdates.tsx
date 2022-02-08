@@ -3,17 +3,12 @@ import { IGenre, providerFilter, watchProvider } from './SearchQueryTypes';
 
 export function sendUpdateFilterState(filtersState: FiltersType, order: string, filterOfProviders: providerFilter[], filterOfRatings: number[], filterOfYears: number[], filterOfGenres: IGenre[]) {
   const genres = filterOfGenres
-    .map((obj) => {
-      if (obj.isApplied === true) {
-        return obj.id;
-      }
-      return null;
-    })
-    .filter((obj) => obj !== null)
+    .map((genre) => (genre.isApplied ? genre.id : null))
+    .filter((genre) => genre !== null)
     .join(',');
   const providersStr = filterOfProviders
-    .map((item) => (item.isApplied ? item.id : null))
-    .filter((obj) => obj !== null)
+    .map((provider) => (provider.isApplied ? provider.id : null))
+    .filter((provider) => provider !== null)
     .join('+');
   return SearchPageActions.UpdateFiltersState({ ...filtersState, sortOrder: order, providers: providersStr, genre: genres, rating: filterOfRatings, year: filterOfYears });
 }
