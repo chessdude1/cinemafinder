@@ -1,5 +1,7 @@
 export enum SearchQueryActionTypes {
   LOAD_SEARCH_QUERY_MOVIES = 'LOAD_SEARCH_QUERY_MOVIES',
+  CLEAN_QUERY_CONTAINER = 'CLEAN_QUERY_CONTAINER',
+  UPDATE_QUERY_LOADING_STATUS = 'UPDATE_QUERY_LOADING_STATUS',
 }
 
 export const SearchQueryActions = {
@@ -7,16 +9,23 @@ export const SearchQueryActions = {
     type: SearchQueryActionTypes.LOAD_SEARCH_QUERY_MOVIES,
     payload: movie,
   }),
+  UpdateLoadingStatus: (): UpdateLoadingStatus => ({
+    type: SearchQueryActionTypes.UPDATE_QUERY_LOADING_STATUS,
+  }),
+  CleanQueryContainer: (): CleanQuery => ({
+    type: SearchQueryActionTypes.CLEAN_QUERY_CONTAINER,
+  }),
 };
 
 export interface SearchQueryStateType {
   movies: Movie[];
+  isLoading: boolean;
 }
 
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: Array<{ id: number; name: string }>;
+  genre_ids: Array<number>;
   id: number;
   media_type: string;
   original_language: string;
@@ -36,4 +45,11 @@ interface FetchQueried {
   payload: Movie[];
 }
 
-export type SearchQueryActionsType = FetchQueried;
+interface CleanQuery {
+  type: SearchQueryActionTypes.CLEAN_QUERY_CONTAINER;
+}
+interface UpdateLoadingStatus {
+  type: SearchQueryActionTypes.UPDATE_QUERY_LOADING_STATUS;
+}
+
+export type SearchQueryActionsType = FetchQueried | CleanQuery | UpdateLoadingStatus;

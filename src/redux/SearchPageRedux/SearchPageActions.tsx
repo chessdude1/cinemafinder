@@ -59,7 +59,7 @@ export type FiltersType = {
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: Array<{ id: number; name: string }>;
+  genre_ids: Array<number>;
   id: number;
   media_type: string;
   original_language: string;

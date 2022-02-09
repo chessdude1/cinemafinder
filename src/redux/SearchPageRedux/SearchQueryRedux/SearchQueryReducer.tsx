@@ -3,6 +3,7 @@ import { SearchQueryActionsType, SearchQueryActionTypes, SearchQueryStateType } 
 
 const initialState: SearchQueryStateType = {
   movies: [],
+  isLoading: false,
 };
 
 export function SearchQueryReducer(state: SearchQueryStateType = initialState, action: SearchQueryActionsType) {
@@ -11,6 +12,17 @@ export function SearchQueryReducer(state: SearchQueryStateType = initialState, a
       return {
         ...state,
         movies: action.payload,
+        isLoading: false,
+      };
+    case SearchQueryActionTypes.UPDATE_QUERY_LOADING_STATUS:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case SearchQueryActionTypes.CLEAN_QUERY_CONTAINER:
+      return {
+        ...state,
+        movies: [],
       };
     default:
       return state;
