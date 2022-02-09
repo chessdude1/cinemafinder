@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
-import { SearchPageActions, SearchPageActionTypes } from '../../redux/SearchPageRedux/SearchPageActions';
+import { SearchPageActionTypes } from '../../redux/SearchPageRedux/SearchPageActions';
 import { GenreFilters } from './Filters/GenreFilters';
 import { ProviderFilter, ProviderFilterType } from './Filters/ProviderFilter';
 import { RatingFilter } from './Filters/RatingFilter';
@@ -10,12 +10,10 @@ import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
 import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
 import { SearchPage } from './Movie/SearchPage';
-import { IGenre, providerFilter, sortTypes, watchProvider } from './SearchQueryTypes';
+import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
 import './SearchPage.scss';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
-import { CustomTextField } from '../../Common/UI/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton';
-import { SearchQueryAux } from './SearchQuery/QueryAux';
 
 export function SearchPageAux() {
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
@@ -89,7 +87,6 @@ export function SearchPageAux() {
 
   return (
     <section className='search-page'>
-      {/* <SearchQueryAux /> */}
       <CustomButton type='button' color='primary' variant='outlined' disabled={false}>
         Фильтры
       </CustomButton>

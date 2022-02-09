@@ -6,7 +6,6 @@ import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  // onBlur: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   value: string;
   dependentValue: Movie[];
   placeholder: string;
