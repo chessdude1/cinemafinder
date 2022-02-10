@@ -36,7 +36,7 @@ export function SearchQueryAux() {
   };
   return (
     <div>
-      <CustomSearchField key='search-field' id='header-search-field' dependentValue={movies} value={searchQuery} onChange={onChange} placeholder='Movie name' />
+      <CustomSearchField key='search-field' id='header-search-field' searchResult={movies} searchInput={searchQuery} onChange={onChange} placeholder='Movie name' />
       <div className='query-results'>
         {movies.map((movie) => (
           <SearchQueryResult key={movie.id} title={movie.title} id={movie.id} posterPath={movie.poster_path} genres={movie.genre_ids.map((id) => getGenreName(id)).join(',')} />

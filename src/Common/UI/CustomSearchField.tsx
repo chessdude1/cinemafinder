@@ -6,19 +6,17 @@ import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  value: string;
-  dependentValue: Movie[];
+  searchInput: string;
+  searchResult: Movie[];
   placeholder: string;
   id: string;
 }
 
-export function CustomSearchField({ onChange, dependentValue, value, placeholder, id }: ICustomSearchFieldType) {
-  const searchInput = React.useRef<HTMLInputElement>(null);
+export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id }: ICustomSearchFieldType) {
+  const searchInputField = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (searchInput.current !== null) {
-      searchInput.current.focus();
-    }
-  }, [value, dependentValue]);
+    searchInputField.current?.focus();
+  }, [searchInput, searchResult]);
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -60,7 +58,7 @@ export function CustomSearchField({ onChange, dependentValue, value, placeholder
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase key={id} inputRef={searchInput} id={id} onChange={onChange} value={value} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
+      <StyledInputBase key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
     </Search>
   );
 }
