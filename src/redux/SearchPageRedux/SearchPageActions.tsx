@@ -3,13 +3,11 @@ import { IGenre, watchProvider } from '../../Views/SearchPage/SearchQueryTypes';
 export enum SearchPageActionTypes {
   UPDATE_FILTERS_STATE = 'UPDATE_FILTERS_STATE',
   FETCH_FILTERED_MOVIES = 'FETCH_FILTERD_MOVIES',
-  FETCH_NEXT_PAGE_MOVIES = 'FETCH_NEXT_PAGE_MOVIES',
-  FETCH_POPULAR = 'FETCH_POPULAR',
   LOAD_POPULAR_SUCCESS = 'LOAD_POPULAR_SUCCESS',
   LOAD_PROVIDERS_LIST = 'LOAD_PROVIDERS_LIST',
-  LOAD_POPULAR_ERROR = 'LOAD_POPULAR_ERROR',
   UPDATE_LOADING_STATUS = 'UPDATE_LOADING_STATUS',
   UPDATE_PAGE_NUMBER = 'UPDATE_PAGE_NUMBER',
+  LOAD_SEARCH_QUERY_MOVIES = 'LOAD_SEARCH_QUERY_MOVIES',
 }
 
 export const SearchPageActions = {
@@ -17,10 +15,7 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.FETCH_FILTERED_MOVIES,
     payload: movie,
   }),
-  FetchNextPageMovies: (movie: Movie[]): FetchFilteredMovies => ({
-    type: SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES,
-    payload: movie,
-  }),
+
   FetchProvidersList: (providers: watchProvider[]): FetchProvidersList => ({
     type: SearchPageActionTypes.LOAD_PROVIDERS_LIST,
     payload: providers,
@@ -35,10 +30,15 @@ export const SearchPageActions = {
     type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS,
     payload: movie,
   }),
+  FetchQueried: (movie: Movie[]): FetchQueried => ({
+    type: SearchPageActionTypes.LOAD_SEARCH_QUERY_MOVIES,
+    payload: movie,
+  }),
 };
 
 export interface SearchPageStateType {
   movies: Movie[];
+  query: string;
   filters: FiltersType;
   providersList: watchProvider[];
   pageNumber: number;
@@ -59,7 +59,7 @@ export type FiltersType = {
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: Array<{ id: number; name: string }>;
+  genre_ids: Array<number>;
   id: number;
   media_type: string;
   original_language: string;
@@ -90,9 +90,13 @@ interface FetchPopular {
   type: SearchPageActionTypes.LOAD_POPULAR_SUCCESS;
   payload: Movie[];
 }
+interface FetchQueried {
+  type: SearchPageActionTypes.LOAD_SEARCH_QUERY_MOVIES;
+  payload: Movie[];
+}
 
 interface FetchFilteredMovies {
-  type: SearchPageActionTypes.FETCH_FILTERED_MOVIES | SearchPageActionTypes.FETCH_NEXT_PAGE_MOVIES;
+  type: SearchPageActionTypes.FETCH_FILTERED_MOVIES;
   payload: Movie[];
 }
 interface FetchProvidersList {
@@ -100,4 +104,4 @@ interface FetchProvidersList {
   payload: watchProvider[];
 }
 
-export type SearchPageActionsType = UpdatePageNumber | UpdateLoadingStatus | UpdateFiltersState | FetchPopular | FetchFilteredMovies | FetchProvidersList;
+export type SearchPageActionsType = FetchQueried | UpdatePageNumber | UpdateLoadingStatus | UpdateFiltersState | FetchPopular | FetchFilteredMovies | FetchProvidersList;
