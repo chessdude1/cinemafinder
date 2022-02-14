@@ -3,8 +3,17 @@
 .navlink {
   text-decoration: none;
   font-size: 1.6rem;
+  color: $GRAYLINKS
 }
 
 .navlink.active {
   color : $BLUELINK
+}
+
+.MuiAppBar-root {
+  background-color: aliceblue;
+}
+
+.MuiAppBar-colorDefault {
+  background-color: $WHITE;
 }
