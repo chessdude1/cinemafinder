@@ -15,7 +15,6 @@ export function SearchQueryAux() {
   const [focused, setFocused] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
-  const loading = useTypedSelector((store) => store.SearchQueryReducer.isLoading);
   const dispatch = useDispatch();
   function getGenreName(id: number) {
     const res = INIT_GENRES_STATE.find((genre) => genre.id === id);

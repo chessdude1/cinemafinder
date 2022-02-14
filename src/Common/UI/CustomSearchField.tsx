@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
 import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
@@ -14,10 +15,19 @@ interface ICustomSearchFieldType {
 
 export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
+  function handleKeyDownEvent(e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      return navigate('/query');
+    }
+    return 1;
+  }
+
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -60,6 +70,7 @@ export function CustomSearchField({ onChange, searchResult, searchInput, placeho
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        onKeyDown={(e) => handleKeyDownEvent(e)}
         key={id}
         inputRef={searchInputField}
         onBlur={() => setFocus(false)}

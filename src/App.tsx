@@ -12,6 +12,7 @@ import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
 import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
 import './App.scss';
 import { SearchPageAux } from './Views/SearchPage/SearchPageAux';
+import { QueryPageAux } from './Views/SearchPage/SearchQuery/QueryPage/QueryPage';
 
 const theme = createTheme({
   typography: {
@@ -29,6 +30,7 @@ export function App() {
       <Routes>
         <Route path='/' element={<StartPage />} />
         <Route path='/search' element={<SearchPageAux />} />
+        <Route path='/query' element={<QueryPageAux />} />
         <Route path='/registration' element={<RegistrationPage />} />
         <Route path='/authorization' element={<AuthorizationPage />} />
         <Route path='/favourites' element={<FavouritesPageAux />} />
