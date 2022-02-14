@@ -1,6 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,40 +8,29 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { CustomSearchField } from '../Common/UI/CustomSearchField';
 import { SearchQueryAux } from '../Views/SearchPage/SearchQuery/QueryAux';
+import './HeaderStyles.scss';
 
 const PAGES = ['Search', 'Account', 'Favourites'];
-const SETTINGS = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const constructRoute = (page: string) => `/${page.toLowerCase()}`;
 
   return (
     <AppBar position='static'>
-      <Container maxWidth='xl'>
+      <Container sx={{ maxWidth: '1280px' }}>
         <Toolbar disableGutters>
           <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             LOGO
@@ -66,7 +54,8 @@ function Header() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}>
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
               {PAGES.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign='center'>{page}</Typography>
@@ -80,7 +69,7 @@ function Header() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {PAGES.map((page) => (
               <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                <NavLink to={constructRoute(page)}>{page}</NavLink>
+                <NavLink className='navlink' to={constructRoute(page)}>{page}</NavLink>
               </Button>
             ))}
           </Box>

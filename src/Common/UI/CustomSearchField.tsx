@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
-import { Formik, Form, FormikProps } from 'formik';
 import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {

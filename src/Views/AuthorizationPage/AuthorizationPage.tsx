@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 import Grid from '@mui/material/Grid';
 import { createStyles, makeStyles } from '@mui/styles';
-
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
-
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
-
 import { CustomTextField } from '../../Common/UI/CustomTextField';
-import { CustomButton } from '../../Common/UI/CustomButton';
+import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -198,7 +194,6 @@ export function AuthorizationPage() {
                 >
                   <CustomButton
                     type='submit'
-                    variant='contained'
                     color='secondary'
                     disabled={isSubmitting}
                   >

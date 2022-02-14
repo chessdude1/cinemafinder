@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 import { CustomTextField } from '../../Common/UI/CustomTextField';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
-import { CustomButton } from '../../Common/UI/CustomButton';
+import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -250,7 +250,6 @@ export function RegistrationPage() {
                 >
                   <CustomButton
                     type='submit'
-                    variant='contained'
                     color='secondary'
                     disabled={isSubmitting}
                   >
