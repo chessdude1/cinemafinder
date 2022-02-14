@@ -5,15 +5,17 @@ import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  setFocus: React.Dispatch<React.SetStateAction<boolean>>;
   searchInput: string;
   searchResult: Movie[];
   placeholder: string;
   id: string;
 }
 
-export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id }: ICustomSearchFieldType) {
+export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
+    setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
   const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -57,7 +59,16 @@ export function CustomSearchField({ onChange, searchResult, searchInput, placeho
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
+      <StyledInputBase
+        key={id}
+        inputRef={searchInputField}
+        onBlur={() => setFocus(false)}
+        id={id}
+        onChange={onChange}
+        value={searchInput}
+        placeholder={placeholder}
+        inputProps={{ 'aria-label': 'search' }}
+      />
     </Search>
   );
 }

@@ -1,5 +1,12 @@
 .query-results {
   position: absolute;
   top: 10rem;
-  width: 20rem;
+  right: 5rem;
+  width: 50vw;
+  height: 40vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
 }
