@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { StartPage } from './Views/MainPage/StartPage';
 import { PageNotFound } from './Views/ErrorPage/PageNotFound';
 import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
@@ -12,9 +13,18 @@ import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
 import './App.scss';
 import { SearchPageAux } from './Views/SearchPage/SearchPageAux';
 
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: 'Inter',
+      textTransform: 'none',
+    },
+  },
+});
+
 export function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
       <Routes>
         <Route path='/' element={<StartPage />} />
@@ -28,6 +38,6 @@ export function App() {
         <Route path='/movie/:movieId' element={<MoviePageAux />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-    </>
+    </ThemeProvider>
   );
 }

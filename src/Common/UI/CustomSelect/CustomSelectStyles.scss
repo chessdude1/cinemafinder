@@ -1,0 +1,23 @@
+@import '../../../Variables.scss';
+
+
+.custom-select.MuiOutlinedInput-root {
+  height: 3.8rem;
+  border-radius: 4rem;
+  color: $GRAYTEXTCOLOR;
+  font-size: 1.6rem;
+  max-width: 15rem;
+  font-size: 1.6rem;
+}
+
+.custom-select.MuiInputBase-colorSecondary {
+  border: 1px solid $GRAYTEXTCOLOR 
+}
+
+.custom-select.MuiInputBase-colorPrimary {
+  border: 1px solid $GREENSUCCESS 
+}
+
+.custom-select.MuiOutlinedInput-root.Mui-focused {
+  border: 1px solid $GREENSUCCESS 
+}

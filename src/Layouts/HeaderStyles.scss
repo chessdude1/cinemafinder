@@ -1,0 +1,10 @@
+@import '../Variables.scss';
+
+.navlink {
+  text-decoration: none;
+  font-size: 1.6rem;
+}
+
+.navlink.active {
+  color : $BLUELINK
+}

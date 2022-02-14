@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface CustomLabeledCheckboxType{
   label : string,
-  onChange : (Ischecked : boolean) => void
+  onChange : (IsChecked : boolean) => void
 }
 
 export function CustomLabeledCheckbox({ label, onChange } :CustomLabeledCheckboxType) {
