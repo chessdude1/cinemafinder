@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { SearchQueryAux } from '../Views/SearchPage/SearchQuery/QueryAux';
 import './HeaderStyles.scss';
+import Logo from '../Assets/img/header/Logo.png';
 
 const PAGES = ['Search', 'Account', 'Favourites'];
 
@@ -29,13 +30,9 @@ function Header() {
   const constructRoute = (page: string) => `/${page.toLowerCase()}`;
 
   return (
-    <AppBar position='static'>
+    <AppBar color='default' position='static'>
       <Container sx={{ maxWidth: '1280px' }}>
         <Toolbar disableGutters>
-          <Typography variant='h6' noWrap component='div' sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            LOGO
-          </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton size='large' aria-label='account of current user' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
               <MenuIcon />
@@ -63,9 +60,7 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            LOGO
-          </Typography>
+          <img alt='logo' src={Logo} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {PAGES.map((page) => (
               <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
@@ -76,10 +71,10 @@ function Header() {
           <SearchQueryAux />
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink to='/authorization'>Sign In</NavLink>
+              <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
             </Button>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink to='/registration'>Sign Up</NavLink>
+              <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
             </Button>
           </Box>
         </Toolbar>

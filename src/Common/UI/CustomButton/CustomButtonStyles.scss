@@ -1,15 +1,21 @@
 @import '../../../Variables.scss';
 
-.custom-button.MuiButton-root {
-  border-radius: 4rem;
-  color: $GRAYTEXTCOLOR;
+.custom-button.MuiButton-contained {
   font-size: 1.6rem;
-  background-color: $GRAYTEXTBACKGROUND;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  width: 20rem;
+  height: 5rem;
+  background-color: $BLUE;
 }
 
 .custom-button.MuiButton-outlined {
-  border: 1px solid $GREENSUCCESS;
+  border: 1px solid $BORDERGRAY;
   background-color: $WHITE;
+  border-radius: 0.4rem;
+  color: $GRAYLINKS;
+  font-size: 1.6rem;
 }
+
+.filter {
+  margin-left: 1.2rem;
+}
+
