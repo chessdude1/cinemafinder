@@ -14,11 +14,12 @@ interface TCustomSelect {
   max: number;
   value: number;
   onChange: (value: number | Array<number>) => void;
+  isDisabled?: boolean; // use if you want disable button force for example using reset button
 }
 
-export function CustomSelectRange({ placeholder, defaultValue, step, min, max, value, onChange } : TCustomSelect) {
+export function CustomSelectRange({ placeholder, defaultValue, step, min, max, value, onChange, isDisabled = false } : TCustomSelect) {
   const [valueSliderControlIsSliderChoose, setValueSliderControlIsSliderChoose] = useState<number | Array<number> | null>(null);
-  const isChoose = valueSliderControlIsSliderChoose !== null;
+  const isChoose = valueSliderControlIsSliderChoose !== null && !isDisabled;
 
   return (
     <div>

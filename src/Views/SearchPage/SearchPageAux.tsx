@@ -11,10 +11,8 @@ import { YearFilter } from './Filters/YearFilter';
 import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
 import { SearchPage } from './Movie/SearchPage';
 import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
-import './SearchPage.scss';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
-import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
-import { CustomSelect } from '../../Common/UI/CustomSelect/CustomSelect';
+import './SearchPage.scss';
 
 export function SearchPageAux() {
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
@@ -88,24 +86,7 @@ export function SearchPageAux() {
 
   return (
     <section className='search-page'>
-      <CustomButton type='button' color='primary' disabled={false}>
-        Фильтры
-      </CustomButton>
-      <CustomSelect
-        variants={[
-          'Oliver Hansen',
-          'Van Henry',
-          'April Tucker',
-          'Ralph Hubbard',
-          'Omar Alexander',
-          'Carlos Abbott',
-          'Miriam Wagner',
-          'Bradley Wilkerson',
-          'Virginia Andrews',
-          'Kelly Snyder',
-        ]}
-        placeholder='Фильтры'
-      />
+
       <div className='filters hidden'>
         <div className='filters__checkbox'>
           <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
