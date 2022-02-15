@@ -126,7 +126,7 @@ export function FavouritesPageAux() {
   }
 
   useEffect(() => {
-    AddFavouriteFilm();
+    AddFavouriteFilm(); // read favourite user films
   }, []);
 
   return (

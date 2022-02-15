@@ -10,9 +10,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useDispatch } from 'react-redux';
 import { SearchQueryAux } from '../Views/SearchPage/SearchQuery/QueryAux';
 import './HeaderStyles.scss';
 import Logo from '../Assets/img/header/Logo.png';
+import { logout } from '../Services/Service';
+import { AuthPageActions } from '../redux/AuthPageRedux/AuthPageActions';
 
 const PAGES = ['Search', 'Account', 'Favourites'];
 
@@ -26,7 +29,7 @@ function Header() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  const dispatch = useDispatch();
   const constructRoute = (page: string) => `/${page.toLowerCase()}`;
 
   return (
@@ -75,6 +78,15 @@ function Header() {
             </Button>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}>
               <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
+            </Button>
+            <Button
+              onClick={() => {
+                logout();
+                dispatch(AuthPageActions.SetIsLogin(true));
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Logout
             </Button>
           </Box>
         </Toolbar>

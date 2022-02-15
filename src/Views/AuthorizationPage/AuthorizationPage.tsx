@@ -63,6 +63,7 @@ const formStatusProps: IFormStatusProps = {
 };
 
 export function AuthorizationPage() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState<IFormStatus>({
@@ -73,9 +74,12 @@ export function AuthorizationPage() {
   async function loginUser(user: ISignInForm) {
     try {
       const response = await login(user.email, user.password);
-      console.log(response);
+      dispatch(AuthPageActions.SetIsLogin(true));
+      dispatch(AuthPageActions.SetUser(response.data.user));
+
       localStorage.setItem('token', response.data.accessToken);
     } catch (e: any) {
+      dispatch(AuthPageActions.SetIsLogin(false));
       console.log(e.response?.data?.message);
     }
   }
@@ -119,7 +123,7 @@ export function AuthorizationPage() {
               /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character and no spaces',
+              'Please valid password. One uppercase, one lowercase, one special character and no spaces, more then 8 letters',
             ),
         })}
       >

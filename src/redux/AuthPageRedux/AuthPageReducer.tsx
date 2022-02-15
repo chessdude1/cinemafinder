@@ -1,15 +1,13 @@
-import { AuthPageActionsTypes, UserOperations } from './AuthPageActions';
+import { AuthPageActionsTypes, UserOperations, UserType } from './AuthPageActions';
 
 const initialState = {
-  isLogin: true,
+  isLogin: false,
   user: {
-    id: 1,
-    password: 'user',
-    email: 'test@test.ru',
-    subscribes: ['More TV', 'Кинопоиск HD'],
-    favorite_films: ['27046', '421892', '808'],
+    isActivated: false,
+    email: '1@mail.ru',
+    favoriteFilms: ['123', '321'],
   },
-  // mock user
+
 };
 
 export function AuthPageReducer(
@@ -17,17 +15,19 @@ export function AuthPageReducer(
   action: AuthPageActionsTypes,
 ): typeof initialState {
   switch (action.type) {
+    case UserOperations.SETISLOGIN:
+      return { ...state, isLogin: action.payload };
     case UserOperations.SETUSER:
       return { ...state, user: action.payload };
     case UserOperations.SETFAVOURITEFILM:
       const favoriteFilmsWithoutRepeats = Array.from(
-        new Set([...state.user.favorite_films, action.payload]),
+        new Set([...state.user.favoriteFilms, action.payload]),
       );
       return {
         ...state,
         user: {
           ...state.user,
-          favorite_films: favoriteFilmsWithoutRepeats,
+          favoriteFilms: favoriteFilmsWithoutRepeats,
         },
       };
     default:
