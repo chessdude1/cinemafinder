@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { WatchProvidersResponseType, ListOfWatchProvidersType, MovieWithAdditionalInformation } from './ServiceTypes';
+import axios, { AxiosResponse } from 'axios';
+import $api from './Interceptors';
+import { IAuthResponse, IUser, WatchProvidersResponseType, ListOfWatchProvidersType, MovieWithAdditionalInformation } from './ServiceTypes';
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -96,4 +97,20 @@ export async function getMovieWithAdditionalInformation(id: string, language = '
     watchProviders,
     similarFilms,
   };
+}
+
+export async function login(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
+  return $api.post<IAuthResponse>('/login', { email, password });
+}
+
+export async function registration(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
+  return $api.post<IAuthResponse>('/registration', { email, password });
+}
+
+export async function logout(): Promise<void> {
+  return $api.post('/logout');
+}
+
+export function fetchUsers(): Promise<AxiosResponse<IUser[]>> {
+  return $api.get<IUser[]>('/users');
 }

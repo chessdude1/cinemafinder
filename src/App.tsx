@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import axios from 'axios';
 import { StartPage } from './Views/MainPage/StartPage';
 import { PageNotFound } from './Views/ErrorPage/PageNotFound';
 import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
@@ -12,6 +13,8 @@ import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
 import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
 import './App.scss';
 import { SearchPageAux } from './Views/SearchPage/SearchPageAux';
+import { IAuthResponse } from './Services/ServiceTypes';
+import { API_URL } from './Services/Interceptors';
 
 const theme = createTheme({
   typography: {
@@ -23,6 +26,22 @@ const theme = createTheme({
 });
 
 export function App() {
+  async function checkAuth() {
+    try {
+      const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
+        withCredentials: true,
+      });
+      console.log(response);
+      localStorage.setItem('token', response.data.accessToken);
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Header />

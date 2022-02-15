@@ -8,6 +8,8 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
+import { registration } from '../../Services/Service';
+
 import { CustomTextField } from '../../Common/UI/CustomTextField';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
@@ -89,6 +91,18 @@ export function RegistrationPage() {
 
   const authPage = useTypedSelector((store) => store.AuthPageReducer);
 
+  async function createUser(user : ISignUpForm) {
+    try {
+      const response = await registration(user.email, user.password);
+      console.log(response);
+      localStorage.setItem('token', response.data.accessToken);
+    } catch (e: any) {
+      if (e) {
+        console.log(e.response?.data?.message);
+      }
+    }
+  }
+
   const formStatusContent = () => {
     if (formStatus.type === 'error') {
       return <p className={classes.errorMessage}>{formStatus.message}</p>;
@@ -109,7 +123,7 @@ export function RegistrationPage() {
           email: '',
         }}
         onSubmit={(values: ISignUpForm, actions) => {
-          createNewUser(values, actions.resetForm);
+          createUser(values);
           setTimeout(() => {
             actions.setSubmitting(false);
           }, 500);

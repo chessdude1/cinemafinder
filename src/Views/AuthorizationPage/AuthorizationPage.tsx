@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import Grid from '@mui/material/Grid';
 import { createStyles, makeStyles } from '@mui/styles';
+
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
+
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
+import { login } from '../../Services/Service';
+
 import { CustomTextField } from '../../Common/UI/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 
@@ -28,10 +33,8 @@ const useStyles = makeStyles(() => createStyles({
   errorMessage: { color: 'red' },
 }));
 
-interface ISignUpForm {
-    fullName: string
+interface ISignInForm {
     password: string
-    confirmPassword: string
     email: string
 }
 
@@ -67,6 +70,16 @@ export function AuthorizationPage() {
     type: '',
   });
 
+  async function loginUser(user: ISignInForm) {
+    try {
+      const response = await login(user.email, user.password);
+      console.log(response);
+      localStorage.setItem('token', response.data.accessToken);
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
   const formStatusContent = () => {
     if (formStatus.type === 'error') {
       return (
@@ -88,12 +101,11 @@ export function AuthorizationPage() {
     <div className={classes.root}>
       <Formik
         initialValues={{
-          fullName: '',
           password: '',
-          confirmPassword: '',
           email: '',
         }}
-        onSubmit={(values: ISignUpForm, actions) => {
+        onSubmit={(values: ISignInForm, actions) => {
+          loginUser(values);
           setTimeout(() => {
             actions.setSubmitting(false);
           }, 500);
@@ -102,7 +114,6 @@ export function AuthorizationPage() {
           email: Yup.string()
             .email()
             .required('Enter valid email-id'),
-          fullName: Yup.string().required('Please enter full name'),
           password: Yup.string()
             .matches(
               /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
@@ -110,12 +121,9 @@ export function AuthorizationPage() {
             .required(
               'Please valid password. One uppercase, one lowercase, one special character and no spaces',
             ),
-          confirmPassword: Yup.string()
-            .required('Required')
-            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
         })}
       >
-        {(props: FormikProps<ISignUpForm>) => {
+        {(props: FormikProps<ISignInForm>) => {
           const {
             values,
             touched,
