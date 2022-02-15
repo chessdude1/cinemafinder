@@ -1,65 +1,51 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import './CustomSelectRangeStyles.scss';
+import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Slider from '@mui/material/Slider';
+import './CustomSelectRangeStyles.scss';
 
 interface TCustomSelect {
-  variants : Array<string>,
-  placeholder : string
+  placeholder : string;
+  defaultValue: number,
+  step: number
+  min: number;
+  max: number;
+  value: number;
+  onChange: (value: number | Array<number>) => void;
 }
 
-export function CustomSelectRange({ variants, placeholder } : TCustomSelect) {
-  const [item, setItem] = React.useState<string[]>([]);
-
-  const handleChange = (event: SelectChangeEvent<typeof item>) => {
-    const {
-      target: { value },
-    } = event;
-
-    function deleteDublicates(array : Array <string>) {
-      let dublicateName = '';
-      for (let i = 0; i < array.length; i += 1) {
-        if (array.indexOf(array[i]) !== array.lastIndexOf(array[i])) {
-          dublicateName = array[i];
-        }
-      }
-      return array.filter((elem) => elem !== dublicateName);
-    }
-
-    setItem(
-      deleteDublicates([...item, value[1]]),
-    );
-  };
-  const isChoose = item.length > 0;
+export function CustomSelectRange({ placeholder, defaultValue, step, min, max, value, onChange } : TCustomSelect) {
+  const [valueSliderControlIsSliderChoose, setValueSliderControlIsSliderChoose] = useState<number | Array<number> | null>(null);
+  const isChoose = valueSliderControlIsSliderChoose !== null;
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
         <Select
-          input={<OutlinedInput className='custom-select' color={isChoose ? 'primary' : 'secondary'} defaultValue='test' />}
+          input={<OutlinedInput className='custom-select' color={isChoose ? 'primary' : 'secondary'} />}
           multiple
           value={[placeholder]}
-          onChange={(e) => { handleChange(e); }}
           renderValue={(selected) => selected.join(', ')}
         >
-          {variants.map((variant) => (
-            <MenuItem key={variant} value={variant}>
-              <Slider
-                aria-label='Small steps'
-                defaultValue={0.00000005}
-                step={0.00000001}
-                marks
-                min={-0.00000005}
-                max={0.0000001}
-                valueLabelDisplay='auto'
-              />
-            </MenuItem>
-          ))}
+          <MenuItem>
+            <Slider
+              sx={{ marginTop: '20px' }}
+              defaultValue={defaultValue}
+              step={step}
+              marks
+              value={value}
+              min={min}
+              max={max}
+              onChange={(e, valueSlider) => {
+                setValueSliderControlIsSliderChoose(valueSlider);
+                onChange(valueSlider);
+              }}
+              valueLabelDisplay='auto'
+            />
+          </MenuItem>
+
         </Select>
       </FormControl>
     </div>
