@@ -9,27 +9,28 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 
 interface TCustomSelect {
   variants : Array<string>,
-  placeholder : string
+  placeholder : string,
+  handleMultipleSelect: (value : Array<string>) => void
 }
 
-export function CustomSelect({ variants, placeholder } : TCustomSelect) {
+export function CustomSelect({ variants, placeholder, handleMultipleSelect } : TCustomSelect) {
   const [item, setItem] = React.useState<string[]>([]);
+
+  function deleteDublicates(array : Array <string>) {
+    let dublicateName = '';
+    for (let i = 0; i < array.length; i += 1) {
+      if (array.indexOf(array[i]) !== array.lastIndexOf(array[i])) {
+        dublicateName = array[i];
+      }
+    }
+    return array.filter((elem) => elem !== dublicateName);
+  }
 
   const handleChange = (event: SelectChangeEvent<typeof item>) => {
     const {
       target: { value },
     } = event;
-
-    function deleteDublicates(array : Array <string>) {
-      let dublicateName = '';
-      for (let i = 0; i < array.length; i += 1) {
-        if (array.indexOf(array[i]) !== array.lastIndexOf(array[i])) {
-          dublicateName = array[i];
-        }
-      }
-      return array.filter((elem) => elem !== dublicateName);
-    }
-
+    handleMultipleSelect(deleteDublicates([...item, value[1]]));
     setItem(
       deleteDublicates([...item, value[1]]),
     );

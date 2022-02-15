@@ -8,19 +8,18 @@ interface IButtonType {
   color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | undefined,
   disabled: boolean,
   children: React.ReactNode;
-  variant?: 'outlined' | 'contained' | 'text'
+  variant?: 'outlined' | 'contained' | 'text';
+  onClick?: ()=> void
 }
 
 export function CustomButton({
-  type, color, disabled, children, variant = 'contained',
+  type, color, disabled, children, variant, onClick,
 }: IButtonType) {
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-
   return (
     <Button
       sx={{ textTransform: 'none' }}
       className='custom-button'
-      onClick={() => { setIsButtonClicked(!isButtonClicked); }}
+      onClick={onClick}
       type={type}
       variant={variant}
       color={color}

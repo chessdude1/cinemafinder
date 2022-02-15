@@ -1,8 +1,8 @@
 @import '../../../Variables.scss';
 
 .custom-button.MuiButton-contained {
+  width: 11rem;
   font-size: 1.6rem;
-  width: 20rem;
   height: 5rem;
   background-color: $BLUE;
 }
@@ -13,6 +13,7 @@
   border-radius: 0.4rem;
   color: $GRAYLINKS;
   font-size: 1.6rem;
+  width: 20rem;
 }
 
 .filter {
