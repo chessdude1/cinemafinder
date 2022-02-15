@@ -1,7 +1,11 @@
+import { ListOfWatchProvidersType } from '../../../Services/ServiceTypes';
+import { Movie } from '../SearchPageActions';
+
 export enum SearchQueryActionTypes {
   LOAD_SEARCH_QUERY_MOVIES = 'LOAD_SEARCH_QUERY_MOVIES',
+  LOAD_PAGE_QUERY_MOVIES = 'LOAD_PAGE_QUERY_MOVIES',
   CLEAN_QUERY_CONTAINER = 'CLEAN_QUERY_CONTAINER',
-  UPDATE_QUERY_LOADING_STATUS = 'UPDATE_QUERY_LOADING_STATUS',
+  CLEAN_QUERY_PAGE = 'CLEAN_QUERY_PAGE',
 }
 
 export const SearchQueryActions = {
@@ -9,35 +13,34 @@ export const SearchQueryActions = {
     type: SearchQueryActionTypes.LOAD_SEARCH_QUERY_MOVIES,
     payload: movie,
   }),
-  UpdateLoadingStatus: (): UpdateLoadingStatus => ({
-    type: SearchQueryActionTypes.UPDATE_QUERY_LOADING_STATUS,
+  FetchQueriedWithProviders: (movie: QueriedMovie): FetchQueriedWithProviders => ({
+    type: SearchQueryActionTypes.LOAD_PAGE_QUERY_MOVIES,
+    payload: movie,
   }),
   CleanQueryContainer: (): CleanQuery => ({
     type: SearchQueryActionTypes.CLEAN_QUERY_CONTAINER,
+  }),
+  CleanQueryPage: (): CleanQuery => ({
+    type: SearchQueryActionTypes.CLEAN_QUERY_PAGE,
   }),
 };
 
 export interface SearchQueryStateType {
   movies: Movie[];
-  isLoading: boolean;
+  moviesWithProvider: QueriedMovie[];
 }
 
-export interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: Array<number>;
+export interface QueriedMovie {
   id: number;
-  media_type: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
+  backdropPath: string;
+  genres: number[];
+  originalLanguage: string;
+  originalTitle: string;
+  posterPath: string;
   popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  watchProviders: ListOfWatchProvidersType;
+  releaseDate: string;
+  voteAverage: number;
 }
 
 interface FetchQueried {
@@ -45,11 +48,12 @@ interface FetchQueried {
   payload: Movie[];
 }
 
-interface CleanQuery {
-  type: SearchQueryActionTypes.CLEAN_QUERY_CONTAINER;
+interface FetchQueriedWithProviders {
+  type: SearchQueryActionTypes.LOAD_PAGE_QUERY_MOVIES;
+  payload: QueriedMovie;
 }
-interface UpdateLoadingStatus {
-  type: SearchQueryActionTypes.UPDATE_QUERY_LOADING_STATUS;
+interface CleanQuery {
+  type: SearchQueryActionTypes.CLEAN_QUERY_CONTAINER | SearchQueryActionTypes.CLEAN_QUERY_PAGE;
 }
 
-export type SearchQueryActionsType = FetchQueried | CleanQuery | UpdateLoadingStatus;
+export type SearchQueryActionsType = FetchQueried | CleanQuery | FetchQueriedWithProviders;

@@ -6,6 +6,7 @@ import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   setFocus: React.Dispatch<React.SetStateAction<boolean>>;
   searchInput: string;
   searchResult: Movie[];
@@ -13,20 +14,20 @@ interface ICustomSearchFieldType {
   id: string;
 }
 
-export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
+export function CustomSearchField({ onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
-  function handleKeyDownEvent(e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) {
-    if (e.key === 'Enter') {
-      return navigate('/query');
-    }
-    return 1;
-  }
+
+  // function handleKeyDownEvent(e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) {
+  //   if (e.key === 'Enter') {
+  //     return navigate('/query');
+  //   }
+  //   return 1;
+  // }
 
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -70,7 +71,7 @@ export function CustomSearchField({ onChange, searchResult, searchInput, placeho
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        onKeyDown={(e) => handleKeyDownEvent(e)}
+        onKeyDown={onKeyDown}
         key={id}
         inputRef={searchInputField}
         onBlur={() => setFocus(false)}

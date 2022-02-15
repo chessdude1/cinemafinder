@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { TranslateGenre } from '../../../../Auxiliary/TranslateGenre';
 import { useTypedSelector } from '../../../../Hooks/useTypedSelector';
 import { SearchQuerySagaTypes } from '../../../../redux/Sages/SearchQuerySaga';
-import { SearchQueryActionTypes } from '../../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
+import { QueriedMovie, SearchQueryActionTypes } from '../../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
 import { INIT_GENRES_STATE } from '../../Filters/InitialStates';
 import { MovieCardMedium } from './MovieCardMedium/MovieCardMedium';
 
 export function QueryPageAux() {
-  const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
+  const movies: QueriedMovie[] = useTypedSelector((store) => store.SearchQueryReducer.moviesWithProvider);
   function getGenreName(id: number) {
     const res = INIT_GENRES_STATE.find((genre) => genre.id === id);
     return res!.name;
@@ -24,13 +24,13 @@ export function QueryPageAux() {
         <MovieCardMedium
           classStyle='movie-card__medium'
           key={movie.id}
-          providers={movie.media_type}
-          rating={movie.vote_average}
-          year={movie.release_date.slice(0, 4)}
-          originalTitle={movie.title}
+          providers={movie.watchProviders}
+          rating={movie.voteAverage}
+          year={movie.releaseDate.slice(0, 4)}
+          originalTitle={movie.originalTitle}
           id={movie.id}
-          posterPath={movie.poster_path}
-          genre={translate(movie.genre_ids).join(',')}
+          posterPath={movie.posterPath}
+          genre={translate(movie.genres).join(',')}
         />
       ))}
     </div>
