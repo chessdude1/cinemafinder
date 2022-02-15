@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import './CustomButtonStyles.scss';
 import filter from '../../../Assets/img/Button/filter.png';
