@@ -74,3 +74,15 @@ export interface filmResponse{
   vote_average: number,
   vote_count: number,
 }
+
+export interface IUser {
+  email: string;
+  isActivated: boolean;
+  id: string;
+}
+
+export interface IAuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: IUser;
+}
