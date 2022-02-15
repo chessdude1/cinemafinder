@@ -1,14 +1,14 @@
 export enum UserOperations {
   SETUSER = 'SETUSER',
-  SETFAVOURITEFILM = 'SETFAVOURITEFILM'
+  SETFAVOURITEFILM = 'SETFAVOURITEFILM',
+  SETISLOGIN = 'SETISLOGIN'
 }
 
-interface UserType {
-  id : number,
-  password : string,
+export interface UserType {
+  isActivated: boolean,
   email : string,
-  subscribes : Array<string>,
-  favorite_films : Array<string>
+  favoriteFilms: Array<string>,
+  picture?: string
 }
 
 export const AuthPageActions = {
@@ -20,6 +20,10 @@ export const AuthPageActions = {
     type: UserOperations.SETFAVOURITEFILM,
     payload,
   }),
+  SetIsLogin: (payload : boolean) : SetIsLoginActionType => ({
+    type: UserOperations.SETISLOGIN,
+    payload,
+  }),
 };
 
 interface SetUserActionType {
@@ -27,9 +31,14 @@ interface SetUserActionType {
   payload : UserType
 }
 
+interface SetIsLoginActionType {
+  type : UserOperations.SETISLOGIN,
+  payload : boolean
+}
+
 interface SetFavouriteFilmType {
   type : UserOperations.SETFAVOURITEFILM,
   payload : string
 }
 
-export type AuthPageActionsTypes = SetUserActionType | SetFavouriteFilmType
+export type AuthPageActionsTypes = SetUserActionType | SetFavouriteFilmType | SetIsLoginActionType

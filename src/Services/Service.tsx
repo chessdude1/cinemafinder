@@ -111,6 +111,11 @@ export async function logout(): Promise<void> {
   return $api.post('/logout');
 }
 
-export function fetchUsers(): Promise<AxiosResponse<IUser[]>> {
-  return $api.get<IUser[]>('/users');
+export async function fetchUser() : Promise<IUser> {
+  const user = await $api.get('/user');
+  return user.data;
+}
+
+export function postUser(user: IUser): Promise<AxiosResponse<IUser>> {
+  return $api.post<IUser>('/user', { user });
 }

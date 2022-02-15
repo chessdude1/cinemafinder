@@ -75,29 +75,17 @@ export function RegistrationPage() {
 
   const dispatch = useDispatch();
 
-  function createNewUser(
-    data: ISignUpForm,
-    resetForm: (emptyForm: Record<string, never>) => void,
-  ) {
-    dispatch(
-      AuthPageActions.SetUser({
-        id: 7,
-        subscribes: ['ivi'],
-        favorite_films: ['192345'],
-        ...data,
-      }),
-    );
-  }
-
   const authPage = useTypedSelector((store) => store.AuthPageReducer);
 
   async function createUser(user : ISignUpForm) {
     try {
       const response = await registration(user.email, user.password);
-      console.log(response);
+      dispatch(AuthPageActions.SetIsLogin(true));
+      dispatch(AuthPageActions.SetUser(response.data.user));
       localStorage.setItem('token', response.data.accessToken);
-    } catch (e: any) {
+    } catch (e : any) {
       if (e) {
+        dispatch(AuthPageActions.SetIsLogin(false));
         console.log(e.response?.data?.message);
       }
     }

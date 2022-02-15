@@ -76,9 +76,14 @@ export interface filmResponse{
 }
 
 export interface IUser {
-  email: string;
-  isActivated: boolean;
-  id: string;
+  _id?: string;
+  password?: string;
+  __v?: 0;
+  activationLink?: string;
+  isActivated: boolean,
+  email : string,
+  favoriteFilms: Array<string>,
+  picture?: string
 }
 
 export interface IAuthResponse {

@@ -24,7 +24,7 @@ interface FavouriteFilmRequest {
 
 function* workerAddFavouriteFilm() {
   const storeSaga: RootState = yield select((store) => store);
-  const userFilmIds = storeSaga.AuthPageReducer.user.favorite_films;
+  const userFilmIds = storeSaga.AuthPageReducer.user.favoriteFilms;
 
   for (let i = 0; i < userFilmIds.length; i += 1) {
     const watchProviders: ListOfWatchProvidersType = yield getWatchProviders(
