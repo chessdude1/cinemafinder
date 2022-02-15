@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
@@ -19,6 +19,7 @@ export function SearchQueryAux() {
   const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const ref = useRef();
   function dispatchQuery(query: string) {
     if (query.length !== 0) {
       dispatch({ type: SearchQuerySagaTypes.FETCH_QUERY_SAGA, payload: query });
@@ -42,7 +43,6 @@ export function SearchQueryAux() {
     setSearchQuery(e.target.value);
     delayedQuery(e.target.value);
   };
-  console.log(focused);
   return (
     <div>
       <CustomSearchField

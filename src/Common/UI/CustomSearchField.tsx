@@ -16,18 +16,10 @@ interface ICustomSearchFieldType {
 
 export function CustomSearchField({ onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
-
-  // function handleKeyDownEvent(e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) {
-  //   if (e.key === 'Enter') {
-  //     return navigate('/query');
-  //   }
-  //   return 1;
-  // }
 
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
