@@ -32,16 +32,6 @@ export function GenreFilters({ setFilterOfGenres, genreFilter }: GenreFiltersTyp
             updateFieldChanged(value);
           }}
         />
-        {/* // <div key={filter.id}>
-          //   {filter.name}
-          //   <input
-          //     type='checkbox'
-          //     checked={filter.isApplied}
-          //     onChange={(e) => {
-          //       updateFieldChanged(genreFilter, filter.id, e.target.checked);
-          //     }}
-          //   />
-          // </div> */}
       </div>
     </section>
   );

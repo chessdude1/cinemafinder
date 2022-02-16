@@ -21,16 +21,6 @@ export function YearFilter({ setFilterOfYears, filterOfYears }: YearFilterType) 
           max={2022}
           value={filterOfYears}
         />
-        {/* <CustomSlider
-          onChange={(value) => {
-            setFilterOfYears(value as number[]);
-          }}
-          step={10}
-          min={1900}
-          max={2022}
-          value={filterOfYears}
-          title='year'
-        /> */}
       </div>
     </section>
   );

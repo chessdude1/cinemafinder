@@ -24,9 +24,6 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList }: SortOrderType)
             updateFieldChanged(value);
           }}
         />
-        {/* {sortsList.map((sort) => (
-          <CustomRadioInput key={sort} label={sort} name='sort' onChange={setSortOrder} />
-        ))} */}
       </div>
     </section>
   );

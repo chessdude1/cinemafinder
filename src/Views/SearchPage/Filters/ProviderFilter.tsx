@@ -30,17 +30,6 @@ export function ProviderFilter({ setFilterOfProviders, filterOfProviders, provid
             updateFieldChanged(value);
           }}
         />
-        {/* {providerList.map((provider) => (
-          <div key={provider.provider_id}>
-            {provider.provider_name}
-            <input
-              checked={filterOfProviders.find((filter) => provider.provider_id === filter.id)?.isApplied}
-              type='checkbox'
-              onChange={(e) => updateFieldChanged(filterOfProviders, provider.provider_id, e.target.checked)}
-            />
-            <img src={provider.logo_path} alt='' />
-          </div>
-        ))} */}
       </div>
     </section>
   );

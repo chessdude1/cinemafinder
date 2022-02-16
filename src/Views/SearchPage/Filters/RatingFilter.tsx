@@ -21,16 +21,6 @@ export function RatingFilter({ setFilterOfRatings, filterOfRatings }: RatingFilt
           min={0}
           max={10}
         />
-        {/* <CustomSlider
-          onChange={(value) => {
-            setFilterOfRatings(value as number[]);
-          }}
-          step={1}
-          min={0}
-          max={10}
-          value={filterOfRatings}
-          title='Rating'
-        /> */}
       </div>
     </section>
   );
