@@ -1,5 +1,22 @@
+@import '../../../Variables.scss';
 .query-results {
+  padding: 2rem 1rem;
+  background-color: $WHITE;
+  border: 0.1rem solid black;
+  border-radius: 1rem;
   position: absolute;
-  top: 10rem;
-  width: 20rem;
+  z-index: 2;
+  top: 9rem;
+  right: 5rem;
+  width: 40vw;
+  height: 50vh;
+}
+.movie-cards__container {
+  height: 100%;
+  padding: 2rem 1rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
 }

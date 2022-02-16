@@ -1,0 +1,29 @@
+@import '../../../../Variables.scss';
+.poster {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 1rem;
+}
+.movie-card__small {
+  min-width: 15rem;
+  width: 15%;
+}
+.description__title {
+  font-size: 1.4rem;
+  display: inline-block;
+  color: $GRAYLINKS;
+}
+.description__extra {
+  font-size: 1.2rem;
+  overflow-wrap: break-word;
+  color: $GRAYTEXTCOLOR;
+}
+.movie-card__popup {
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  .poster {
+    max-width: 20%;
+  }
+}

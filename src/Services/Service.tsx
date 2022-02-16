@@ -74,7 +74,7 @@ export async function getWatchProviders(id: string, apiKey = 'a48c1568134ff77326
     if (responseListOfProviders.data.results.RU.rent) {
       listOfProviders = {
         ...listOfProviders,
-        flatrate: responseListOfProviders.data.results.RU.rent,
+        rent: responseListOfProviders.data.results.RU.rent,
       };
     }
     if (responseListOfProviders.data.results.RU.ads) {

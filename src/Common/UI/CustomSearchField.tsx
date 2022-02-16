@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
 import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  setFocus: React.Dispatch<React.SetStateAction<boolean>>;
   searchInput: string;
   searchResult: Movie[];
   placeholder: string;
   id: string;
+  resultContainer: HTMLDivElement | MutableRefObject<null>;
 }
 
-export function CustomSearchField({ onChange, searchResult, searchInput, placeholder, id }: ICustomSearchFieldType) {
+export function CustomSearchField({ resultContainer, onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
+    setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
+
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -57,7 +63,7 @@ export function CustomSearchField({ onChange, searchResult, searchInput, placeho
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
+      <StyledInputBase onKeyDown={onKeyDown} key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
     </Search>
   );
 }

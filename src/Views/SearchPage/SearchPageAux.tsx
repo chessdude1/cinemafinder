@@ -9,7 +9,7 @@ import { RatingFilter } from './Filters/RatingFilter';
 import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
 import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
-import { SearchPage } from './Movie/SearchPage';
+import { SearchPage } from './MovieTable/SearchPage';
 import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
 import './SearchPage.scss';
@@ -86,17 +86,12 @@ export function SearchPageAux() {
 
   return (
     <section className='search-page'>
-
-      <div className='filters hidden'>
-        <div className='filters__checkbox'>
-          <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-          <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-          <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-        </div>
-        <div className='filters__slider'>
-          <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
-          <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
-        </div>
+      <div className='filters'>
+        <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+        <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+        <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+        <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+        <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
       </div>
       <div id='movies-filtered-list'>
         <SearchPage movies={movies} />

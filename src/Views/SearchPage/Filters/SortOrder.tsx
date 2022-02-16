@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomRadioInput from '../../../Common/UI/CustomRadioInput';
+import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { providerFilter, watchProvider } from '../SearchQueryTypes';
 
 export interface SortOrderType {
@@ -8,13 +9,21 @@ export interface SortOrderType {
   sortsList: string[];
 }
 export function SortOrder({ setSortOrder, sortOrder, sortsList }: SortOrderType) {
+  function updateFieldChanged(names: string[]) {
+    setSortOrder(names[0]);
+  }
   return (
     <section>
-      <h2>Sort Order</h2>
       <div className='sort-options'>
-        {sortsList.map((sort) => (
-          <CustomRadioInput key={sort} label={sort} name='sort' onChange={setSortOrder} />
-        ))}
+        <CustomSelect
+          isMultiple={false}
+          checkedArray={[sortOrder]}
+          variants={sortsList.map((order) => order)}
+          placeholder='order'
+          handleMultipleSelect={(value: string[]) => {
+            updateFieldChanged(value);
+          }}
+        />
       </div>
     </section>
   );
