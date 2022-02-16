@@ -10,7 +10,7 @@ const initialState : FavouritePageStateType = {
       popularity: 5.072,
       watchProviders: {
         ads: [{
-          display_priority: 123, logo_path: 123, provider_id: 123, provider_name: '123',
+          display_priority: 123, logo_path: '123', provider_id: 123, provider_name: '123',
         }],
       },
       genres: [
@@ -37,7 +37,7 @@ export function FavouritesPageReducer(
 ) {
   switch (action.type) {
     case FavouritePageActionTypes.ADDFAVOURITE:
-      return { ...state, films: [...state.films, action.payload] };
+      return { films: [...action.payload] };
     default:
       return state;
   }

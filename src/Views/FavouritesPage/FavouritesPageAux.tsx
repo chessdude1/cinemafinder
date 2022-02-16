@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
+import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { FavouriteFilm } from '../../redux/FavouritesPageRedux/FavouritePageActions';
 import { FavouritePageSagaTypes } from '../../redux/Sages/FavoritePageSaga';
+import { fetchUser } from '../../Services/Service';
 import { FavouritesPage } from './FavouritesPage';
 
 export interface optionsType {
@@ -61,6 +63,7 @@ export function FavouritesPageAux() {
   };
 
   const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
+  const user = useTypedSelector((store) => store.AuthPageReducer.user);
 
   const [ratingFilterValue, setRatingFilterValue] = useState<number[] | number>(5);
   const [yearFilterValue, setYearFilterValue] = useState<Array<number> | number>([1900, 2022]);
@@ -68,7 +71,6 @@ export function FavouritesPageAux() {
   const [genres, setGenres] = useState<genresType>(initialGenres);
 
   const dispatch = useDispatch();
-
   const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно'], ['rend', 'Аренда']];
   const CheckboxsGenres = [['Action', 'Экшен'],
     ['Adventure', 'приключения'],
@@ -126,7 +128,10 @@ export function FavouritesPageAux() {
   }
 
   useEffect(() => {
-    AddFavouriteFilm(); // read favourite user films
+    if (localStorage.getItem('token')) {
+      fetchUser().then((userResponse) => dispatch(AuthPageActions.SetUser(userResponse))).then(() => AddFavouriteFilm());
+    }
+    // read favourite user films
   }, []);
 
   return (

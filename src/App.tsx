@@ -17,8 +17,8 @@ import { QueryPageAux } from './Views/SearchPage/SearchQuery/QueryPage/QueryPage
 import { IAuthResponse } from './Services/ServiceTypes';
 import { API_URL } from './Services/Interceptors';
 import { AuthPageActions } from './redux/AuthPageRedux/AuthPageActions';
-import './App.scss';
 import { fetchUser } from './Services/Service';
+import './App.scss';
 
 const theme = createTheme({
   typography: {
@@ -31,6 +31,7 @@ const theme = createTheme({
 
 export function App() {
   const dispatch = useDispatch();
+
   async function checkAuth() {
     try {
       const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
@@ -39,35 +40,38 @@ export function App() {
       localStorage.setItem('token', response.data.accessToken);
       dispatch(AuthPageActions.SetIsLogin(true));
       const user = await fetchUser();
-      console.log(user);
       dispatch(AuthPageActions.SetUser(user));
-    } catch (e: any) {
+    } catch (e : any) {
       dispatch(AuthPageActions.SetIsLogin(false));
-      console.log(123);
       console.log(e.response?.data?.message);
     }
   }
 
   useEffect(() => {
-    checkAuth();
-  });
+    if (localStorage.getItem('token')) {
+      checkAuth();
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
+
       <Header />
-      <Routes>
-        <Route path='/' element={<StartPage />} />
-        <Route path='/search' element={<SearchPageAux />} />
-        <Route path='/query' element={<QueryPageAux />} />
-        <Route path='/registration' element={<RegistrationPage />} />
-        <Route path='/authorization' element={<AuthorizationPage />} />
-        <Route path='/favourites' element={<FavouritesPageAux />} />
-        <Route path='/account' element={<AccountPage />}>
-          <Route path='settings' element={<SettingsPage />} />
-        </Route>
-        <Route path='/movie/:movieId' element={<MoviePageAux />} />
-        <Route path='*' element={<PageNotFound />} />
-      </Routes>
+      <div className='App'>
+        <Routes>
+          <Route path='/' element={<StartPage />} />
+          <Route path='/search' element={<SearchPageAux />} />
+          <Route path='/query' element={<QueryPageAux />} />
+          <Route path='/registration' element={<RegistrationPage />} />
+          <Route path='/authorization' element={<AuthorizationPage />} />
+          <Route path='/favourites' element={<FavouritesPageAux />} />
+          <Route path='/account' element={<AccountPage />}>
+            <Route path='settings' element={<SettingsPage />} />
+          </Route>
+          <Route path='/movie/:movieId' element={<MoviePageAux />} />
+          <Route path='*' element={<PageNotFound />} />
+        </Routes>
+      </div>
     </ThemeProvider>
   );
 }

@@ -25,7 +25,7 @@ interface FavouriteFilmRequest {
 function* workerAddFavouriteFilm() {
   const storeSaga: RootState = yield select((store) => store);
   const userFilmIds = storeSaga.AuthPageReducer.user.favoriteFilms;
-
+  const favouriteFilms = [];
   for (let i = 0; i < userFilmIds.length; i += 1) {
     const watchProviders: ListOfWatchProvidersType = yield getWatchProviders(
       userFilmIds[i],
@@ -44,10 +44,10 @@ function* workerAddFavouriteFilm() {
       status: filmRequest.status,
       voteAverage: filmRequest.vote_average,
     };
-
-    yield put(FavouritePageActions.AddFavouriteFilm(favoriteFilm));
-    // ADDFAVOURITESAGA type call FavouritePageActions.AddFavouriteFilm
+    favouriteFilms.push(favoriteFilm);
   }
+  yield put(FavouritePageActions.AddFavouriteFilm(favouriteFilms));
+  // ADDFAVOURITESAGA type call FavouritePageActions.AddFavouriteFilm
 }
 
 export function* watchAddFavouriteFilm() {
