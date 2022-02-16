@@ -10,6 +10,7 @@ import { genresType, optionsType } from './FavouritesPageAux';
 import './FavouritePageStyles.scss';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { TemporaryDrawer } from '../../Common/UX/Drawer/Drawer';
+import { UserNotAuthorizedCard } from '../../Common/UX/UserNotAuthorizedCard/UserNotAuthorizedCard';
 
 interface FavouritesPageType {
   favoriteFilms : Array<FavouriteFilm>,
@@ -133,7 +134,7 @@ export function FavouritesPage({
               </div>
             </TemporaryDrawer>
           </>
-        ) : ''}
+        ) : <UserNotAuthorizedCard />}
     </main>
   );
 }
