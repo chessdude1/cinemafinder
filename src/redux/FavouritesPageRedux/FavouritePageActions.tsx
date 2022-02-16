@@ -6,7 +6,7 @@ export enum FavouritePageActionTypes {
 
 export const FavouritePageActions = {
   AddFavouriteFilm:
-  (film : FavouriteFilm)
+  (film : Array<FavouriteFilm>)
   : AddFavouriteFilm => ({ type: FavouritePageActionTypes.ADDFAVOURITE, payload: film }),
 };
 
@@ -20,7 +20,7 @@ export interface FavouriteFilm {
   originalTitle: string,
   posterPath: string,
   genres: Array<{id : number, name : string}>,
-  backdropPath: string
+  backdropPath: string | null,
   popularity: number,
   status : string,
   releaseDate: string,
@@ -30,7 +30,7 @@ export interface FavouriteFilm {
 
 interface AddFavouriteFilm {
   type : FavouritePageActionTypes.ADDFAVOURITE,
-  payload : FavouriteFilm
+  payload : Array<FavouriteFilm>
 }
 
 export type FavouritePageActionsType = AddFavouriteFilm;

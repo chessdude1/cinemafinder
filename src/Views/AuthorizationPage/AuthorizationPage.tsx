@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import Grid from '@mui/material/Grid';
 import { createStyles, makeStyles } from '@mui/styles';
 
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import { IAuthResponse } from '../../Services/ServiceTypes';
 
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
@@ -13,6 +15,7 @@ import { login } from '../../Services/Service';
 
 import { CustomTextField } from '../../Common/UI/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
+import { API_URL } from '../../Services/Interceptors';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -75,9 +78,8 @@ export function AuthorizationPage() {
     try {
       const response = await login(user.email, user.password);
       dispatch(AuthPageActions.SetIsLogin(true));
-      dispatch(AuthPageActions.SetUser(response.data.user));
-
       localStorage.setItem('token', response.data.accessToken);
+      dispatch(AuthPageActions.SetUser(response.data.user));
     } catch (e: any) {
       dispatch(AuthPageActions.SetIsLogin(false));
       console.log(e.response?.data?.message);

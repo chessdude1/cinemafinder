@@ -1,10 +1,12 @@
+import { Typography } from '@mui/material';
 import React from 'react';
+import Box from '@mui/material/Box';
 import CustomLabeledCheckbox from '../../Common/UI/CustomLabeledCheckbox';
 import { CustomSlider } from '../../Common/UI/CustomSlider';
 import { FavouriteFilm } from '../../redux/FavouritesPageRedux/FavouritePageActions';
 import { FavoriteFilmCard } from './FavoriteFilmCard/FavoriteFilmCard';
-import './FavouritePageStyles.scss';
 import { genresType, optionsType } from './FavouritesPageAux';
+import './FavouritePageStyles.scss';
 
 interface FavouritesPageType {
   favoriteFilms : Array<FavouriteFilm>,
@@ -35,16 +37,21 @@ export function FavouritesPage({
 } : FavouritesPageType) {
   return (
     <main className='favourite-page'>
-      <section className='films-list'>
+      <Typography variant='h2'>Избранное</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {favoriteFilms.map((favoriteFilm) => (
           <FavoriteFilmCard
             key={favoriteFilm.id + Math.random()}
+            releaseDate={favoriteFilm.releaseDate}
+            watchProviders={favoriteFilm.watchProviders}
+            voteAverage={favoriteFilm.voteAverage}
+            genres={favoriteFilm.genres}
             id={favoriteFilm.id}
             posterPath={favoriteFilm.posterPath}
             originalTitle={favoriteFilm.originalTitle}
           />
         ))}
-      </section>
+      </Box>
       <div className='filters'>
         <div className='filters__rating-filter'>
           <CustomSlider
