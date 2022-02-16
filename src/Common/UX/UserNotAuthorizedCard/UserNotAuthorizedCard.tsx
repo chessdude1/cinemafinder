@@ -1,19 +1,26 @@
 import React from 'react';
 import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
+import { Link, NavLink } from 'react-router-dom';
 import { CustomButton } from '../../UI/CustomButton/CustomButton';
 
 export function UserNotAuthorizedCard() {
   return (
-    <Card sx={{ maxWidth: '60vw', margin: '4rem auto 3px auto' }}>
-      <Typography sx={{ fontWeight: '600' }} variant='h2'>
-        Еще не зарегистрированы?
-      </Typography>
-      <Typography sx={{ fontWeight: '400', marginTop: '16px' }} variant='h4'>
-        Для добавления фильмов в избранное и отслеживания подходящих вам подписок зарегистрируйтесь.
-      </Typography>
-      <CustomButton type='button' variant='text'>Зарегистрироваться</CustomButton>
+    <Card sx={{ maxWidth: '50vw', margin: '4rem auto 3px auto' }}>
+      <Box sx={{ margin: '2rem' }}>
+        <Typography sx={{ fontWeight: '600' }} variant='h2'>
+          Еще не зарегистрированы?
+        </Typography>
+        <Typography sx={{ fontWeight: '400', marginTop: '1.6rem', marginBottom: '1rem' }} variant='h4'>
+          Для добавления фильмов в избранное
+          и отслеживания подходящих вам подписок зарегистрируйтесь.
+        </Typography>
+        <Link to='/registration'>
+          <CustomButton type='button' variant='text'>Зарегистрироваться</CustomButton>
+        </Link>
+      </Box>
       <Paper elevation={3} />
     </Card>
   );

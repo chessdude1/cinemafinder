@@ -8,6 +8,7 @@ import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
 import { RatingDisplay } from '../../../Common/UX/RatingDisplay/RatingDisplay';
 import './FavouriteFilmCard.scss';
 import { GetListnotRepeatWatchProvidersWithSaveFields } from '../../../Auxiliary/GetListnotRepeatWatchProviders';
+import notFoundImg from '../../../Assets/img/NotFoundImg/notFound.svg';
 
 interface FavoriteFilmCardType {
   id : number,
@@ -16,7 +17,7 @@ interface FavoriteFilmCardType {
   releaseDate: string,
   watchProviders: ListOfWatchProvidersType,
   voteAverage: number,
-  genres: Array<{id: number, name: string}>;
+  genres: Array<{id: number, name: string}> ;
 }
 
 export function FavoriteFilmCard({ id, posterPath, originalTitle,
@@ -44,7 +45,7 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
               />
             </NavLink>
           )
-            : <img alt='not found img' src='https://icdn.lenta.ru/images/2019/11/01/13/20191101130724350/square_1280_88f54b592eb591cd6252313b5ec3e06d.png' />
+            : <img className='film-card__image' alt='not found img' src={notFoundImg} />
         }
         </Box>
         <Box sx={{ marginLeft: '1.6rem' }}>
