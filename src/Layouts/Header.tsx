@@ -82,7 +82,7 @@ function Header() {
             <Button
               onClick={() => {
                 logout();
-                dispatch(AuthPageActions.SetIsLogin(true));
+                dispatch(AuthPageActions.SetIsLogin(false));
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >

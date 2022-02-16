@@ -5,8 +5,8 @@ import filter from '../../../Assets/img/Button/filter.png';
 
 interface IButtonType {
   type: 'button' | 'reset' | 'submit' | undefined,
-  color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | undefined,
-  disabled: boolean,
+  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | undefined,
+  disabled?: boolean,
   children: React.ReactNode;
   variant?: 'outlined' | 'contained' | 'text';
   onClick?: ()=> void

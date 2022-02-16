@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@mui/material';
 import Slider from '@mui/material/Slider';
 
 interface CustomSliderType {
@@ -20,7 +21,7 @@ export function CustomSlider({
 }: CustomSliderType) {
   return (
     <>
-      <h2>{title}</h2>
+      <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>{title}</Typography>
       <Slider
         step={step}
         marks

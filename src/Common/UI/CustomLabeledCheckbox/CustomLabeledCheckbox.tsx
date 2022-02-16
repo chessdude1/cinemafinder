@@ -1,6 +1,7 @@
 import React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import './CustomLabaledCheckBoxStyles.scss';
 
 interface CustomLabeledCheckboxType{
   label : string,
@@ -10,6 +11,7 @@ interface CustomLabeledCheckboxType{
 export function CustomLabeledCheckbox({ label, onChange } :CustomLabeledCheckboxType) {
   return (
     <FormControlLabel
+      sx={{ fontSize: '1.2rem' }}
       control={<Checkbox defaultChecked onChange={(e) => { onChange(e.target.checked); }} />}
       label={label}
     />
