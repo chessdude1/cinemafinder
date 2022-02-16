@@ -8,3 +8,9 @@
 .hidden {
   display: none;
 }
+.filters {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  //gap: 1rem;
+}

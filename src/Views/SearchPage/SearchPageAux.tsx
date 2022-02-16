@@ -86,16 +86,12 @@ export function SearchPageAux() {
 
   return (
     <section className='search-page'>
-      <div className='filters hidden'>
-        <div className='filters__checkbox'>
-          <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-          <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-          <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-        </div>
-        <div className='filters__slider'>
-          <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
-          <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
-        </div>
+      <div className='filters'>
+        <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+        <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+        <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+        <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+        <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
       </div>
       <div id='movies-filtered-list'>
         <SearchPage movies={movies} />

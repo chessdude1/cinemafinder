@@ -7,29 +7,24 @@ import Slider from '@mui/material/Slider';
 import './CustomSelectRangeStyles.scss';
 
 interface TCustomSelect {
-  placeholder : string;
-  defaultValue: number,
-  step: number
+  placeholder: string;
+  defaultValue: number;
+  step: number;
   min: number;
   max: number;
-  value: number;
+  value: number | Array<number>;
   onChange: (value: number | Array<number>) => void;
   isDisabled?: boolean; // use if you want disable button force for example using reset button
 }
 
-export function CustomSelectRange({ placeholder, defaultValue, step, min, max, value, onChange, isDisabled = false } : TCustomSelect) {
+export function CustomSelectRange({ placeholder, defaultValue, step, min, max, value, onChange, isDisabled = false }: TCustomSelect) {
   const [valueSliderControlIsSliderChoose, setValueSliderControlIsSliderChoose] = useState<number | Array<number> | null>(null);
   const isChoose = valueSliderControlIsSliderChoose !== null && !isDisabled;
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <Select
-          input={<OutlinedInput className='custom-select' color={isChoose ? 'primary' : 'secondary'} />}
-          multiple
-          value={[placeholder]}
-          renderValue={(selected) => selected.join(', ')}
-        >
+      <FormControl sx={{ m: 1, width: 150 }}>
+        <Select input={<OutlinedInput className='custom-select' color={isChoose ? 'primary' : 'secondary'} />} multiple value={[placeholder]} renderValue={(selected) => selected.join(', ')}>
           <MenuItem>
             <Slider
               sx={{ marginTop: '20px' }}
@@ -46,7 +41,6 @@ export function CustomSelectRange({ placeholder, defaultValue, step, min, max, v
               valueLabelDisplay='auto'
             />
           </MenuItem>
-
         </Select>
       </FormControl>
     </div>
