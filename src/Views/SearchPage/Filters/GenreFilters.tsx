@@ -1,5 +1,4 @@
 import React from 'react';
-import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { IGenre } from '../SearchQueryTypes';
 import { INIT_GENRES_STATE } from './InitialStates';

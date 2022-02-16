@@ -86,7 +86,7 @@ export function SearchPageAux() {
 
   return (
     <section className='search-page'>
-      <div className='filters'>
+      <div className='search-page__filters'>
         <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
         <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
         <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />

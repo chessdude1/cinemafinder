@@ -69,7 +69,7 @@ export function FavouritesPage({
               ))}
             </Box>
             <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
-              <div className='filters'>
+              <div className='favourite-page__filters'>
                 <div className='filters__rating-filter'>
                   <CustomSlider
                     onChange={(value) => {
