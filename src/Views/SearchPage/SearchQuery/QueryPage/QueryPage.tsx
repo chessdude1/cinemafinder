@@ -1,10 +1,8 @@
 import _ from 'lodash';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { TranslateGenre } from '../../../../Auxiliary/TranslateGenre';
 import { useTypedSelector } from '../../../../Hooks/useTypedSelector';
-import { SearchQuerySagaTypes } from '../../../../redux/Sages/SearchQuerySaga';
-import { QueriedMovie, SearchQueryActionTypes } from '../../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
+import { QueriedMovie } from '../../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
 import { INIT_GENRES_STATE } from '../../Filters/InitialStates';
 import { MovieCardMedium } from './MovieCardMedium/MovieCardMedium';
 
