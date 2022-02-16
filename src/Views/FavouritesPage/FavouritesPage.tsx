@@ -68,6 +68,7 @@ export function FavouritesPage({
                 />
               ))}
             </Box>
+
             <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
               <div className='favourite-page__filters'>
                 <div className='filters__rating-filter'>

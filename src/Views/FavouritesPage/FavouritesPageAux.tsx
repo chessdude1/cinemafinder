@@ -64,7 +64,7 @@ export function FavouritesPageAux() {
 
   const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
   const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
-  console.log(isLogin);
+
   const [ratingFilterValue, setRatingFilterValue] = useState<number[] | number>(5);
   const [yearFilterValue, setYearFilterValue] = useState<Array<number> | number>([1900, 2022]);
   const [options, setOptions] = useState<optionsType>(initialOptions);

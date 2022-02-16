@@ -1,34 +1,26 @@
-import _ from 'lodash';
 import React from 'react';
-import { TranslateGenre } from '../../../../Auxiliary/TranslateGenre';
+import _ from 'lodash';
+import { GetGenresFromIds } from '../../../../Auxiliary/GetGenresFromIds';
 import { useTypedSelector } from '../../../../Hooks/useTypedSelector';
 import { QueriedMovie } from '../../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
+import { FavoriteFilmCard } from '../../../FavouritesPage/FavoriteFilmCard/FavoriteFilmCard';
 import { INIT_GENRES_STATE } from '../../Filters/InitialStates';
-import { MovieCardMedium } from './MovieCardMedium/MovieCardMedium';
 
 export function QueryPageAux() {
   const movies: QueriedMovie[] = useTypedSelector((store) => store.SearchQueryReducer.moviesWithProvider);
-  function getGenreName(id: number) {
-    const res = INIT_GENRES_STATE.find((genre) => genre.id === id);
-    return res!.name;
-  }
-  function translate(ids: number[]) {
-    const genresArray = ids.map((id) => ({ id, name: getGenreName(id) }));
-    return TranslateGenre(genresArray);
-  }
+
   return (
     <div className='movie-table'>
       {movies.map((movie) => (
-        <MovieCardMedium
-          classStyle='movie-card__medium'
+        <FavoriteFilmCard
           key={movie.id}
-          providers={movie.watchProviders}
-          rating={movie.voteAverage}
-          year={movie.releaseDate.slice(0, 4)}
+          watchProviders={movie.watchProviders}
+          voteAverage={movie.voteAverage}
+          releaseDate={movie.releaseDate}
           originalTitle={movie.originalTitle}
-          id={movie.id}
           posterPath={movie.posterPath}
-          genre={translate(movie.genres).join(',')}
+          genres={GetGenresFromIds(movie.genres)}
+          id={movie.id}
         />
       ))}
     </div>
