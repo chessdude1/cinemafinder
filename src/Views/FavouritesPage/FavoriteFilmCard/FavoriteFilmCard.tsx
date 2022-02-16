@@ -30,16 +30,19 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
   const watchProvidersWithoutRepeats = GetListnotRepeatWatchProvidersWithSaveFields(watchProviders);
 
   return (
-    <Card sx={{ width: '48%' }}>
+    <Card sx={{ width: '48%', marginTop: '2.4rem' }}>
       <Box sx={{ padding: '2.4rem', display: 'flex' }}>
         <Box sx={{ maxWidth: '17rem' }}>
           {
           posterPath ? (
-            <img
-              className='film-card__image'
-              alt={originalTitle}
-              src={`https://image.tmdb.org/t/p/w342${posterPath}`}
-            />
+            <NavLink to={link}>
+
+              <img
+                className='film-card__image'
+                alt={originalTitle}
+                src={`https://image.tmdb.org/t/p/w342${posterPath}`}
+              />
+            </NavLink>
           )
             : <img alt='not found img' src='https://icdn.lenta.ru/images/2019/11/01/13/20191101130724350/square_1280_88f54b592eb591cd6252313b5ec3e06d.png' />
         }
@@ -47,7 +50,6 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
         <Box sx={{ marginLeft: '1.6rem' }}>
           <Typography variant='h4' sx={{ fontWeight: '600' }}>
             {originalTitle}
-
             (
             {year}
             )

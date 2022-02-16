@@ -1,8 +1,18 @@
-// .favourite-page {
-//   display: flex;
-// }
 
 .filters {
-  width: 20rem;
-  margin-left: 5rem;
+  width: 30rem;
+}
+
+.filters__rating-filter, 
+.filters__options, 
+.filter__genres,
+.filters__year-filter  {
+    padding-left: 2rem;
+    margin-right: 3rem;
+}
+
+.favourite-page__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

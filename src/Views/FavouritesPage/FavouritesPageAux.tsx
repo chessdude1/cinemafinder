@@ -63,12 +63,13 @@ export function FavouritesPageAux() {
   };
 
   const films = useTypedSelector((store) => store.FavouritesPageReducer.films);
-  const user = useTypedSelector((store) => store.AuthPageReducer.user);
-
+  const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
+  console.log(isLogin);
   const [ratingFilterValue, setRatingFilterValue] = useState<number[] | number>(5);
   const [yearFilterValue, setYearFilterValue] = useState<Array<number> | number>([1900, 2022]);
   const [options, setOptions] = useState<optionsType>(initialOptions);
   const [genres, setGenres] = useState<genresType>(initialGenres);
+  const [isDrawerOpen, setDrawer] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно'], ['rend', 'Аренда']];
@@ -136,6 +137,7 @@ export function FavouritesPageAux() {
 
   return (
     <FavouritesPage
+      isDrawerOpen={isDrawerOpen}
       genres={genres}
       setGenres={setGenres}
       ratingFilterValue={ratingFilterValue}
@@ -147,6 +149,8 @@ export function FavouritesPageAux() {
       setOptions={setOptions}
       checkboxsOptions={CheckboxsOptions}
       checkboxsGenres={CheckboxsGenres}
+      setDrawer={setDrawer}
+      isLogin={isLogin}
     />
   );
 }
