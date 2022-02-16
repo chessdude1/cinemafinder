@@ -17,14 +17,12 @@ export function MovieCardSmall({ id, posterPath, originalTitle, year, genre, cla
     <NavLink className={classStyle} to={link}>
       <img className='poster' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
       <div className='description'>
-        <h2>{originalTitle}</h2>
-        <h3>
-          <span>
-            {year}
-            {', '}
-          </span>
-          <span>{genre}</span>
-        </h3>
+        <h2 className='description__title'>{originalTitle}</h2>
+        <div className='description__extra'>
+          {year}
+          {', '}
+          {genre}
+        </div>
       </div>
     </NavLink>
   );

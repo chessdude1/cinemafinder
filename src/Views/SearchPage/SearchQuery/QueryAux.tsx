@@ -10,7 +10,7 @@ import { SearchQueryActionTypes } from '../../../redux/SearchPageRedux/SearchQue
 import { INIT_GENRES_STATE } from '../Filters/InitialStates';
 import { MovieCardSmall } from '../MovieTable/MovieCard/MovieCardSmall';
 import { QueryResultPopupAux } from './QueryPopup/QueryPopupAux';
-import { QueryResultPopup } from './QueryPopup/QueryResultPopup';
+
 import './QueryStyle.scss';
 
 export function SearchQueryAux() {
@@ -19,7 +19,7 @@ export function SearchQueryAux() {
   const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const ref = useRef();
+  const ref = useRef(null);
   function dispatchQuery(query: string) {
     if (query.length !== 0) {
       dispatch({ type: SearchQuerySagaTypes.FETCH_QUERY_SAGA, payload: query });
@@ -28,7 +28,7 @@ export function SearchQueryAux() {
     }
   }
   const loadQueryPage = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (searchQuery && e.key === 'Enter') {
       dispatch({ type: SearchQuerySagaTypes.FETCH_QUERY_PROVIDERS_SAGA });
       setFocused(false);
       return navigate('/query');
@@ -36,7 +36,7 @@ export function SearchQueryAux() {
     return 1;
   };
   const delayedQuery = useCallback(
-    _.debounce((q) => dispatchQuery(q), 500),
+    _.debounce((q) => dispatchQuery(q), 100),
     [],
   );
   const onChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -46,6 +46,7 @@ export function SearchQueryAux() {
   return (
     <div>
       <CustomSearchField
+        resultContainer={ref}
         setFocus={setFocused}
         onKeyDown={loadQueryPage}
         key='search-field'
@@ -55,7 +56,7 @@ export function SearchQueryAux() {
         onChange={onChange}
         placeholder='Movie name'
       />
-      {focused && movies.length > 0 ? <QueryResultPopupAux movies={movies} /> : ''}
+      {focused && movies.length > 0 ? <QueryResultPopupAux focused={focused} setFocus={setFocused} movies={movies} /> : ''}
     </div>
   );
 }

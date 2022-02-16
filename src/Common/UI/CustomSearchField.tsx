@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
@@ -12,9 +12,10 @@ interface ICustomSearchFieldType {
   searchResult: Movie[];
   placeholder: string;
   id: string;
+  resultContainer: HTMLDivElement | MutableRefObject<null>;
 }
 
-export function CustomSearchField({ onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
+export function CustomSearchField({ resultContainer, onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
     setFocus(true);
@@ -62,17 +63,7 @@ export function CustomSearchField({ onChange, onKeyDown, searchResult, searchInp
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase
-        onKeyDown={onKeyDown}
-        key={id}
-        inputRef={searchInputField}
-        onBlur={() => setFocus(false)}
-        id={id}
-        onChange={onChange}
-        value={searchInput}
-        placeholder={placeholder}
-        inputProps={{ 'aria-label': 'search' }}
-      />
+      <StyledInputBase onKeyDown={onKeyDown} key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
     </Search>
   );
 }
