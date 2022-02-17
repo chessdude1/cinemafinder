@@ -46,7 +46,6 @@ export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
     delayedQuery(e.target.value);
   };
   return (
-<<<<<<< HEAD
     <>
       <div className='search-field-wrapper'>
         <CustomSearchField
@@ -62,21 +61,6 @@ export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
           inputPaddings={inputPaddings}
         />
       </div>
-=======
-    <div>
-      <CustomSearchField
-        resultContainer={ref}
-        setFocus={setFocused}
-        onKeyDown={loadQueryPage}
-        key='search-field'
-        id='header-search-field'
-        searchResult={movies}
-        searchInput={searchQuery}
-        onChange={onChange}
-        placeholder='Movie name'
-        inputPaddings={inputPaddings}
-      />
->>>>>>> cf286b3 (feat: add header layout plus start page)
       {focused && movies.length > 0 ? <QueryResultPopupAux focused={focused} setFocus={setFocused} movies={movies} /> : ''}
     </>
   );

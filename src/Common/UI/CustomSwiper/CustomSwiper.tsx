@@ -64,7 +64,8 @@ export function CustomSwiper({ slidesPerView, spaceBetween, movies }: ICustomSwi
           slidesPerView,
           spaceBetween,
         },
-      }}>
+      }}
+    >
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <MovieCardSmall
