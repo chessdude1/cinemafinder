@@ -1,38 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Movie } from '../../../redux/SearchPageRedux/SearchPageActions';
 import { INIT_GENRES_STATE } from '../Filters/InitialStates';
 import { MovieCardSmall } from './MovieCard/MovieCardSmall';
 import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
+import { GetGenresFromIds } from '../../../Auxiliary/GetGenresFromIds';
 import './SearchPageStyle.scss';
+import { useTypedSelector } from '../../../Hooks/useTypedSelector';
 
-export interface SearchPageType {
-  movies: Movie[];
-}
-
-export function SearchPage({ movies }: SearchPageType) {
-  function getGenreName(id: number) {
-    const res = INIT_GENRES_STATE.find((genre) => genre.id === id);
-    return res!.name;
-  }
+export function SearchPage() {
+  const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
+  const nodeRef = React.useRef(null);
   function translate(ids: number[]) {
-    const genresArray = ids.map((id) => ({ id, name: getGenreName(id) }));
-    return TranslateGenre(genresArray);
+    const genresArray = GetGenresFromIds(ids);
+    return TranslateGenre(genresArray).join(', ');
   }
+
   return (
     <section>
-      <div className='movie-table'>
+      <TransitionGroup className='movie-table'>
         {movies.map((movie) => (
-          <MovieCardSmall
-            classStyle='movie-card__small'
-            key={movie.id}
-            id={movie.id}
-            posterPath={movie.poster_path}
-            originalTitle={movie.title}
-            year={movie.release_date.slice(0, 4)}
-            genre={translate(movie.genre_ids).join(',')}
-          />
+          <CSSTransition nodeRef={nodeRef} key={movie.id} timeout={500} classNames='item'>
+            <MovieCardSmall
+              classStyle='movie-card__small'
+              key={movie.id}
+              id={movie.id}
+              posterPath={movie.poster_path}
+              originalTitle={movie.title}
+              year={movie.release_date.slice(0, 4)}
+              genre={translate(movie.genre_ids)}
+            />
+          </CSSTransition>
         ))}
-      </div>
+      </TransitionGroup>
     </section>
   );
 }

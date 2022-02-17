@@ -15,7 +15,6 @@ import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_O
 import './SearchPage.scss';
 
 export function SearchPageAux() {
-  const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
   const pageNumber = useTypedSelector((store) => store.SearchPageReducer.pageNumber);
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
@@ -94,7 +93,7 @@ export function SearchPageAux() {
         <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
       </div>
       <div id='movies-filtered-list'>
-        <SearchPage movies={movies} />
+        <SearchPage />
       </div>
     </section>
   );
