@@ -19,7 +19,6 @@ import { SearchQueryAux } from '../Views/SearchPage/SearchQuery/QueryAux';
 import { logout } from '../Services/Service';
 import { AuthPageActions } from '../redux/AuthPageRedux/AuthPageActions';
 import { useTypedSelector } from '../Hooks/useTypedSelector';
-<<<<<<< HEAD
 
 import './HeaderStyles.scss';
 import Logo from '../Assets/img/header/Logo.png';
@@ -37,14 +36,6 @@ interface IPageTranslated {
 
 const PAGES = ['Поиск', 'Избранные'];
 const settings = ['Настройки', 'Выход'];
-=======
-
-import './HeaderStyles.scss';
-import Logo from '../Assets/img/header/Logo.png';
-
-const PAGES = ['Search', 'Favourites'];
-const settings = ['Account', 'Settings', 'Logout'];
->>>>>>> c42af84 (feat: add header layout plus start page)
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -52,10 +43,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
-<<<<<<< HEAD
   const picture = useTypedSelector((store) => store.AuthPageReducer.user.picture);
-=======
->>>>>>> c42af84 (feat: add header layout plus start page)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
