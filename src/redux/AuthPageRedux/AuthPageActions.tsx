@@ -1,7 +1,8 @@
 export enum UserOperations {
   SETUSER = 'SETUSER',
   SETFAVOURITEFILM = 'SETFAVOURITEFILM',
-  SETISLOGIN = 'SETISLOGIN'
+  SETISLOGIN = 'SETISLOGIN',
+  DELETEFAVOURITEFILM = 'DELETEFAVOURITEFILM'
 }
 
 export interface UserType {
@@ -24,6 +25,10 @@ export const AuthPageActions = {
     type: UserOperations.SETISLOGIN,
     payload,
   }),
+  DeleteFavoriteFilm: (payload : string) : DeleteFavouriteFilmType => ({
+    type: UserOperations.DELETEFAVOURITEFILM,
+    payload,
+  }),
 };
 
 interface SetUserActionType {
@@ -41,4 +46,10 @@ interface SetFavouriteFilmType {
   payload : string
 }
 
-export type AuthPageActionsTypes = SetUserActionType | SetFavouriteFilmType | SetIsLoginActionType
+interface DeleteFavouriteFilmType {
+  type : UserOperations.DELETEFAVOURITEFILM,
+  payload : string
+}
+
+export type AuthPageActionsTypes = SetUserActionType |
+ SetFavouriteFilmType | SetIsLoginActionType | DeleteFavouriteFilmType

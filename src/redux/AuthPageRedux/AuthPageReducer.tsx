@@ -30,6 +30,15 @@ export function AuthPageReducer(
           favoriteFilms: favoriteFilmsWithoutRepeats,
         },
       };
+    case UserOperations.DELETEFAVOURITEFILM:
+      const favoriteFilmsAfterDelete = state.user.favoriteFilms.filter((filmId) => filmId !== action.payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favoriteFilms: favoriteFilmsAfterDelete,
+        },
+      };
     default:
       return state;
   }
