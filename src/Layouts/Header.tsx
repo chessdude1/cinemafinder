@@ -10,17 +10,28 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
+
 import { useDispatch } from 'react-redux';
+
 import { SearchQueryAux } from '../Views/SearchPage/SearchQuery/QueryAux';
-import './HeaderStyles.scss';
-import Logo from '../Assets/img/header/Logo.png';
 import { logout } from '../Services/Service';
 import { AuthPageActions } from '../redux/AuthPageRedux/AuthPageActions';
+import { useTypedSelector } from '../Hooks/useTypedSelector';
 
-const PAGES = ['Search', 'Account', 'Favourites'];
+import './HeaderStyles.scss';
+import Logo from '../Assets/img/header/Logo.png';
+
+const PAGES = ['Search', 'Favourites'];
+const settings = ['Account', 'Settings', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -29,8 +40,73 @@ function Header() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const dispatch = useDispatch();
   const constructRoute = (page: string) => `/${page.toLowerCase()}`;
+
+  const userStatus = isLogin ? (
+    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+      <Tooltip title='Open settings'>
+        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+        </IconButton>
+      </Tooltip>
+      <Menu
+        sx={{ mt: '45px' }}
+        id='menu-appbar'
+        anchorEl={anchorElUser}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+      >
+        {settings.map((setting) => (
+          setting !== 'Logout' ? (
+            <NavLink to={constructRoute(setting)}>
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign='center'>{setting}</Typography>
+              </MenuItem>
+            </NavLink>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                logout();
+                handleCloseUserMenu();
+                dispatch(AuthPageActions.SetIsLogin(false));
+              }}
+              key={setting}
+            >
+              <Typography textAlign='center'>{setting}</Typography>
+            </MenuItem>
+          )
+        ))}
+      </Menu>
+    </Box>
+  ) : (
+    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+      <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+        <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
+      </Button>
+      <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+        <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
+      </Button>
+    </Box>
+  );
 
   return (
     <AppBar color='default' position='static'>
@@ -63,32 +139,19 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          <img alt='logo' src={Logo} />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          <Box sx={{ alignItems: 'center', gap: '20px', flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <NavLink to='/'>
+              <img alt='logo' src={Logo} />
+            </NavLink>
             {PAGES.map((page) => (
               <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                 <NavLink className='navlink' to={constructRoute(page)}>{page}</NavLink>
               </Button>
             ))}
+            <SearchQueryAux inputPaddings={1} />
           </Box>
-          <SearchQueryAux />
-          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
-            </Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-              <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
-            </Button>
-            <Button
-              onClick={() => {
-                logout();
-                dispatch(AuthPageActions.SetIsLogin(false));
-              }}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              Logout
-            </Button>
-          </Box>
+          {userStatus}
         </Toolbar>
       </Container>
     </AppBar>

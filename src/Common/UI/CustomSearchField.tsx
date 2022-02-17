@@ -13,9 +13,10 @@ interface ICustomSearchFieldType {
   placeholder: string;
   id: string;
   resultContainer: HTMLDivElement | MutableRefObject<null>;
+  inputPaddings: number
 }
 
-export function CustomSearchField({ resultContainer, onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus }: ICustomSearchFieldType) {
+export function CustomSearchField({ resultContainer, onChange, onKeyDown, searchResult, searchInput, placeholder, id, setFocus, inputPaddings }: ICustomSearchFieldType) {
   const searchInputField = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
     setFocus(true);
@@ -30,11 +31,12 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    right: '0',
   }));
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: '#FAFAFA',
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
@@ -49,8 +51,8 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      padding: theme.spacing(inputPaddings, inputPaddings, inputPaddings, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(1)})`,
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('md')]: {

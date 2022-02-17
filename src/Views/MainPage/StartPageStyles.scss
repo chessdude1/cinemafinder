@@ -1,0 +1,23 @@
+@import "../../Variables.scss";
+
+.search-block {
+  background-color: #C4C4C4;
+  margin-bottom: 60px;
+}
+
+.search-block__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.search-block__heading {
+  text-align: center;
+  font-size: 40px;
+  line-height: 120%;
+  color: $GRAYLINKS;
+  max-width: 773px;
+}
+

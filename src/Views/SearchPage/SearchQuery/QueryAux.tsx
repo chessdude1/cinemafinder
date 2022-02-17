@@ -13,7 +13,11 @@ import { QueryResultPopupAux } from './QueryPopup/QueryPopupAux';
 
 import './QueryStyle.scss';
 
-export function SearchQueryAux() {
+interface ISearchQueryAux {
+  inputPaddings: number
+}
+
+export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
   const [focused, setFocused] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
@@ -55,6 +59,7 @@ export function SearchQueryAux() {
         searchInput={searchQuery}
         onChange={onChange}
         placeholder='Movie name'
+        inputPaddings={inputPaddings}
       />
       {focused && movies.length > 0 ? <QueryResultPopupAux focused={focused} setFocus={setFocused} movies={movies} /> : ''}
     </div>

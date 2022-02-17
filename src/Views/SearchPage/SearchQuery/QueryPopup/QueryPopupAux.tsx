@@ -35,7 +35,15 @@ export function QueryResultPopupAux({ movies, setFocus, focused }: QueryResultPo
   }
   return (
     <div ref={ref} className='query-results'>
-      <div onClick={() => setFocus(true)} className='movie-cards__container'>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events
+       */}
+      <div
+        onClick={() => setFocus(true)}
+        onKeyDown={() => setFocus(true)}
+        role='button'
+        tabIndex={0}
+        className='movie-cards__container'
+      >
         {movies.map((movie) => (
           <MovieCardSmall
             classStyle='movie-card__popup'

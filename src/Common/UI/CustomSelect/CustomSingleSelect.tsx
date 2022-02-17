@@ -37,7 +37,8 @@ export function CustomSingleSelect({ variants, placeholder, checkedItem: checked
           renderValue={() => placeholder}
           onChange={(e: SelectChangeEvent<string>) => {
             handleChange(e);
-          }}>
+          }}
+        >
           {variants.map((variant) => (
             <MenuItem key={variant} value={variant}>
               <Checkbox checked={item.indexOf(variant) > -1} />

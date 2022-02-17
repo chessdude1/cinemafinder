@@ -51,7 +51,8 @@ export function CustomSelect({ variants, placeholder, checkedArray, handleMultip
           onChange={(e) => {
             handleChange(e);
           }}
-          renderValue={(selected) => selected.join(', ')}>
+          renderValue={(selected) => selected.join(', ')}
+        >
           {variants.map((variant) => (
             <MenuItem key={variant} value={variant}>
               <Checkbox checked={item.indexOf(variant) > -1} />
