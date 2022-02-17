@@ -27,10 +27,13 @@ interface IMoviePage {
   AddFilmToUserFavourite : (filmId : string) => void;
   currentMovieId : string;
   runtime : number | undefined;
-  setNewFavoriteFilm: (filmId : string) => void
+  setNewFavoriteFilm: (filmId : string) => void;
+  isFilmAlreadyInFavourites: boolean;
+  deleteFilmFromFavorite: (filmId : string) => void
 }
 
 export function MoviePage({
+  isFilmAlreadyInFavourites,
   genres,
   voteAverage,
   title,
@@ -47,6 +50,7 @@ export function MoviePage({
   currentMovieId,
   runtime,
   setNewFavoriteFilm,
+  deleteFilmFromFavorite,
 } : IMoviePage) {
   const translatedGenres = TranslateGenre(genres);
 
@@ -75,16 +79,30 @@ export function MoviePage({
               </Typography>
             </Grid>
           </Grid>
-          <CustomButton
-            variant='contained'
-            onClick={() => {
-              setNewFavoriteFilm(currentMovieId);
-            }}
-            type='submit'
-          >
-            В избранное
+          {isFilmAlreadyInFavourites ? (
+            <CustomButton
+              variant='contained'
+              onClick={() => {
+                deleteFilmFromFavorite(currentMovieId);
+              }}
+              type='submit'
+            >
+              Удалить из избранного
 
-          </CustomButton>
+            </CustomButton>
+          ) : (
+            <CustomButton
+              variant='contained'
+              onClick={() => {
+                setNewFavoriteFilm(currentMovieId);
+              }}
+              type='submit'
+            >
+              В избранное
+
+            </CustomButton>
+          )}
+
         </Box>
       </section>
       <section className='movie-description'>
@@ -98,6 +116,7 @@ export function MoviePage({
           {translatedGenres?.join(', ')}
         </Typography>
         <Box sx={{ marginTop: '3.2rem' }}>
+          {flatrateWatchProviders ? <WatchProvidersList listName='Бесплатно по подписке' watchProviders={flatrateWatchProviders} /> : ''}
           {adsWatchProviders ? <WatchProvidersList listName='C рекламой' watchProviders={adsWatchProviders} /> : ''}
           { buyWatchProviders ? <WatchProvidersList listName='Для покупки' watchProviders={buyWatchProviders} /> : ''}
           {rentWatchProviders ? <WatchProvidersList listName='В аренду' watchProviders={rentWatchProviders} /> : ''}

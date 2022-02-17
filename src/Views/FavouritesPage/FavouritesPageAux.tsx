@@ -72,7 +72,7 @@ export function FavouritesPageAux() {
   const [isDrawerOpen, setDrawer] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно'], ['rend', 'Аренда']];
+  const CheckboxsOptions = [['buy', 'Купить'], ['ads', 'С рекламой'], ['flatrate', 'Бесплатно по подписке'], ['rend', 'Аренда']];
   const CheckboxsGenres = [['Action', 'Экшен'],
     ['Adventure', 'приключения'],
     ['Animation', 'Мультфильмы'],
@@ -104,8 +104,8 @@ export function FavouritesPageAux() {
     );
 
     if (Array.isArray(yearFilterValue)) {
-      filteredFilms = filteredFilms.filter((film) => yearFilterValue[0] < Number(film.releaseDate.split('-')[0]));
-      filteredFilms = filteredFilms.filter((film) => yearFilterValue[1] > Number(film.releaseDate.split('-')[0]));
+      filteredFilms = filteredFilms.filter((film) => yearFilterValue[0] <= Number(film.releaseDate.split('-')[0]));
+      filteredFilms = filteredFilms.filter((film) => yearFilterValue[1] >= Number(film.releaseDate.split('-')[0]));
     }
 
     filteredFilms = filteredFilms.filter((film) => { // filter on genre
@@ -119,6 +119,9 @@ export function FavouritesPageAux() {
     filteredFilms = filteredFilms.filter((film) => {
       const result: Array<boolean> = [];
       const currentFilmWatchTypes = Object.keys(film.watchProviders);
+      if (currentFilmWatchTypes.length === 0) {
+        result.push(true);
+      }
       currentFilmWatchTypes.forEach((watchProviderType) => {
         result.push(options[watchProviderType]);
       });
