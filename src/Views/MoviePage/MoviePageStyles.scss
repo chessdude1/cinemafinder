@@ -1,3 +1,18 @@
 .movie-page {
   display: flex;
+  margin-top: 7.2rem;
+}
+
+.movie-page__poster {
+  max-width: percentage(371 / 1440);
+}
+
+.movie-page__poster_img {
+  max-height: 52.7rem;
+  max-width: 37.1rem;
+  border-radius: 8px;
+}
+
+.movie-description {
+  margin-left: 4rem;
 }

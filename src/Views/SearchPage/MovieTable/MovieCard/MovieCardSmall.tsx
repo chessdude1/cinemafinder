@@ -8,7 +8,7 @@ interface MovieCardSmallType {
   originalTitle: string;
   year: string;
   genre: string;
-  classStyle: string;
+  classStyle?: string;
 }
 
 export function MovieCardSmall({ id, posterPath, originalTitle, year, genre, classStyle }: MovieCardSmallType) {

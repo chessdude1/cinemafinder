@@ -4,7 +4,7 @@ import './RatingDisplay.scss';
 
 interface IRatingDisplay {
   evaluator: string;
-  rating: number | string
+  rating: number | string | undefined
 }
 
 export function RatingDisplay({ evaluator, rating } : IRatingDisplay) {
