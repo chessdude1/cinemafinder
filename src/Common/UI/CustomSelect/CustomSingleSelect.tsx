@@ -22,7 +22,6 @@ export function CustomSingleSelect({ variants, placeholder, checkedArray, handle
       target: { value },
     } = event;
     const newItems = value;
-    console.log(newItems);
     handleSelect(newItems as string);
     setItem(newItems as string);
   };
