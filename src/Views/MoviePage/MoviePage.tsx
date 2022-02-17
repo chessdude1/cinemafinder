@@ -27,6 +27,7 @@ interface IMoviePage {
   AddFilmToUserFavourite : (filmId : string) => void;
   currentMovieId : string;
   runtime : number | undefined;
+  setNewFavoriteFilm: (filmId : string) => void
 }
 
 export function MoviePage({
@@ -45,6 +46,7 @@ export function MoviePage({
   AddFilmToUserFavourite,
   currentMovieId,
   runtime,
+  setNewFavoriteFilm,
 } : IMoviePage) {
   const translatedGenres = TranslateGenre(genres);
 
@@ -73,7 +75,16 @@ export function MoviePage({
               </Typography>
             </Grid>
           </Grid>
-          <CustomButton variant='contained' onClick={() => { AddFilmToUserFavourite(currentMovieId); }} type='submit'>В избранное</CustomButton>
+          <CustomButton
+            variant='contained'
+            onClick={() => {
+              setNewFavoriteFilm(currentMovieId);
+            }}
+            type='submit'
+          >
+            В избранное
+
+          </CustomButton>
         </Box>
       </section>
       <section className='movie-description'>
