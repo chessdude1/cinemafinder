@@ -5,7 +5,7 @@ import { MoviePage } from './MoviePage';
 import { getMovieWithAdditionalInformation, postUser } from '../../Services/Service';
 import { MovieWithAdditionalInformation } from '../../Services/ServiceTypes';
 import { GetListnotRepeatWatchProviders } from '../../Auxiliary/GetListnotRepeatWatchProviders';
-import { AuthPageActions, UserOperations } from '../../redux/AuthPageRedux/AuthPageActions';
+import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 
 export function MoviePageAux() {
@@ -16,6 +16,8 @@ export function MoviePageAux() {
 
   const currentMovieId = url.pathname.split('/')[url.pathname.split('/').length - 1];
   const [currentMovie, setCurrentMovie] = useState<MovieWithAdditionalInformation>();
+
+  const isFilmAlreadyInFavourites = user.favoriteFilms.includes(currentMovieId);
 
   function getFilmYear(date : string | undefined) : string {
     if (!date) {
@@ -36,11 +38,23 @@ export function MoviePageAux() {
       ...user,
       favoriteFilms: [...user.favoriteFilms, filmId],
     });
+    dispatch(AuthPageActions.SetFavoriteFilm(filmId));
+  };
+
+  const deleteFilmFromFavorite = (filmId : string) => {
+    const userfavoriteFilmsAfterDelete = user.favoriteFilms.filter((film) => film !== filmId);
+    postUser({
+      ...user,
+      favoriteFilms: [...userfavoriteFilmsAfterDelete],
+    });
+    dispatch(AuthPageActions.DeleteFavoriteFilm(filmId));
   };
 
   return (
     <div>
       <MoviePage
+        deleteFilmFromFavorite={deleteFilmFromFavorite}
+        isFilmAlreadyInFavourites={isFilmAlreadyInFavourites}
         currentMovieId={currentMovieId}
         voteAverage={currentMovie?.vote_average}
         genres={currentMovie?.genres}
