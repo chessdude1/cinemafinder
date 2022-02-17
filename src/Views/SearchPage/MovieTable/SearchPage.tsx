@@ -1,10 +1,9 @@
 import React from 'react';
 import { Movie } from '../../../redux/SearchPageRedux/SearchPageActions';
-import { FavoriteFilmCard } from '../../FavouritesPage/FavoriteFilmCard/FavoriteFilmCard';
 import { INIT_GENRES_STATE } from '../Filters/InitialStates';
 import { MovieCardSmall } from './MovieCard/MovieCardSmall';
 import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
-import './style.scss';
+import './SearchPageStyle.scss';
 
 export interface SearchPageType {
   movies: Movie[];

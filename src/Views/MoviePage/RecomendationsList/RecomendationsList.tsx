@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { AuthPageActions } from '../../../redux/AuthPageRedux/AuthPageActions';
 import { filmResponse } from '../../../Services/ServiceTypes';
+import { MovieCardSmall } from '../../SearchPage/MovieTable/MovieCard/MovieCardSmall';
 import './RecomendationsListStyles.scss';
 
 interface IRecomendationsList {
@@ -19,14 +20,16 @@ export function RecomendationsList({ similarFilms } : IRecomendationsList) {
   return (
     <div className='recomendation-list__wrapper'>
       {similarFilms?.map((similarFilm) => (
-        <NavLink key={similarFilm.id} to={`/movie/${similarFilm.id}`}>
-          <div>
-            <h2>{similarFilm.title}</h2>
-            <img alt='similar-film' src={`https://image.tmdb.org/t/p/w342${similarFilm.poster_path}`} />
-            <p>{similarFilm.vote_average}</p>
-            <button onClick={() => { AddFilmToUserFavourite(String(similarFilm.id)); }} type='submit'>Добавить в избранное</button>
-          </div>
-        </NavLink>
+        <div className="recomendation-list__movie">
+          <MovieCardSmall
+            originalTitle={similarFilm.original_title}
+            genre='Экшн'
+            year='2001'
+            posterPath={similarFilm.poster_path}
+            id={similarFilm.id}
+            key={similarFilm.id}
+          />
+        </div>
       ))}
     </div>
   );

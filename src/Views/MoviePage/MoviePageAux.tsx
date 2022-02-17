@@ -5,7 +5,6 @@ import { MoviePage } from './MoviePage';
 import { getMovieWithAdditionalInformation } from '../../Services/Service';
 import { MovieWithAdditionalInformation } from '../../Services/ServiceTypes';
 import { GetListnotRepeatWatchProviders } from '../../Auxiliary/GetListnotRepeatWatchProviders';
-import { AuthorizationPage } from '../AuthorizationPage/AuthorizationPage';
 import { AuthPageActions, UserOperations } from '../../redux/AuthPageRedux/AuthPageActions';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 
@@ -20,7 +19,6 @@ export function MoviePageAux() {
     }
     return date.split('-')[0];
   }
-
   const AddFilmToUserFavourite = (filmId : string) => {
     dispatch(AuthPageActions.SetFavoriteFilm(filmId));
   };
@@ -30,16 +28,14 @@ export function MoviePageAux() {
   }, [currentMovieId]);
 
   const user = useTypedSelector((store) => store.AuthPageReducer.user);
-
   return (
     <div>
       <MoviePage
         currentMovieId={currentMovieId}
         voteAverage={currentMovie?.vote_average}
         genres={currentMovie?.genres}
-        voteCount={currentMovie?.vote_count}
         title={currentMovie?.title}
-        backdropPath={currentMovie?.backdrop_path}
+        posterPath={currentMovie?.poster_path}
         releaseYear={getFilmYear(currentMovie?.release_date)}
         adsWatchProviders={currentMovie?.watchProviders.ads}
         buyWatchProviders={currentMovie?.watchProviders.buy}
@@ -49,6 +45,7 @@ export function MoviePageAux() {
         notRepeatedProviders={GetListnotRepeatWatchProviders(currentMovie?.watchProviders)}
         similarFilms={currentMovie?.similarFilms}
         AddFilmToUserFavourite={AddFilmToUserFavourite}
+        runtime={currentMovie?.runtime}
       />
     </div>
   );
