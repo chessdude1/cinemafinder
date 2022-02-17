@@ -74,30 +74,30 @@ function Header() {
           horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (setting !== 'Logout' ? (
-          <NavLink to={constructRoute(setting)}>
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        onClose={handleCloseUserMenu}>
+        {settings.map((setting) =>
+          setting !== 'Logout' ? (
+            <NavLink to={constructRoute(setting)}>
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign='center'>{setting}</Typography>
+              </MenuItem>
+            </NavLink>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                logout();
+                handleCloseUserMenu();
+                dispatch(AuthPageActions.SetIsLogin(false));
+              }}
+              key={setting}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>
-          </NavLink>
-        ) : (
-          <MenuItem
-            onClick={() => {
-              logout();
-              handleCloseUserMenu();
-              dispatch(AuthPageActions.SetIsLogin(false));
-            }}
-            key={setting}
-          >
-            <Typography textAlign='center'>{setting}</Typography>
-          </MenuItem>
-        )))}
+          ),
+        )}
       </Menu>
     </Box>
   ) : (
-    <Box sx={{ flexGrow: 0, display: 'flex' }}>
+    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
         <NavLink className='navlink' to='/authorization'>
           Sign In
@@ -133,8 +133,7 @@ function Header() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
+              sx={{ display: { xs: 'block', md: 'none' } }}>
               {PAGES.map((page) => (
                 <NavLink className='navlink' key={page} to={constructRoute(page)}>
                   <MenuItem onClick={handleCloseNavMenu}>

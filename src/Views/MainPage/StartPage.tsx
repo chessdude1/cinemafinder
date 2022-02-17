@@ -30,9 +30,7 @@ export function StartPage() {
     <div>
       <section className='search-block'>
         <div className='search-block__container'>
-          <h1 className='search-block__heading'>
-            Смотрите фильмы на площадках, которые у вас есть
-          </h1>
+          <h1 className='search-block__heading'>Смотрите фильмы на площадках, которые у вас есть</h1>
           <SearchQueryAux inputPaddings={2} />
         </div>
       </section>
