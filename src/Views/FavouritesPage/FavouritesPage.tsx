@@ -26,7 +26,7 @@ interface FavouritesPageType {
   checkboxsOptions : Array<Array<string>>,
   isDrawerOpen: boolean,
   setDrawer: React.Dispatch<React.SetStateAction<boolean>>,
-  isLogin: boolean
+  isLogin: boolean;
 }
 
 export function FavouritesPage({
