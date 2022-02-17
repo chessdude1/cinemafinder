@@ -1,4 +1,13 @@
 .watch-provider-list {
   display: flex;
-  
+  margin-top: 0.8rem;
+}
+
+.watch-provider-list__watch-provider_img {
+  height: 5.6rem;
+  border-radius: 4px;
+}
+
+.watch-provider-list__watch-provider {
+  margin-right: 1.2rem;
 }
