@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-// eslint-disable-next-line import/no-unresolved
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
-
-// Import Swiper styles
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/css';
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/css/pagination';
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/css/navigation';
-
-import './StartPageStyles.scss';
+import { Typography } from '@mui/material';
 
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
-import { MovieCardSmall } from '../SearchPage/MovieTable/MovieCard/MovieCardSmall';
-import { TranslateGenre } from '../../Auxiliary/TranslateGenre';
-import { INIT_GENRES_STATE } from '../SearchPage/Filters/InitialStates';
 import { SearchQueryAux } from '../SearchPage/SearchQuery/QueryAux';
+import { CustomSwiper } from '../../Common/UI/CustomSwiper/CustomSwiper';
+
+import './StartPageStyles.scss';
 
 export function StartPage() {
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
@@ -35,17 +23,7 @@ export function StartPage() {
     getPopularMovies();
   }, []);
 
-  console.log(movies);
-
-  function getGenreName(id: number) {
-    const res = INIT_GENRES_STATE.find((genre) => genre.id === id);
-    return res!.name;
-  }
-
-  function translate(ids: number[]) {
-    const genresArray = ids.map((id) => ({ id, name: getGenreName(id) }));
-    return TranslateGenre(genresArray);
-  }
+  const latestMovies = movies.filter((movie) => movie.release_date.slice(0, 4) === '2022');
 
   return (
     <div>
@@ -57,28 +35,20 @@ export function StartPage() {
           <SearchQueryAux inputPaddings={2} />
         </div>
       </section>
-      <h2>Новинки</h2>
-      <Swiper
-        slidesPerView={6}
-        spaceBetween={30}
-        // eslint-disable-next-line react/jsx-boolean-value
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className='mySwiper'
-      >
-        {movies.map((el) => (
-          <SwiperSlide key={el.id}>
-            <MovieCardSmall
-              id={el.id}
-              posterPath={el.poster_path}
-              originalTitle={el.original_title}
-              year={el.release_date.slice(0, 4)}
-              genre={translate(el.genre_ids).join(',')}
-              classStyle='movie-card__small'
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <section className='latest-block'>
+        <div className='latest-block__heading-wrapper'>
+          <Typography variant='h2'>Новинки</Typography>
+          <img src='img/heading-arrow.svg' alt='slide' />
+        </div>
+        <CustomSwiper slidesPerView={6} spaceBetween={30} movies={latestMovies} />
+      </section>
+      <section className='popular-block'>
+        <div className='popular-block__heading-wrapper'>
+          <Typography variant='h2'>Популярное</Typography>
+          <img src='img/heading-arrow.svg' alt='slide' />
+        </div>
+        <CustomSwiper slidesPerView={6} spaceBetween={30} movies={movies} />
+      </section>
     </div>
   );
 }
