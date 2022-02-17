@@ -97,7 +97,7 @@ function Header() {
       </Menu>
     </Box>
   ) : (
-    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
         <NavLink className='navlink' to='/authorization'>
           Sign In
