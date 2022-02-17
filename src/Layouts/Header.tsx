@@ -53,7 +53,7 @@ function Header() {
   const constructRoute = (page: string) => `/${page.toLowerCase()}`;
 
   const userStatus = isLogin ? (
-    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
@@ -98,7 +98,7 @@ function Header() {
       </Menu>
     </Box>
   ) : (
-    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+    <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
         <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
       </Button>
@@ -133,11 +133,16 @@ function Header() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {PAGES.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
+                <NavLink className='navlink' key={page} to={constructRoute(page)}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center'>{page}</Typography>
+                  </MenuItem>
+                </NavLink>
               ))}
             </Menu>
+            <NavLink to='/'>
+              <img alt='logo' src={Logo} />
+            </NavLink>
           </Box>
 
           <Box sx={{ alignItems: 'center', gap: '20px', flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
