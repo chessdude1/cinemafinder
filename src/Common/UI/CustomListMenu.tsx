@@ -39,7 +39,8 @@ export default function SimpleListMenu() {
         MenuListProps={{
           'aria-labelledby': 'lock-button',
           role: 'listbox',
-        }}>
+        }}
+      >
         {options.map((option, index) => (
           <MenuItem key={option} disabled={index === 0} selected={index === selectedIndex} onClick={(event) => handleMenuItemClick(event, index)}>
             {option}
