@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+
 import { createStyles, makeStyles } from '@mui/styles';
 
 import { Formik, Form, FormikProps } from 'formik';
@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 import { registration } from '../../Services/Service';
 
 import { CustomTextField } from '../../Common/UI/CustomTextField';
-import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 
@@ -41,41 +40,10 @@ interface ISignUpForm {
   email: string;
 }
 
-interface IFormStatus {
-  message: string;
-  type: string;
-}
-
-interface IFormStatusProps {
-  [key: string]: IFormStatus;
-}
-
-const formStatusProps: IFormStatusProps = {
-  success: {
-    message: 'Signed up successfully.',
-    type: 'success',
-  },
-  duplicate: {
-    message: 'Email-id already exist. Please use different email-id.',
-    type: 'error',
-  },
-  error: {
-    message: 'Something went wrong. Please try again.',
-    type: 'error',
-  },
-};
-
 export function RegistrationPage() {
   const classes = useStyles();
-  const [displayFormStatus, setDisplayFormStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<IFormStatus>({
-    message: '',
-    type: '',
-  });
 
   const dispatch = useDispatch();
-
-  const authPage = useTypedSelector((store) => store.AuthPageReducer);
 
   async function createUser(user : ISignUpForm) {
     try {
@@ -91,16 +59,6 @@ export function RegistrationPage() {
     }
   }
 
-  const formStatusContent = () => {
-    if (formStatus.type === 'error') {
-      return <p className={classes.errorMessage}>{formStatus.message}</p>;
-    }
-    if (formStatus.type === 'success') {
-      return <p className={classes.successMessage}>{formStatus.message}</p>;
-    }
-    return null;
-  };
-
   return (
     <div className={classes.root}>
       <Formik
@@ -110,21 +68,18 @@ export function RegistrationPage() {
           confirmPassword: '',
           email: '',
         }}
-        onSubmit={(values: ISignUpForm, actions) => {
+        onSubmit={(values: ISignUpForm) => {
           createUser(values);
-          setTimeout(() => {
-            actions.setSubmitting(false);
-          }, 500);
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email().required('Enter valid email-id'),
+          email: Yup.string().email().required('Enter valid email'),
           fullName: Yup.string().required('Please enter full name'),
           password: Yup.string()
             .matches(
-              /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+              / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character and no spaces',
+              'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces',
             ),
           confirmPassword: Yup.string()
             .required('Required')
@@ -138,8 +93,10 @@ export function RegistrationPage() {
             errors,
             handleBlur,
             handleChange,
-            isSubmitting,
           } = props;
+
+          const isErrors = Object.entries(errors).length !== 0;
+
           return (
             <Form>
               <h1 className={classes.title}>Sign up</h1>
@@ -184,8 +141,8 @@ export function RegistrationPage() {
                     type='password'
                     helperText={
                       errors.password && touched.password
-                        ? 'Please valid password. One uppercase, one lowercase, one special character and no spaces'
-                        : 'One uppercase, one lowercase, one special character and no spaces'
+                        ? 'Please valid password. One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
+                        : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
                     }
                     error={!!(errors.password && touched.password)}
                     onChange={handleChange}
@@ -229,13 +186,13 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='email'
                     id='email'
-                    label='Email-id'
+                    label='email'
                     value={values.email}
                     type='email'
                     helperText={
                       errors.email && touched.email
                         ? errors.email
-                        : 'Enter email-id'
+                        : 'Enter email'
                     }
                     error={!!(errors.email && touched.email)}
                     onChange={handleChange}
@@ -253,13 +210,10 @@ export function RegistrationPage() {
                   <CustomButton
                     type='submit'
                     color='secondary'
-                    disabled={isSubmitting}
+                    disabled={isErrors}
                   >
                     Submit
                   </CustomButton>
-                  {displayFormStatus && (
-                    <div className='formStatus'>{formStatusContent}</div>
-                  )}
                 </Grid>
               </Grid>
             </Form>
