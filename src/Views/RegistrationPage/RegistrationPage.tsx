@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
-
+import { Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
@@ -16,6 +15,7 @@ import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { UploadButton } from '../../Common/UI/UploadButton/UploadButton';
+import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -46,6 +46,29 @@ const useStyles = makeStyles(() => createStyles({
 }
 
 export function RegistrationPage() {
+  const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
+  const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+  let userEmail = '';
+
+  const handleSuccessSnackBar = () => {
+    setSuccessSnackBarOpen(true);
+  };
+
+  const handleErrorSnackBar = () => {
+    setErrorSnackBarOpen(true);
+  };
+
+  const handleCloseSnackBar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccessSnackBarOpen(false);
+    setErrorSnackBarOpen(false);
+  };
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -54,12 +77,16 @@ export function RegistrationPage() {
   async function createUser(user : ISignUpForm) {
     try {
       const response = await registrationUserFormData(user.email, user.password, user.Name, handleFile);
+      userEmail = response.data.user.email;
+      handleSuccessSnackBar();
       dispatch(AuthPageActions.SetIsLogin(true));
       dispatch(AuthPageActions.SetUser(response.data.user));
       localStorage.setItem('token', response.data.accessToken);
     } catch (e : any) {
       if (e) {
         dispatch(AuthPageActions.SetIsLogin(false));
+        setErrorMessage(e.response?.data?.message);
+        handleErrorSnackBar();
         console.log(e.response?.data?.message);
       }
     }
@@ -67,6 +94,19 @@ export function RegistrationPage() {
 
   return (
     <div className={classes.root}>
+      <Snackbars
+        handleClose={handleCloseSnackBar}
+        text={`На почту ${userEmail} отправлена ссылка для активации аккаунта, не забудьте проверить папку спам.`}
+        type='success'
+        isOpen={isSuccessSnackBarOpen}
+      />
+      <Snackbars
+        handleClose={handleCloseSnackBar}
+        text={`${errorMessage} `}
+        type='error'
+        isOpen={isErrorSnackBarOpen}
+      />
+
       <Formik
         initialValues={{
           Name: '',
