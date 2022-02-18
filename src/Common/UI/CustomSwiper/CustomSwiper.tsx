@@ -17,11 +17,12 @@ import 'swiper/css/pagination';
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/css/navigation';
 import './CustomSwiperStyles.scss';
+import { filmResponse } from '../../../Services/ServiceTypes';
 
 interface ICustomSwiper {
   slidesPerView: number,
   spaceBetween: number,
-  movies: Array<Movie>
+  movies: Array<Movie> | Array<filmResponse>
 }
 
 export function CustomSwiper({ slidesPerView, spaceBetween, movies }: ICustomSwiper) {
