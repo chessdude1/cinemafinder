@@ -3,19 +3,22 @@ import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import { registration, registrationUserFormData } from '../../Services/Service';
+import { registrationUserFormData } from '../../Services/Service';
 
 import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { UploadButton } from '../../Common/UI/UploadButton/UploadButton';
 import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
+
+export const TIMEBEFOREREDIRECT = 2500;
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -46,6 +49,8 @@ export function RegistrationPage() {
   const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
   const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+  const navigate = useNavigate();
 
   let userEmail = '';
 
@@ -79,6 +84,7 @@ export function RegistrationPage() {
       dispatch(AuthPageActions.SetIsLogin(true));
       dispatch(AuthPageActions.SetUser(response.data.user));
       localStorage.setItem('token', response.data.accessToken);
+      setTimeout(() => navigate('/'), TIMEBEFOREREDIRECT);
     } catch (e : any) {
       if (e) {
         dispatch(AuthPageActions.SetIsLogin(false));
