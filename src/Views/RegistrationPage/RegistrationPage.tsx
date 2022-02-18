@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { createStyles, makeStyles } from '@mui/styles';
@@ -26,15 +26,12 @@ const useStyles = makeStyles(() => createStyles({
   textField: {
     '& > *': {
       marginTop: '2.2rem',
-      width: '130%',
+      width: '120%',
     },
   },
   submitButton: {
     marginTop: '2.4rem',
   },
-  title: { textAlign: 'center' },
-  successMessage: { color: 'green' },
-  errorMessage: { color: 'red' },
 }));
 
  interface ISignUpForm {
