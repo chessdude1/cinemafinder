@@ -13,7 +13,7 @@ import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { login } from '../../Services/Service';
 
-import { CustomTextField } from '../../Common/UI/CustomTextField';
+import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { API_URL } from '../../Services/Interceptors';
 

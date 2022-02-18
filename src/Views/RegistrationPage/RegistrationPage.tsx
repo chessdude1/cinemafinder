@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Box from '@mui/material/Box';
 
 import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
@@ -10,19 +12,21 @@ import * as Yup from 'yup';
 
 import { registration } from '../../Services/Service';
 
-import { CustomTextField } from '../../Common/UI/CustomTextField';
+import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
+import { UploadButton } from '../../Common/UI/UploadButton/UploadButton';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    maxWidth: '450px',
+    maxWidth: '35rem',
     display: 'block',
     margin: '0 auto',
   },
   textField: {
     '& > *': {
-      width: '100%',
+      marginTop: '3.2rem',
+      width: '130%',
     },
   },
   submitButton: {
@@ -34,7 +38,7 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 interface ISignUpForm {
-  fullName: string;
+  Name: string;
   password: string;
   confirmPassword: string;
   email: string;
@@ -63,7 +67,7 @@ export function RegistrationPage() {
     <div className={classes.root}>
       <Formik
         initialValues={{
-          fullName: '',
+          Name: '',
           password: '',
           confirmPassword: '',
           email: '',
@@ -73,7 +77,7 @@ export function RegistrationPage() {
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email().required('Enter valid email'),
-          fullName: Yup.string().required('Please enter full name'),
+          Name: Yup.string().required('Please enter full name'),
           password: Yup.string()
             .matches(
               / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
@@ -98,8 +102,20 @@ export function RegistrationPage() {
           const isErrors = Object.entries(errors).length !== 0;
 
           return (
-            <Form>
-              <h1 className={classes.title}>Sign up</h1>
+            <Form className='registration-page__wrapper'>
+              <Typography
+                sx={{ fontWeight: '600',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '4.8rem',
+                  marginBottom: '2.4rem' }}
+                variant='h2'
+              >
+                Создать аккаунт
+                {' '}
+
+              </Typography>
+
               <Grid container spacing={2} direction='row'>
                 <Grid
                   item
@@ -110,17 +126,17 @@ export function RegistrationPage() {
                   className={classes.textField}
                 >
                   <CustomTextField
-                    name='fullName'
-                    id='fullName'
-                    label='Full Name'
-                    value={values.fullName}
+                    name='Name'
+                    id='Name'
+                    label='Name'
+                    value={values.Name}
                     type='text'
                     helperText={
-                      errors.fullName && touched.fullName
-                        ? errors.fullName
-                        : 'Enter your full name.'
+                      errors.Name && touched.Name
+                        ? errors.Name
+                        : 'Enter your name.'
                     }
-                    error={!!(errors.fullName && touched.fullName)}
+                    error={!!(errors.Name && touched.Name)}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -186,7 +202,7 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='email'
                     id='email'
-                    label='email'
+                    label='Email'
                     value={values.email}
                     type='email'
                     helperText={
@@ -207,13 +223,26 @@ export function RegistrationPage() {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <CustomButton
-                    type='submit'
-                    color='secondary'
-                    disabled={isErrors}
+                  <Box sx={{ display: 'flex',
+                    width: '130%',
+                    marginBottom: '4.8rem',
+                    justifyContent: 'center' }}
                   >
-                    Submit
-                  </CustomButton>
+                    <UploadButton />
+                  </Box>
+
+                  <Box sx={{ display: 'flex',
+                    width: '130%',
+                    justifyContent: 'center' }}
+                  >
+                    <CustomButton
+                      variant='contained'
+                      type='submit'
+                      disabled={isErrors}
+                    >
+                      Регистрация
+                    </CustomButton>
+                  </Box>
                 </Grid>
               </Grid>
             </Form>
