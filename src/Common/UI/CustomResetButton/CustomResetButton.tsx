@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 import './CustomResetButtonStyles.scss';
 
 interface IResetButtonType {
@@ -15,6 +16,7 @@ export function CustomResetButton({ type, color, disabled, content, variant, onC
   return (
     <Button sx={{ textTransform: 'none' }} className='custom-reset-button' onClick={onClick} type={type} variant={variant} color={color} disabled={disabled}>
       {content}
+      <CloseIcon />
     </Button>
   );
 }

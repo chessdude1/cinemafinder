@@ -8,11 +8,15 @@
 }
 
 .custom-reset-button.MuiButton-outlined {
-  border: 1px solid $BORDERGRAY;
+  border: 1px solid $GRAYTEXTCOLOR;
   background-color: $WHITE;
-  border-radius: 0.4rem;
-  color: $GRAYLINKS;
+  border-radius: 1rem;
+  color: $GRAYTEXTCOLOR;
   font-size: 1.6rem;
   max-height: 4.8rem;
-  width: 15rem;
+  width: 10rem;
+  margin-top: 0.7rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }

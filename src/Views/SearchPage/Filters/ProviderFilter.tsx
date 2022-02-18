@@ -1,7 +1,6 @@
 import React from 'react';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { providerFilter, watchProvider } from '../SearchQueryTypes';
-import { INIT_PROVIDERS_STATE } from './InitialStates';
 
 export interface ProviderFilterType {
   setFilterOfProviders: React.Dispatch<React.SetStateAction<providerFilter[]>>;

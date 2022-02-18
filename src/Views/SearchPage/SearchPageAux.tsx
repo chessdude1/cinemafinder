@@ -85,7 +85,6 @@ export function SearchPageAux() {
     };
   }, [allLoaded, trackScrolling, dispatch]);
   function resetFilters() {
-    // dispatch(sendUpdateFilterState(filtersInStore, INIT_SORT_ORDER, initProvidersState, INIT_RATING_STATE, INIT_YEARS_STATE, filterOfGenres));
     setFilterOfGenres(INIT_GENRES_STATE);
     setFilterOfProviders(INIT_PROVIDERS_STATE);
     setFilterOfYears(INIT_YEARS_STATE);
@@ -94,13 +93,17 @@ export function SearchPageAux() {
   }
   return (
     <section className='search-page'>
-      <div className='search-page__filters'>
-        <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-        <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-        <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-        <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
-        <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
-        <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+      <div className='search-page__ui'>
+        <div className='search-page__filters'>
+          <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+          <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+          <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+          <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+          <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+        </div>
+        <div className='search-page__button'>
+          <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+        </div>
       </div>
       <div id='movies-filtered-list'>
         <SearchPage />
