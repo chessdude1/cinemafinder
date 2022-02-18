@@ -88,7 +88,6 @@ export function MoviePage({
               type='submit'
             >
               Удалить из избранного
-
             </CustomButton>
           ) : (
             <CustomButton
@@ -99,7 +98,6 @@ export function MoviePage({
               type='submit'
             >
               В избранное
-
             </CustomButton>
           )}
 
