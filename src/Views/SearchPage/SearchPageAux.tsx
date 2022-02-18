@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
@@ -16,6 +17,13 @@ import './SearchPage.scss';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { CustomResetButton } from '../../Common/UI/CustomResetButton/CustomResetButton';
 
+interface IFilter {
+  sort: string;
+  provider: providerFilter[];
+  ratings: number[];
+  years: number[];
+  genres: IGenre[];
+}
 export function SearchPageAux() {
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
   const pageNumber = useTypedSelector((store) => store.SearchPageReducer.pageNumber);
@@ -34,22 +42,32 @@ export function SearchPageAux() {
   const [sortOrder, setSortOrder] = useState(filtersInStore.sortOrder);
 
   const dispatch = useDispatch();
-
+  function updateFilterState({ sort, provider, ratings, years, genres }: IFilter) {
+    dispatch(sendUpdateFilterState(filtersInStore, sort, provider, ratings, years, genres));
+  }
   function getPopularMovies() {
     dispatch({ type: SearchPageSagaTypes.FETCHPOPULARSAGA });
   }
   function getProvidersList() {
     dispatch({ type: SearchPageSagaTypes.FETCHPROVIDERSSAGA });
   }
-
+  const delayedQuery = useCallback(
+    _.debounce((filters) => updateFilterState(filters), 500),
+    [],
+  );
   function isNoFilterApplied() {
     const years = filterOfYears[0] === INIT_YEARS_STATE[0] && filterOfYears[1] === INIT_YEARS_STATE[1];
     const rating = filterOfRatings[0] === INIT_RATING_STATE[0] && filterOfRatings[1] === INIT_RATING_STATE[1];
     return filtersInStore.genre.length === 0 && filtersInStore.providers.length === 0 && sortOrder === INIT_SORT_ORDER && years && rating;
   }
   useEffect(() => {
-    dispatch(sendUpdateFilterState(filtersInStore, sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres));
-  }, [sortOrder, filterOfProviders, filterOfRatings, filterOfYears, filterOfGenres]);
+    const filters = { sort: sortOrder, provider: filterOfProviders, ratings: filterOfRatings, years: filterOfYears, genres: filterOfGenres };
+    updateFilterState(filters);
+  }, [sortOrder, filterOfProviders, filterOfGenres]);
+  useEffect(() => {
+    const filters = { sort: sortOrder, provider: filterOfProviders, ratings: filterOfRatings, years: filterOfYears, genres: filterOfGenres };
+    delayedQuery(filters);
+  }, [filterOfRatings, filterOfYears]);
   useEffect(() => {
     if (!loading) {
       dispatch({ type: SearchPageActionTypes.UPDATE_LOADING_STATUS });

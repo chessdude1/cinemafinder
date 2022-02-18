@@ -20,6 +20,8 @@ export function YearFilter({ setFilterOfYears, filterOfYears }: YearFilterType) 
           min={1900}
           max={2022}
           value={filterOfYears}
+          bottomRange={filterOfYears[0].toString()}
+          topRange={filterOfYears[1].toString()}
         />
       </div>
     </section>
