@@ -7,13 +7,16 @@ const initialState = {
     email: '1@mail.ru',
     favoriteFilms: ['123', '321'],
   },
-
 };
+type test = {
+  isLogin: boolean,
+  user : UserType
+}
 
 export function AuthPageReducer(
   state = initialState,
   action: AuthPageActionsTypes,
-): typeof initialState {
+): test {
   switch (action.type) {
     case UserOperations.SETISLOGIN:
       return { ...state, isLogin: action.payload };

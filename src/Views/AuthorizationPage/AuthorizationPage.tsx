@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import { createStyles, makeStyles } from '@mui/styles';
@@ -15,6 +16,7 @@ import { login } from '../../Services/Service';
 import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
+import { TIMEBEFOREREDIRECT } from '../RegistrationPage/RegistrationPage';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -41,6 +43,7 @@ export function AuthorizationPage() {
   const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
   const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const navigate = useNavigate();
 
   const handleSuccessSnackBar = () => {
     setSuccessSnackBarOpen(true);
@@ -68,6 +71,7 @@ export function AuthorizationPage() {
       handleSuccessSnackBar();
       localStorage.setItem('token', response.data.accessToken);
       dispatch(AuthPageActions.SetUser(response.data.user));
+      setTimeout(() => navigate('/'), TIMEBEFOREREDIRECT);
     } catch (e: any) {
       setErrorMessage(e.response?.data?.message);
       handleErrorSnackBar();

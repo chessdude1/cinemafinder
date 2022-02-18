@@ -32,6 +32,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
+  const picture = useTypedSelector((store) => store.AuthPageReducer.user.picture);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -56,7 +57,9 @@ function Header() {
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+          {
+            picture ? <Avatar alt='user image' src={`http://localhost:5000/${picture}`} /> : <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+          }
         </IconButton>
       </Tooltip>
       <Menu
