@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
@@ -19,7 +20,8 @@ interface TCustomSelect {
 }
 
 export function CustomSelect({ variants, placeholder, checkedArray, handleMultipleSelect, isMultiple }: TCustomSelect) {
-  const [item, setItem] = React.useState<string[]>(checkedArray);
+  const [item, setItem] = useState(checkedArray);
+  useEffect(() => setItem(checkedArray), [checkedArray]);
   function deleteDublicates(array: Array<selectableTypes>) {
     let dublicateName = '';
     for (let i = 0; i < array.length; i += 1) {

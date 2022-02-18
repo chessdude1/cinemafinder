@@ -1,8 +1,3 @@
-export interface sortOrderTypes {
-  titleAsc: boolean;
-  titleDesc: boolean;
-  rating: boolean;
-}
 export const sortTypes: string[] = ['popularity.desc', 'popularity.asc', 'release_date.desc', 'release_date.asc', 'original_title.desc', 'original_title.asc'];
 export enum SORT_ORDER {
   'popularity.desc' = 'More Popular',

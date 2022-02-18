@@ -20,6 +20,8 @@ export function RatingFilter({ setFilterOfRatings, filterOfRatings }: RatingFilt
           step={1}
           min={0}
           max={10}
+          bottomRange={filterOfRatings[0].toString()}
+          topRange={filterOfRatings[1].toString()}
         />
       </div>
     </section>

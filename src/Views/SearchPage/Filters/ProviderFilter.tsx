@@ -1,7 +1,6 @@
 import React from 'react';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { providerFilter, watchProvider } from '../SearchQueryTypes';
-import { INIT_PROVIDERS_STATE } from './InitialStates';
 
 export interface ProviderFilterType {
   setFilterOfProviders: React.Dispatch<React.SetStateAction<providerFilter[]>>;
@@ -18,12 +17,20 @@ export function ProviderFilter({ setFilterOfProviders, filterOfProviders, provid
     });
     setFilterOfProviders(newArr);
   }
+  function getAppliedNames(providers: providerFilter[]) {
+    const appliedIDs = providers.map((provider) => (provider.isApplied ? provider.id : null)).filter((id) => id);
+    const names = appliedIDs.map((id) => {
+      const ind = providerList.findIndex((item) => item.provider_id === id);
+      return providerList[ind].provider_name;
+    });
+    return names;
+  }
   return (
     <section>
       <div className='filters__providers'>
         <CustomSelect
           isMultiple
-          checkedArray={filterOfProviders.filter((provider) => provider.isApplied).map((prov) => providerList.find((item) => prov.id === item.provider_id)!.provider_name)}
+          checkedArray={getAppliedNames(filterOfProviders)}
           variants={providerList.map((provider) => provider.provider_name)}
           placeholder='providers'
           handleMultipleSelect={(value: string[]) => {

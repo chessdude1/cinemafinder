@@ -1,9 +1,24 @@
 .movie-table {
   width: 100%;
-  padding: 5rem;
+  padding: 5rem 0;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   gap: 2rem;
+}
+
+.movie-table__item-enter {
+  opacity: 0;
+}
+.movie-table__item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.movie-table__item-exit {
+  opacity: 1;
+}
+.movie-table__item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
 }
