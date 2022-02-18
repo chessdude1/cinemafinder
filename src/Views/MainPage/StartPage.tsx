@@ -7,6 +7,7 @@ import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
 import { SearchQueryAux } from '../SearchPage/SearchQuery/QueryAux';
 import { CustomSwiper } from '../../Common/UI/CustomSwiper/CustomSwiper';
+import headingArrow from '../../Assets/img/Swiper/heading-arrow.svg';
 
 import './StartPageStyles.scss';
 
@@ -38,14 +39,14 @@ export function StartPage() {
       <section className='latest-block'>
         <div className='latest-block__heading-wrapper'>
           <Typography variant='h2'>Новинки</Typography>
-          <img src='img/heading-arrow.svg' alt='slide' />
+          <img src={headingArrow} alt='slide' />
         </div>
         <CustomSwiper slidesPerView={6} spaceBetween={30} movies={latestMovies} />
       </section>
       <section className='popular-block'>
         <div className='popular-block__heading-wrapper'>
           <Typography variant='h2'>Популярное</Typography>
-          <img src='img/heading-arrow.svg' alt='slide' />
+          <img src={headingArrow} alt='slide' />
         </div>
         <CustomSwiper slidesPerView={6} spaceBetween={30} movies={movies} />
       </section>
