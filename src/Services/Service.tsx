@@ -103,8 +103,22 @@ export async function login(email: string, password: string): Promise<AxiosRespo
   return $api.post<IAuthResponse>('/login', { email, password });
 }
 
-export async function registration(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-  return $api.post<IAuthResponse>('/registration', { email, password });
+export async function registration(email: string, password: string, name : string): Promise<AxiosResponse<IAuthResponse>> {
+  return $api.post<IAuthResponse>('/registration', { email, password, name });
+}
+
+export function registrationUserFormData(email: string, password: string, name : string, file : File | string): Promise<AxiosResponse<IAuthResponse>> {
+  if (
+    typeof file === 'string'
+  ) {
+    return $api.post<IAuthResponse>('/registration', { email, password, name });
+  }
+  const formData = new FormData();
+  formData.append('picture', file);
+  formData.append('email', email);
+  formData.append('password', password);
+  formData.append('name', name);
+  return $api.post<IAuthResponse>('/registration', formData);
 }
 
 export async function logout(): Promise<void> {

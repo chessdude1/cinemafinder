@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 
@@ -10,7 +10,7 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import { registration } from '../../Services/Service';
+import { registration, registrationUserFormData } from '../../Services/Service';
 
 import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => createStyles({
   },
   textField: {
     '& > *': {
-      marginTop: '3.2rem',
+      marginTop: '2.2rem',
       width: '130%',
     },
   },
@@ -37,21 +37,23 @@ const useStyles = makeStyles(() => createStyles({
   errorMessage: { color: 'red' },
 }));
 
-interface ISignUpForm {
+ interface ISignUpForm {
   Name: string;
   password: string;
   confirmPassword: string;
   email: string;
+  file : string;
 }
 
 export function RegistrationPage() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const [handleFile, setFile] = useState<string | File>('');
 
   async function createUser(user : ISignUpForm) {
     try {
-      const response = await registration(user.email, user.password);
+      const response = await registrationUserFormData(user.email, user.password, user.Name, handleFile);
       dispatch(AuthPageActions.SetIsLogin(true));
       dispatch(AuthPageActions.SetUser(response.data.user));
       localStorage.setItem('token', response.data.accessToken);
@@ -71,6 +73,7 @@ export function RegistrationPage() {
           password: '',
           confirmPassword: '',
           email: '',
+          file: '',
         }}
         onSubmit={(values: ISignUpForm) => {
           createUser(values);
@@ -98,7 +101,6 @@ export function RegistrationPage() {
             handleBlur,
             handleChange,
           } = props;
-
           const isErrors = Object.entries(errors).length !== 0;
 
           return (
@@ -112,8 +114,6 @@ export function RegistrationPage() {
                 variant='h2'
               >
                 Создать аккаунт
-                {' '}
-
               </Typography>
 
               <Grid container spacing={2} direction='row'>
@@ -228,7 +228,7 @@ export function RegistrationPage() {
                     marginBottom: '4.8rem',
                     justifyContent: 'center' }}
                   >
-                    <UploadButton />
+                    <UploadButton handleChange={setFile} name='file' />
                   </Box>
 
                   <Box sx={{ display: 'flex',
@@ -236,11 +236,11 @@ export function RegistrationPage() {
                     justifyContent: 'center' }}
                   >
                     <CustomButton
-                      variant='contained'
+                      variant='text'
                       type='submit'
                       disabled={isErrors}
                     >
-                      Регистрация
+                      Зарегистрироваться
                     </CustomButton>
                   </Box>
                 </Grid>
