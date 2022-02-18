@@ -19,6 +19,8 @@ export function CustomTextField({
 }: ICustomTextFieldType) {
   return (
     <TextField
+      InputProps={{ style: { fontSize: '1.6rem' } }}
+      InputLabelProps={{ style: { fontSize: '1.6rem' } }}
       name={name}
       id={id}
       label={label}
