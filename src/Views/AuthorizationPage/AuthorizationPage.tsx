@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { Typography } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import { createStyles, makeStyles } from '@mui/styles';
 
+import Box from '@mui/material/Box';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
-import { IAuthResponse } from '../../Services/ServiceTypes';
 
-import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { login } from '../../Services/Service';
 
 import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
-import { API_URL } from '../../Services/Interceptors';
+import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -25,15 +24,12 @@ const useStyles = makeStyles(() => createStyles({
   },
   textField: {
     '& > *': {
-      width: '100%',
+      width: '120%',
     },
   },
   submitButton: {
     marginTop: '2.4rem',
   },
-  title: { textAlign: 'center' },
-  successMessage: { color: 'green' },
-  errorMessage: { color: 'red' },
 }));
 
 interface ISignInForm {
@@ -41,80 +37,54 @@ interface ISignInForm {
     email: string
 }
 
-interface IFormStatus {
-    message: string
-    type: string
-}
-
-interface IFormStatusProps {
-    [key: string]: IFormStatus
-}
-
-const formStatusProps: IFormStatusProps = {
-  success: {
-    message: 'Signed up successfully.',
-    type: 'success',
-  },
-  duplicate: {
-    message: 'Email-id already exist. Please use different email-id.',
-    type: 'error',
-  },
-  error: {
-    message: 'Something went wrong. Please try again.',
-    type: 'error',
-  },
-};
-
 export function AuthorizationPage() {
+  const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
+  const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+  const handleSuccessSnackBar = () => {
+    setSuccessSnackBarOpen(true);
+  };
+
+  const handleErrorSnackBar = () => {
+    setErrorSnackBarOpen(true);
+  };
+
+  const handleCloseSnackBar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccessSnackBarOpen(false);
+    setErrorSnackBarOpen(false);
+  };
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [displayFormStatus, setDisplayFormStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<IFormStatus>({
-    message: '',
-    type: '',
-  });
 
   async function loginUser(user: ISignInForm) {
     try {
       const response = await login(user.email, user.password);
       dispatch(AuthPageActions.SetIsLogin(true));
+      handleSuccessSnackBar();
       localStorage.setItem('token', response.data.accessToken);
       dispatch(AuthPageActions.SetUser(response.data.user));
     } catch (e: any) {
+      setErrorMessage(e.response?.data?.message);
+      handleErrorSnackBar();
       dispatch(AuthPageActions.SetIsLogin(false));
       console.log(e.response?.data?.message);
     }
   }
 
-  const formStatusContent = () => {
-    if (formStatus.type === 'error') {
-      return (
-        <p className={classes.errorMessage}>
-          {formStatus.message}
-        </p>
-      );
-    } if (formStatus.type === 'success') {
-      return (
-        <p className={classes.successMessage}>
-          {formStatus.message}
-        </p>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className={classes.root}>
       <Formik
         initialValues={{
-          password: '',
           email: '',
+          password: '',
         }}
-        onSubmit={(values: ISignInForm, actions) => {
+        onSubmit={(values: ISignInForm) => {
           loginUser(values);
-          setTimeout(() => {
-            actions.setSubmitting(false);
-          }, 500);
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
@@ -136,16 +106,65 @@ export function AuthorizationPage() {
             errors,
             handleBlur,
             handleChange,
-            isSubmitting,
           } = props;
+          const isErrors = Object.entries(errors).length !== 0;
+
           return (
             <Form>
-              <h1 className={classes.title}>Sign in</h1>
+              <Snackbars
+                handleClose={handleCloseSnackBar}
+                text='Успешный вход'
+                type='success'
+                isOpen={isSuccessSnackBarOpen}
+              />
+              <Snackbars
+                handleClose={handleCloseSnackBar}
+                text={`${errorMessage} `}
+                type='error'
+                isOpen={isErrorSnackBarOpen}
+              />
+              <Typography
+                sx={{ fontWeight: '600',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '4.8rem',
+                  marginBottom: '2.4rem' }}
+                variant='h2'
+              >
+                Логин
+              </Typography>
               <Grid
+                sx={{ marginTop: '10rem' }}
                 container
                 spacing={2}
                 direction='row'
               >
+                <Grid
+                  item
+                  lg={10}
+                  md={10}
+                  sm={10}
+                  xs={10}
+                  className={classes.textField}
+                >
+                  <CustomTextField
+                    name='email'
+                    id='email'
+                    label='Email'
+                    value={values.email}
+                    type='email'
+                    helperText={
+                      errors.email && touched.email
+                        ? errors.email
+                        : 'Enter email'
+                    }
+                    error={
+                      !!(errors.email && touched.email)
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Grid>
                 <Grid
                   item
                   lg={10}
@@ -162,8 +181,8 @@ export function AuthorizationPage() {
                     type='password'
                     helperText={
                       errors.password && touched.password
-                        ? 'Please valid password. One uppercase, one lowercase, one special character and no spaces'
-                        : 'One uppercase, one lowercase, one special character and no spaces'
+                        ? 'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces'
+                        : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
                     }
                     error={
                       !!(errors.password && touched.password)
@@ -171,32 +190,7 @@ export function AuthorizationPage() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                </Grid>
-                <Grid
-                  item
-                  lg={10}
-                  md={10}
-                  sm={10}
-                  xs={10}
-                  className={classes.textField}
-                >
-                  <CustomTextField
-                    name='email'
-                    id='email'
-                    label='Email-id'
-                    value={values.email}
-                    type='email'
-                    helperText={
-                      errors.email && touched.email
-                        ? errors.email
-                        : 'Enter email-id'
-                    }
-                    error={
-                      !!(errors.email && touched.email)
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+
                 </Grid>
                 <Grid
                   item
@@ -206,18 +200,19 @@ export function AuthorizationPage() {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <CustomButton
-                    type='submit'
-                    color='secondary'
-                    disabled={isSubmitting}
+                  <Box sx={{ display: 'flex',
+                    width: '130%',
+                    marginTop: '5rem',
+                    justifyContent: 'center' }}
                   >
-                    Sign in
-                  </CustomButton>
-                  {displayFormStatus && (
-                    <div className='formStatus'>
-                      {formStatusContent}
-                    </div>
-                  )}
+                    <CustomButton
+                      type='submit'
+                      color='secondary'
+                      disabled={isErrors}
+                    >
+                      Войти
+                    </CustomButton>
+                  </Box>
                 </Grid>
               </Grid>
             </Form>
