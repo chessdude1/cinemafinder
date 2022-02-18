@@ -21,7 +21,7 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList }: SortOrderType)
     <section>
       <div className='sort-options'>
         <CustomSingleSelect
-          checkedArray={SORT_ORDER[sortOrder as keyof typeof SORT_ORDER]}
+          checkedItem={SORT_ORDER[sortOrder as keyof typeof SORT_ORDER]}
           variants={sortsList.map((order) => SORT_ORDER[order as keyof typeof SORT_ORDER])}
           placeholder='order'
           handleSelect={(value: string) => {

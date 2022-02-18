@@ -13,6 +13,8 @@ import { SearchPage } from './MovieTable/SearchPage';
 import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
 import './SearchPage.scss';
+import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
+import { CustomResetButton } from '../../Common/UI/CustomResetButton/CustomResetButton';
 
 export function SearchPageAux() {
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
@@ -20,7 +22,7 @@ export function SearchPageAux() {
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
   const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
   const filtersInStore = useTypedSelector((store) => store.SearchPageReducer.filters);
-  const footerIndent = 150;
+  const footerIndent = 10;
 
   const initGenresState = getStateFromStore(filtersInStore.genre, INIT_GENRES_STATE) as IGenre[];
   const initProvidersState = getStateFromStore(filtersInStore.providers, INIT_PROVIDERS_STATE) as providerFilter[];
@@ -82,7 +84,14 @@ export function SearchPageAux() {
       document.removeEventListener('scroll', trackScrolling);
     };
   }, [allLoaded, trackScrolling, dispatch]);
-
+  function resetFilters() {
+    // dispatch(sendUpdateFilterState(filtersInStore, INIT_SORT_ORDER, initProvidersState, INIT_RATING_STATE, INIT_YEARS_STATE, filterOfGenres));
+    setFilterOfGenres(INIT_GENRES_STATE);
+    setFilterOfProviders(INIT_PROVIDERS_STATE);
+    setFilterOfYears(INIT_YEARS_STATE);
+    setFilterOfRatings(INIT_RATING_STATE);
+    setSortOrder(INIT_SORT_ORDER);
+  }
   return (
     <section className='search-page'>
       <div className='search-page__filters'>
@@ -91,6 +100,7 @@ export function SearchPageAux() {
         <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
         <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
         <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+        <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
       </div>
       <div id='movies-filtered-list'>
         <SearchPage />

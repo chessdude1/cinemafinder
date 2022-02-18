@@ -8,17 +8,17 @@
   gap: 2rem;
 }
 
-.item-enter {
+.movie-table__item-enter {
   opacity: 0;
 }
-.item-enter-active {
+.movie-table__item-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
-.item-exit {
+.movie-table__item-exit {
   opacity: 1;
 }
-.item-exit-active {
+.movie-table__item-exit-active {
   opacity: 0;
   transition: opacity 500ms ease-in;
 }

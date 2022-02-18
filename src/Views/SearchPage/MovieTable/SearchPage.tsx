@@ -18,7 +18,7 @@ export function SearchPage() {
     <section>
       <TransitionGroup className='movie-table'>
         {movies.map((movie) => (
-          <CSSTransition key={movie.id} timeout={500} classNames='item'>
+          <CSSTransition key={movie.id} timeout={500} classNames='movie-table__item'>
             <MovieCardSmall
               classStyle='movie-card__small'
               key={movie.id}

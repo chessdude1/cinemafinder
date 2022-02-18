@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
@@ -11,12 +12,13 @@ import { InputLabel } from '@mui/material';
 interface ICustomSingleSelect {
   variants: Array<string>;
   placeholder: string;
-  checkedArray: string;
+  checkedItem: string;
   handleSelect: (value: string) => void;
 }
 
-export function CustomSingleSelect({ variants, placeholder, checkedArray, handleSelect }: ICustomSingleSelect) {
+export function CustomSingleSelect({ variants, placeholder, checkedItem: checkedArray, handleSelect }: ICustomSingleSelect) {
   const [item, setItem] = React.useState<string>(checkedArray);
+  useEffect(() => setItem(checkedArray), [checkedArray]);
   const handleChange = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
