@@ -59,16 +59,21 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
             {transalteGenres.join(', ')}
           </Typography>
           <RatingDisplay evaluator='IMDb' rating={voteAverage} />
-          <Typography sx={{ fontWeight: '600', marginTop: '9.7rem', marginBottom: '0.4rem' }} variant='h5'>
-            Доступные площадки
-          </Typography>
-          <div className='film-card__providers-wrapper'>
-            {watchProvidersWithoutRepeats.map((watchProvider) => (
-              <div key={watchProvider.provider_id}>
-                <img alt={watchProvider.provider_name} className='film-card__provider-image' src={`https://image.tmdb.org/t/p/w342${watchProvider.logo_path}`} />
+          {watchProvidersWithoutRepeats.length > 0 ? (
+            <>
+              <Typography sx={{ fontWeight: '600', marginTop: '9.7rem', marginBottom: '0.4rem' }} variant='h5'>
+                Доступные площадки
+              </Typography>
+              <div className='film-card__providers-wrapper'>
+                {watchProvidersWithoutRepeats.map((watchProvider) => (
+                  <div key={watchProvider.provider_id}>
+                    <img alt={watchProvider.provider_name} className='film-card__provider-image' src={`https://image.tmdb.org/t/p/w342${watchProvider.logo_path}`} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : '' }
+
         </Box>
         <Paper elevation={3} />
       </Box>

@@ -10,6 +10,7 @@ import { WatchProvidersList } from './WatchProvidersList/WatchProvidersList';
 import './MoviePageStyles.scss';
 import { ConverTime } from '../../Auxiliary/ConvertTime';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
+import { CustomSwiper } from '../../Common/UI/CustomSwiper/CustomSwiper';
 
 interface IMoviePage {
   genres : Array<{id: number, name : string}> | undefined;
@@ -22,17 +23,17 @@ interface IMoviePage {
   flatrateWatchProviders : Array<onlineCinema> | undefined;
   rentWatchProviders : Array<onlineCinema> | undefined;
   overview : string | undefined;
-  notRepeatedProviders : Array<string>;
   similarFilms : Array<filmResponse> | undefined;
-  AddFilmToUserFavourite : (filmId : string) => void;
   currentMovieId : string;
   runtime : number | undefined;
   setNewFavoriteFilm: (filmId : string) => void;
   isFilmAlreadyInFavourites: boolean;
-  deleteFilmFromFavorite: (filmId : string) => void
+  deleteFilmFromFavorite: (filmId : string) => void;
+  isLogin: boolean;
 }
 
 export function MoviePage({
+  isLogin,
   isFilmAlreadyInFavourites,
   genres,
   voteAverage,
@@ -44,9 +45,7 @@ export function MoviePage({
   flatrateWatchProviders,
   rentWatchProviders,
   overview,
-  notRepeatedProviders,
   similarFilms,
-  AddFilmToUserFavourite,
   currentMovieId,
   runtime,
   setNewFavoriteFilm,
@@ -79,7 +78,7 @@ export function MoviePage({
               </Typography>
             </Grid>
           </Grid>
-          {isFilmAlreadyInFavourites ? (
+          {isLogin ? (isFilmAlreadyInFavourites ? (
             <CustomButton
               variant='contained'
               onClick={() => {
@@ -99,8 +98,7 @@ export function MoviePage({
             >
               В избранное
             </CustomButton>
-          )}
-
+          )) : '' }
         </Box>
       </section>
       <section className='movie-description'>
@@ -131,9 +129,13 @@ export function MoviePage({
           <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '4rem', marginBottom: '1.6rem' }}>
             Похожие фильмы
           </Typography>
-          <RecomendationsList
+          <Box sx={{ maxWidth: '60vw' }}>
+            {similarFilms ? <CustomSwiper movies={similarFilms} slidesPerView={5} spaceBetween={30} /> : '' }
+          </Box>
+
+          {/* <RecomendationsList
             similarFilms={similarFilms}
-          />
+          /> */}
         </Box>
       </section>
     </main>
