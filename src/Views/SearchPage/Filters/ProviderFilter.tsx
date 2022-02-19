@@ -1,4 +1,6 @@
 import React from 'react';
+import { ADAPTIVE_BREAK_POINT } from '../../../Auxiliary/Constants';
+import { CustomLabeledCheckbox } from '../../../Common/UI/CustomLabeledCheckbox/CustomLabeledCheckbox';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { providerFilter, watchProvider } from '../SearchQueryTypes';
 
@@ -6,14 +8,15 @@ export interface ProviderFilterType {
   setFilterOfProviders: React.Dispatch<React.SetStateAction<providerFilter[]>>;
   filterOfProviders: providerFilter[];
   providerList: watchProvider[];
+  windowSize: number;
 }
-export function ProviderFilter({ setFilterOfProviders, filterOfProviders, providerList }: ProviderFilterType) {
+export function ProviderFilter({ setFilterOfProviders, filterOfProviders, providerList, windowSize }: ProviderFilterType) {
   function updateFieldChanged(names: string[]) {
     const newArr = providerList.map((provider) => {
       if (!names.includes(provider.provider_name)) {
-        return { id: provider.provider_id, isApplied: false };
+        return { id: provider.provider_id, name: provider.provider_name, isApplied: false };
       }
-      return { id: provider.provider_id, isApplied: true };
+      return { id: provider.provider_id, name: provider.provider_name, isApplied: true };
     });
     setFilterOfProviders(newArr);
   }
@@ -28,15 +31,23 @@ export function ProviderFilter({ setFilterOfProviders, filterOfProviders, provid
   return (
     <section>
       <div className='filters__providers'>
-        <CustomSelect
-          isMultiple
-          checkedArray={getAppliedNames(filterOfProviders)}
-          variants={providerList.map((provider) => provider.provider_name)}
-          placeholder='providers'
-          handleMultipleSelect={(value: string[]) => {
-            updateFieldChanged(value);
-          }}
-        />
+        {windowSize > ADAPTIVE_BREAK_POINT ? (
+          <CustomSelect
+            isMultiple
+            checkedArray={getAppliedNames(filterOfProviders)}
+            variants={providerList.map((provider) => provider.provider_name)}
+            placeholder='providers'
+            handleMultipleSelect={(value: string[]) => {
+              updateFieldChanged(value);
+            }}
+          />
+        ) : (
+          <div>
+            {filterOfProviders.map((provider) => (
+              <CustomLabeledCheckbox key={provider.id} isDefaultChecked={provider.isApplied} label={provider.name} onChange={(e) => updateFieldChanged([provider.name])} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

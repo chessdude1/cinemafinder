@@ -31,5 +31,6 @@ export interface watchProvider {
 
 export interface providerFilter {
   id: number;
+  name: string;
   isApplied: boolean;
 }

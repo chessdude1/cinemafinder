@@ -1,27 +1,21 @@
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import React from 'react';
 
 interface CustomRadioInputType {
-  label: string;
-  name: string;
+  checkedValue: string;
+  options: string[];
   onChange: (Ischecked: string) => void;
 }
 
-export function CustomRadioInput({ label, name, onChange }: CustomRadioInputType) {
+export function CustomRadioInput({ checkedValue, options, onChange }: CustomRadioInputType) {
   return (
-    <div>
-      <label htmlFor={label}>
-        {label}
-        <input
-          type='radio'
-          name={name}
-          value={label}
-          id={label}
-          onClick={() => {
-            onChange(label);
-          }}
-        />
-      </label>
-    </div>
+    <FormControl>
+      <RadioGroup aria-labelledby='demo-controlled-radio-buttons-group' name='controlled-radio-buttons-group' value={checkedValue} onChange={(e, value) => onChange(value)}>
+        {options.map((value) => (
+          <FormControlLabel key={value} value={value} control={<Radio />} label={value} />
+        ))}
+      </RadioGroup>
+    </FormControl>
   );
 }
 
