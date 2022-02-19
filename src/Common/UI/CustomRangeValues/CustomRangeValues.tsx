@@ -18,9 +18,11 @@ export function CustomRangeValues({ step, min, max, curValue, onChange, bottomRa
   return (
     <FormControl sx={{ m: 1, width: 200 }}>
       <div className='custom__range-value-filter'>
-        <span className='range-value'>{bottomRange}</span>
         <Slider marks step={step} min={min} max={max} value={curValue} onChange={(e, value: number | number[]) => onChange(value)} valueLabelDisplay='auto' disableSwap />
-        <span className='range-value'>{topRange}</span>
+        <div className='custom__range-values'>
+          <span className='range-value'>{bottomRange}</span>
+          <span className='range-value'>{topRange}</span>
+        </div>
       </div>
     </FormControl>
   );
