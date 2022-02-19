@@ -4,11 +4,11 @@ import TextField from '@mui/material/TextField';
 
 interface ICustomTextFieldType {
   name: string,
-  id: string,
+  id?: string,
   label: string,
   type: string,
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-  onBlur: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  onBlur?: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   value: string,
   helperText: string,
   error: boolean

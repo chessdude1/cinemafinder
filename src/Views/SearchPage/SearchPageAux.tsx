@@ -5,7 +5,7 @@ import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
 import { SearchPageActionTypes } from '../../redux/SearchPageRedux/SearchPageActions';
 import { GenreFilters } from './Filters/GenreFilters';
-import { ProviderFilter, ProviderFilterType } from './Filters/ProviderFilter';
+import { ProviderFilter } from './Filters/ProviderFilter';
 import { RatingFilter } from './Filters/RatingFilter';
 import { SortOrder } from './Filters/SortOrder';
 import { YearFilter } from './Filters/YearFilter';
@@ -13,9 +13,8 @@ import { getStateFromStore, sendUpdateFilterState } from './FilterStateUpdates';
 import { SearchPage } from './MovieTable/SearchPage';
 import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
-import './SearchPage.scss';
-import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { CustomResetButton } from '../../Common/UI/CustomResetButton/CustomResetButton';
+import './SearchPage.scss';
 
 interface IFilter {
   sort: string;

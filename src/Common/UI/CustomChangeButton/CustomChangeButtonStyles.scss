@@ -1,0 +1,10 @@
+@import '../../../Variables.scss';
+
+.custom-change-button.MuiButton-root{
+  max-width: 13.7rem;
+  font-size: 1.5rem;
+  color: $BLUELINK;
+  text-decoration: underline 1px solid $BLUELINK ;
+  border: none !important
+}
+

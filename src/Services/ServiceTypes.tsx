@@ -76,6 +76,7 @@ export interface filmResponse{
 }
 
 export interface IUser {
+  name : string;
   _id?: string;
   password?: string;
   __v?: 0;

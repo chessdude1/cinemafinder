@@ -3,12 +3,13 @@ import { AuthPageActionsTypes, UserOperations, UserType } from './AuthPageAction
 const initialState = {
   isLogin: false,
   user: {
+    name: 'user',
     isActivated: false,
     email: '1@mail.ru',
     favoriteFilms: ['123', '321'],
   },
 };
-type test = {
+type TInitialState = {
   isLogin: boolean,
   user : UserType
 }
@@ -16,7 +17,7 @@ type test = {
 export function AuthPageReducer(
   state = initialState,
   action: AuthPageActionsTypes,
-): test {
+): TInitialState {
   switch (action.type) {
     case UserOperations.SETISLOGIN:
       return { ...state, isLogin: action.payload };
