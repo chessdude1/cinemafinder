@@ -3,16 +3,25 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import './CustomLabaledCheckBoxStyles.scss';
 
-interface CustomLabeledCheckboxType{
-  label : string,
-  onChange : (IsChecked : boolean) => void
+interface CustomLabeledCheckboxType {
+  label: string;
+  onChange: (IsChecked: boolean) => void;
+  isDefaultChecked?: boolean;
+  isChecked?: boolean;
 }
 
-export function CustomLabeledCheckbox({ label, onChange } :CustomLabeledCheckboxType) {
+export function CustomLabeledCheckbox({ label, onChange, isDefaultChecked = true, isChecked = true }: CustomLabeledCheckboxType) {
   return (
     <FormControlLabel
       sx={{ fontSize: '1.2rem' }}
-      control={<Checkbox defaultChecked onChange={(e) => { onChange(e.target.checked); }} />}
+      control={
+        <Checkbox
+          defaultChecked={isDefaultChecked}
+          onChange={(e) => {
+            onChange(e.target.checked);
+          }}
+        />
+      }
       label={label}
     />
   );

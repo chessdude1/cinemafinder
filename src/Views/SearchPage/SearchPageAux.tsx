@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
+import _, { divide } from 'lodash';
+import { Divider, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
@@ -15,6 +16,10 @@ import { IGenre, providerFilter, sortTypes } from './SearchQueryTypes';
 import { INIT_GENRES_STATE, INIT_PROVIDERS_STATE, INIT_RATING_STATE, INIT_SORT_ORDER, INIT_YEARS_STATE } from './Filters/InitialStates';
 import { CustomResetButton } from '../../Common/UI/CustomResetButton/CustomResetButton';
 import './SearchPage.scss';
+import { ADAPTIVE_BREAK_POINT } from '../../Auxiliary/Constants';
+import { TemporaryDrawer } from '../../Common/UX/Drawer/Drawer';
+import { AdaptiveDrawer } from './Filters/AdaptiveFilterDrawer/AdaptiveFilterDrawer';
+import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 
 interface IFilter {
   sort: string;
@@ -24,6 +29,24 @@ interface IFilter {
   genres: IGenre[];
 }
 export function SearchPageAux() {
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+  useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+  const [isDrawerOpen, setDrawer] = useState<boolean>(false);
+
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
   const pageNumber = useTypedSelector((store) => store.SearchPageReducer.pageNumber);
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
@@ -110,18 +133,63 @@ export function SearchPageAux() {
   }
   return (
     <section className='search-page'>
-      <div className='search-page__ui'>
-        <div className='search-page__filters'>
-          <SortOrder setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
-          <ProviderFilter setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
-          <GenreFilters setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
-          <YearFilter setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
-          <RatingFilter setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+      {dimensions.width > ADAPTIVE_BREAK_POINT ? (
+        <div className='search-page__ui'>
+          <div className='search-page__filters'>
+            <SortOrder windowSize={dimensions.width} setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+            <ProviderFilter windowSize={dimensions.width} setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+            <GenreFilters windowSize={dimensions.width} setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+            <YearFilter windowSize={dimensions.width} setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+            <RatingFilter windowSize={dimensions.width} setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+          </div>
+          <div className='search-page__button'>
+            <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+          </div>
         </div>
-        <div className='search-page__button'>
-          <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+      ) : (
+        <div className='search-page__ui'>
+          <CustomButton type='button' onClick={() => setDrawer(true)} variant='outlined'>
+            Фильтры
+          </CustomButton>
+          <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
+            <div className='search-page__drawer'>
+              <CustomButton type='button' onClick={() => setDrawer(false)} variant='contained'>
+                Назад
+              </CustomButton>
+              <div className='search-page__filters'>
+                <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
+                  Провайдеры
+                </Typography>
+                <ProviderFilter windowSize={dimensions.width} setFilterOfProviders={setFilterOfProviders} filterOfProviders={filterOfProviders} providerList={providers} />
+                <Divider />
+                <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
+                  Жанры
+                </Typography>
+                <GenreFilters windowSize={dimensions.width} setFilterOfGenres={setFilterOfGenres} genreFilter={filterOfGenres} />
+                <Divider />
+                <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
+                  Год
+                </Typography>
+                <YearFilter windowSize={dimensions.width} setFilterOfYears={setFilterOfYears} filterOfYears={filterOfYears} />
+                <Divider />
+                <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
+                  Рейтинг
+                </Typography>
+                <RatingFilter windowSize={dimensions.width} setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
+                <Divider />
+                <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
+                  Порядок сортировки
+                </Typography>
+                <SortOrder windowSize={dimensions.width} setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+              </div>
+              <div className='search-page__button'>
+                <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+              </div>
+            </div>
+          </TemporaryDrawer>
         </div>
-      </div>
+      )}
+
       <div id='movies-filtered-list'>
         <SearchPage />
       </div>

@@ -1,0 +1,1 @@
+export const ADAPTIVE_BREAK_POINT = 768;

@@ -1,7 +1,5 @@
-.search-features {
-  display: flex;
-  gap: 1rem;
-}
+@import '../../Variables.scss';
+
 .search-page {
   padding: 2rem 5rem;
   font-family: 'Roboto', sans-serif;
@@ -27,4 +25,24 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+@media (max-width: $SIZEADAPTIVE) {
+  .search-page__ui {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .search-page__drawer {
+    padding: 0 1rem;
+  }
+  .search-page__filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .search-page__filters-year {
+    width: 100%;
+  }
+  .search-page__range-filter {
+    width: 100%;
+  }
 }
