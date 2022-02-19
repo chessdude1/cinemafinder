@@ -271,7 +271,7 @@ export function RegistrationPage() {
                     marginBottom: '4.8rem',
                     justifyContent: 'center' }}
                   >
-                    <UploadButton handleChange={setFile} name='file' />
+                    <UploadButton text='Загрузить изображение' handleChange={setFile} name='file' />
                   </Box>
 
                   <Box sx={{ display: 'flex',

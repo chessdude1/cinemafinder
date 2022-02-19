@@ -6,12 +6,11 @@ import axios from 'axios';
 import { StartPage } from './Views/MainPage/StartPage';
 import { PageNotFound } from './Views/ErrorPage/PageNotFound';
 import { RegistrationPage } from './Views/RegistrationPage/RegistrationPage';
-import { AccountPage } from './Views/AccountPage/AccountPage';
 import { AuthorizationPage } from './Views/AuthorizationPage/AuthorizationPage';
 import { MoviePageAux } from './Views/MoviePage/MoviePageAux';
 import Header from './Layouts/Header';
 import { FavouritesPageAux } from './Views/FavouritesPage/FavouritesPageAux';
-import { SettingsPage } from './Views/AccountPage/SettingsPage/SettingsPage';
+import { SettingsPageAux } from './Views/SettingsPage/SettingsPageAux';
 import { SearchPageAux } from './Views/SearchPage/SearchPageAux';
 import { QueryPageAux } from './Views/SearchPage/SearchQuery/QueryPage/QueryPage';
 import { IAuthResponse } from './Services/ServiceTypes';
@@ -65,9 +64,7 @@ export function App() {
           <Route path='/registration' element={<RegistrationPage />} />
           <Route path='/authorization' element={<AuthorizationPage />} />
           <Route path='/favourites' element={<FavouritesPageAux />} />
-          <Route path='/account' element={<AccountPage />}>
-            <Route path='settings' element={<SettingsPage />} />
-          </Route>
+          <Route path='/settings' element={<SettingsPageAux />} />
           <Route path='/movie/:movieId' element={<MoviePageAux />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>

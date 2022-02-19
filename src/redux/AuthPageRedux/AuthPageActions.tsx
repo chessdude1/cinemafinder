@@ -6,6 +6,7 @@ export enum UserOperations {
 }
 
 export interface UserType {
+  name : string,
   isActivated: boolean,
   email : string,
   favoriteFilms: Array<string>,
