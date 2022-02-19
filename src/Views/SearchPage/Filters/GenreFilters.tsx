@@ -25,25 +25,23 @@ export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: Gen
   }
   return (
     <section>
-      <div className='filters__genre'>
-        {windowSize > ADAPTIVE_BREAK_POINT ? (
-          <CustomSelect
-            isMultiple
-            checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => genre.name)}
-            variants={genreFilter.map((genre) => genre.name)}
-            placeholder='genres'
-            handleMultipleSelect={(value: string[]) => {
-              updateFieldChanged(value);
-            }}
-          />
-        ) : (
-          <div>
-            {genreFilter.map((genre) => (
-              <CustomLabeledCheckbox key={genre.id} isDefaultChecked={genre.isApplied} label={genre.name} onChange={() => updateFieldChanged([genre.name])} />
-            ))}
-          </div>
-        )}
-      </div>
+      {windowSize > ADAPTIVE_BREAK_POINT ? (
+        <CustomSelect
+          isMultiple
+          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => genre.name)}
+          variants={genreFilter.map((genre) => genre.name)}
+          placeholder='genres'
+          handleMultipleSelect={(value: string[]) => {
+            updateFieldChanged(value);
+          }}
+        />
+      ) : (
+        <div className='search-page__checkbox-filter'>
+          {genreFilter.map((genre) => (
+            <CustomLabeledCheckbox key={genre.id} isDefaultChecked={genre.isApplied} label={genre.name} onChange={() => updateFieldChanged([genre.name])} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

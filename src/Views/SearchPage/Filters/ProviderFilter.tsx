@@ -30,25 +30,23 @@ export function ProviderFilter({ setFilterOfProviders, filterOfProviders, provid
   }
   return (
     <section>
-      <div className='filters__providers'>
-        {windowSize > ADAPTIVE_BREAK_POINT ? (
-          <CustomSelect
-            isMultiple
-            checkedArray={getAppliedNames(filterOfProviders)}
-            variants={providerList.map((provider) => provider.provider_name)}
-            placeholder='providers'
-            handleMultipleSelect={(value: string[]) => {
-              updateFieldChanged(value);
-            }}
-          />
-        ) : (
-          <div>
-            {filterOfProviders.map((provider) => (
-              <CustomLabeledCheckbox key={provider.id} isDefaultChecked={provider.isApplied} label={provider.name} onChange={(e) => updateFieldChanged([provider.name])} />
-            ))}
-          </div>
-        )}
-      </div>
+      {windowSize > ADAPTIVE_BREAK_POINT ? (
+        <CustomSelect
+          isMultiple
+          checkedArray={getAppliedNames(filterOfProviders)}
+          variants={providerList.map((provider) => provider.provider_name)}
+          placeholder='providers'
+          handleMultipleSelect={(value: string[]) => {
+            updateFieldChanged(value);
+          }}
+        />
+      ) : (
+        <div className='search-page__checkbox-filter'>
+          {filterOfProviders.map((provider) => (
+            <CustomLabeledCheckbox key={provider.id} isDefaultChecked={provider.isApplied} label={provider.name} onChange={(e) => updateFieldChanged([provider.name])} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
