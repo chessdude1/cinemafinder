@@ -57,9 +57,7 @@ function Header() {
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          {
-            picture ? <Avatar alt='user image' src={`http://localhost:5000/${picture}`} /> : <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-          }
+          {picture ? <Avatar alt='user image' src={`http://localhost:5000/${picture}`} /> : <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
         </IconButton>
       </Tooltip>
       <Menu
@@ -76,9 +74,8 @@ function Header() {
           horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (
+        onClose={handleCloseUserMenu}>
+        {settings.map((setting) =>
           setting !== 'Logout' ? (
             <NavLink to={constructRoute(setting)}>
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -92,21 +89,24 @@ function Header() {
                 handleCloseUserMenu();
                 dispatch(AuthPageActions.SetIsLogin(false));
               }}
-              key={setting}
-            >
+              key={setting}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>
-          )
-        ))}
+          ),
+        )}
       </Menu>
     </Box>
   ) : (
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-        <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
+        <NavLink className='navlink' to='/authorization'>
+          Sign In
+        </NavLink>
       </Button>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-        <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
+        <NavLink className='navlink' to='/registration'>
+          Sign Up
+        </NavLink>
       </Button>
     </Box>
   );
@@ -133,8 +133,7 @@ function Header() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
+              sx={{ display: { xs: 'block', md: 'none' } }}>
               {PAGES.map((page) => (
                 <NavLink className='navlink' key={page} to={constructRoute(page)}>
                   <MenuItem onClick={handleCloseNavMenu}>
@@ -154,10 +153,14 @@ function Header() {
             </NavLink>
             {PAGES.map((page) => (
               <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                <NavLink className='navlink' to={constructRoute(page)}>{page}</NavLink>
+                <NavLink className='navlink' to={constructRoute(page)}>
+                  {page}
+                </NavLink>
               </Button>
             ))}
-            <SearchQueryAux inputPaddings={1} />
+            <div className='search-field__hidden'>
+              <SearchQueryAux inputPaddings={1} />
+            </div>
           </Box>
           {userStatus}
         </Toolbar>

@@ -1,0 +1,9 @@
+@import '../../../../Variables.scss';
+.query-page__search-field {
+  display: none;
+}
+@media (max-width: $SIZEADAPTIVE) {
+  .query-page__search-field {
+    display: block;
+  }
+}
