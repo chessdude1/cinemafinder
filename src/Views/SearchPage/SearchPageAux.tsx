@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import _, { divide } from 'lodash';
 import { Divider, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
 import { SearchPageSagaTypes } from '../../redux/Sages/SearchPageSaga';
@@ -153,9 +154,14 @@ export function SearchPageAux() {
           </CustomButton>
           <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
             <div className='search-page__drawer'>
-              <CustomButton type='button' onClick={() => setDrawer(false)} variant='contained'>
-                Назад
-              </CustomButton>
+              <div className='search-page__drawer-header'>
+                <Typography variant='h3' sx={{ fontWeight: '600', marginTop: '1rem', marginBottom: '1rem' }}>
+                  Фильтры
+                </Typography>
+                <CustomButton type='button' onClick={() => setDrawer(false)} variant='contained'>
+                  <ArrowBackIcon />
+                </CustomButton>
+              </div>
               <div className='search-page__filters'>
                 <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '2rem', marginBottom: '0.5rem' }}>
                   Провайдеры
@@ -181,9 +187,10 @@ export function SearchPageAux() {
                   Порядок сортировки
                 </Typography>
                 <SortOrder windowSize={dimensions.width} setSortOrder={setSortOrder} sortOrder={sortOrder} sortsList={sortTypes} />
+                <Divider />
               </div>
               <div className='search-page__button'>
-                <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+                <CustomResetButton type='button' variant='outlined' content='reset all' onClick={() => resetFilters()} />
               </div>
             </div>
           </TemporaryDrawer>
