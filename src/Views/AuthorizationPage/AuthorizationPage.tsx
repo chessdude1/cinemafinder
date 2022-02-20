@@ -96,7 +96,7 @@ export function AuthorizationPage() {
             .required('Enter valid email-id'),
           password: Yup.string()
             .matches(
-              /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+              / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
               'Please valid password. One uppercase, one lowercase, one special character and no spaces, more then 8 letters',

@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import $api from './Interceptors';
-import { IAuthResponse, IUser, WatchProvidersResponseType, ListOfWatchProvidersType, MovieWithAdditionalInformation } from './ServiceTypes';
+import { IAuthResponse,
+  IUser, WatchProvidersResponseType,
+  ListOfWatchProvidersType,
+  MovieWithAdditionalInformation } from './ServiceTypes';
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -132,4 +135,23 @@ export async function fetchUser() : Promise<IUser> {
 
 export function postUser(user: IUser): Promise<AxiosResponse<IUser>> {
   return $api.post<IUser>('/user', { user });
+}
+
+export function changePicture(id: string | undefined, file : File | string): Promise<AxiosResponse<IUser>> {
+  const formData = new FormData();
+  formData.append('picture', file);
+  if (id) {
+    formData.append('id', id);
+  }
+  return $api.post<IUser>('/user/picture', formData);
+}
+
+export function changePassword(id: string | undefined, password : string): Promise<AxiosResponse<IUser>> {
+  const formData = new FormData();
+  formData.append('password', password);
+  if (id) {
+    formData.append('id', id);
+  }
+
+  return $api.post<IUser>('/user/password', formData);
 }
