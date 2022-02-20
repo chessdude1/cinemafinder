@@ -11,22 +11,18 @@ import { GetListnotRepeatWatchProvidersWithSaveFields } from '../../../Auxiliary
 import notFoundImg from '../../../Assets/img/NotFoundImg/notFound.svg';
 
 interface FavoriteFilmCardType {
-  id : number,
-  posterPath: string,
-  originalTitle : string,
-  releaseDate: string,
-  watchProviders: ListOfWatchProvidersType,
-  voteAverage: number,
-  genres: Array<{id: number, name: string}> ;
+  id: number;
+  posterPath: string;
+  originalTitle: string;
+  releaseDate: string;
+  watchProviders: ListOfWatchProvidersType;
+  voteAverage: number;
+  genres: Array<{ id: number; name: string }>;
 }
 
-export function FavoriteFilmCard({ id, posterPath, originalTitle,
-  releaseDate,
-  watchProviders,
-  voteAverage,
-  genres } : FavoriteFilmCardType) {
+export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, watchProviders, voteAverage, genres }: FavoriteFilmCardType) {
   const link = `/movie/${id}`;
-  const year = (new Date(releaseDate)).getFullYear();
+  const year = new Date(releaseDate).getFullYear();
   const transalteGenres = TranslateGenre(genres);
   const watchProvidersWithoutRepeats = GetListnotRepeatWatchProvidersWithSaveFields(watchProviders);
 
@@ -34,26 +30,17 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
     <Card sx={{ width: '48%', marginTop: '2.4rem' }}>
       <Box sx={{ padding: '2.4rem', display: 'flex' }}>
         <Box sx={{ maxWidth: '17rem' }}>
-          {
-          posterPath ? (
+          {posterPath ? (
             <NavLink to={link}>
-
-              <img
-                className='film-card__image'
-                alt={originalTitle}
-                src={`https://image.tmdb.org/t/p/w342${posterPath}`}
-              />
+              <img className='film-card__image' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
             </NavLink>
-          )
-            : <img className='film-card__image' alt='not found img' src={notFoundImg} />
-        }
+          ) : (
+            <img className='film-card__image' alt='not found img' src={notFoundImg} />
+          )}
         </Box>
         <Box sx={{ marginLeft: '1.6rem' }}>
           <Typography variant='h4' sx={{ fontWeight: '600' }}>
-            {originalTitle}
-            (
-            {year}
-            )
+            {originalTitle}({year})
           </Typography>
           <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
             {transalteGenres.join(', ')}
