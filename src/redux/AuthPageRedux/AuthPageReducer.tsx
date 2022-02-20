@@ -7,6 +7,7 @@ const initialState = {
     isActivated: false,
     email: '1@mail.ru',
     favoriteFilms: ['123', '321'],
+    id: '123',
   },
 };
 type TInitialState = {

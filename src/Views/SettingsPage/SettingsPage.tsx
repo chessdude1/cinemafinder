@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useState, SyntheticEvent } from 'react';
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
@@ -6,14 +7,13 @@ import { styled } from '@mui/material/styles';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import { UserType } from '../../redux/AuthPageRedux/AuthPageActions';
-import { API_URL } from '../../Services/Interceptors';
+import { useDispatch } from 'react-redux';
+import { AuthPageActions, UserType } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
 import { UploadButton } from '../../Common/UI/UploadButton/UploadButton';
 import { CustomChangeButton } from '../../Common/UI/CustomChangeButton/CustomChangeButton';
 import { CustomTextField } from '../../Common/UI/CustomTextField/CustomTextField';
-import { postUser } from '../../Services/Service';
-import { IUser } from '../../Services/ServiceTypes';
+import { changePassword, changePicture, postUser } from '../../Services/Service';
 
 import './SettingsPageStyle.scss';
 import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
@@ -42,11 +42,12 @@ export function SettingsPage({ user } : ISettingsPage) {
   const [isNameChanged, setIsNameChanged] = useState<boolean>(false);
   const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
   const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
+  const [isNameFieldTouched, setIsNameFieldTouched] = React.useState(false);
+  const [name, setName] = React.useState<string>('');
 
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
-  const isNameError = name === '';
+  const dispatch = useDispatch();
 
   const handleSuccessSnackBar = () => {
     setSuccessSnackBarOpen(true);
@@ -65,29 +66,59 @@ export function SettingsPage({ user } : ISettingsPage) {
     setErrorSnackBarOpen(false);
   };
 
-  async function handleSettingsForm(newUserData : ISettings) {
+  async function handleForm() {
     try {
-      console.log(123);
-      let userAfterChangeData : IUser = user;
-      if (name !== '') {
-        userAfterChangeData = {
-          ...user,
-          name,
-        };
+      let id : string | undefined = '';
+      if (user.id) {
+        id = user.id;
+      } else {
+        id = user._id;
       }
-      const test = await postUser(
-        userAfterChangeData,
-      );
-      console.log(test);
+      let userWithChangedFields = user;
+      if (name !== '') {
+        const res = await postUser({ ...user, name });
+        userWithChangedFields = res.data;
+      }
+      if (handleFile !== '') {
+        const res = await changePicture(id, handleFile);
+        userWithChangedFields = res.data;
+      }
+
+      dispatch(AuthPageActions.SetUser(userWithChangedFields));
+      handleSuccessSnackBar();
     } catch (e : any) {
       if (e) {
+        setErrorMessage(e.response?.data?.message);
+        handleErrorSnackBar();
         console.log(e.response?.data?.message);
       }
     }
   }
 
-  const handleNameChange = (e : any) => {
-    setName(e.target.value);
+  async function handleSettingsForm(newUserData : ISettings) {
+    try {
+      let id : string | undefined = '';
+      if (user.id) {
+        id = user.id;
+      } else {
+        id = user._id;
+      }
+      const userWithChangedPassword = await changePassword(id, newUserData.password);
+      dispatch(AuthPageActions.SetUser(userWithChangedPassword.data));
+    } catch (e : any) {
+      if (e) {
+        setErrorMessage(e.response?.data?.message);
+        handleErrorSnackBar();
+        console.log(e.response?.data?.message);
+      }
+    }
+  }
+
+  const handleNameChange = (e : SyntheticEvent) => {
+    if (e.target) {
+      setName((e.target as HTMLButtonElement).value);
+    }
+    setIsNameFieldTouched(true);
   };
 
   return (
@@ -131,14 +162,14 @@ export function SettingsPage({ user } : ISettingsPage) {
             handleChange,
           } = props;
           const isPasswordErrors = touched.password && errors.password;
-
+          const isNameError = name === '' && isNameFieldTouched;
           return (
             <Form className='registration-page__wrapper'>
               <div className='settings'>
                 <Box sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Typography sx={{ fontWeight: '600', marginTop: '4.7rem', marginBottom: '4.7rem', display: 'flex', justifyContent: 'center' }} variant='h2'>Избранное</Typography>
                   <Box sx={{ display: 'flex', marginBottom: '2.4rem', justifyContent: 'center' }}>
-                    {user.picture ? <img className='settings__user-image' alt='user' src={`${API_URL}/${user.picture}`} />
+                    {user.picture ? <img className='settings__user-image' alt='user' src={`http://localhost:5000/${user.picture}`} />
                       : <Avatar sx={{ width: '23.8rem', height: '23.8rem', borderRadius: '18rem' }} alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -253,6 +284,7 @@ export function SettingsPage({ user } : ISettingsPage) {
                 <CustomButton
                   variant='text'
                   type='submit'
+                  onClick={() => { handleForm(); }}
                   disabled={Boolean(isPasswordErrors || isNameError)}
                 >
                   Сохранить

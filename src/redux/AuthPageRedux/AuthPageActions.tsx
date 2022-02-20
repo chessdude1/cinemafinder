@@ -6,11 +6,13 @@ export enum UserOperations {
 }
 
 export interface UserType {
+  _id?: string;
   name : string,
   isActivated: boolean,
   email : string,
   favoriteFilms: Array<string>,
   picture?: string
+  id : string
 }
 
 export const AuthPageActions = {
