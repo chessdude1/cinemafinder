@@ -1,7 +1,6 @@
 @import '../../Variables.scss';
 
 .search-page {
-  // padding: 2rem 5rem;
   font-family: 'Roboto', sans-serif;
 }
 .hidden {
@@ -27,9 +26,6 @@
   align-items: center;
 }
 @media (max-width: $SIZEADAPTIVE) {
-  .search-page {
-    // padding: 1rem 2rem;
-  }
   .search-page__ui {
     flex-direction: column;
     justify-content: flex-start;
