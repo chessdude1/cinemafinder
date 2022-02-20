@@ -54,7 +54,6 @@ export function SearchPageAux() {
   const loading = useTypedSelector((store) => store.SearchPageReducer.isLoading);
   const allLoaded = useTypedSelector((store) => store.SearchPageReducer.isAllLoaded);
   const filtersInStore = useTypedSelector((store) => store.SearchPageReducer.filters);
-  const footerIndent = 10;
 
   const initGenresState = getStateFromStore(filtersInStore.genre, INIT_GENRES_STATE) as IGenre[];
   const initProvidersState = getStateFromStore(filtersInStore.providers, INIT_PROVIDERS_STATE) as providerFilter[];
@@ -102,7 +101,7 @@ export function SearchPageAux() {
       }
     }
   }, [filtersInStore]);
-  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight - footerIndent;
+  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight;
   const trackScrolling = useCallback(() => {
     const el = document.getElementById('movies-filtered-list') as HTMLElement;
     if (isBottom(el) && !loading) {
@@ -151,7 +150,7 @@ export function SearchPageAux() {
       ) : (
         <div className='search-page__ui'>
           <div className='search-filter-wrapper'>
-            <SearchQueryAux inputPaddings={0} />
+            <SearchQueryAux inputPaddings={1} />
             <CustomButton type='button' onClick={() => setDrawer(true)} variant='outlined'>
               Фильтры
             </CustomButton>
