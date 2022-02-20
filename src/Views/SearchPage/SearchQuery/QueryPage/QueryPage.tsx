@@ -7,6 +7,7 @@ import { FavoriteFilmCard } from '../../../FavouritesPage/FavoriteFilmCard/Favor
 import { INIT_GENRES_STATE } from '../../Filters/InitialStates';
 import { SearchQueryAux } from '../QueryAux';
 import './QueryPage.scss';
+import { MovieCardMedium } from './MovieCardMedium/MovieCardMedium';
 
 export function QueryPageAux() {
   const movies: QueriedMovie[] = useTypedSelector((store) => store.SearchQueryReducer.moviesWithProvider);
@@ -18,16 +19,26 @@ export function QueryPageAux() {
       </div>
       <div className='movie-table'>
         {movies.map((movie) => (
-          <FavoriteFilmCard
+          <MovieCardMedium
             key={movie.id}
-            watchProviders={movie.watchProviders}
-            voteAverage={movie.voteAverage}
-            releaseDate={movie.releaseDate}
+            providers={movie.watchProviders}
+            rating={movie.voteAverage}
+            year={movie.releaseDate}
             originalTitle={movie.originalTitle}
             posterPath={movie.posterPath}
-            genres={GetGenresFromIds(movie.genres)}
+            genre={GetGenresFromIds(movie.genres)}
             id={movie.id}
           />
+          // <FavoriteFilmCard
+          //   key={movie.id}
+          //   watchProviders={movie.watchProviders}
+          //   voteAverage={movie.voteAverage}
+          //   releaseDate={movie.releaseDate}
+          //   originalTitle={movie.originalTitle}
+          //   posterPath={movie.posterPath}
+          //   genres={GetGenresFromIds(movie.genres)}
+          //   id={movie.id}
+          // />
         ))}
       </div>
     </>
