@@ -112,10 +112,10 @@ export function MoviePage({
           {translatedGenres?.join(', ')}
         </Typography>
         <Box sx={{ marginTop: '3.2rem' }}>
-          {flatrateWatchProviders ? <WatchProvidersList listName='Бесплатно по подписке' watchProviders={flatrateWatchProviders} /> : ''}
-          {adsWatchProviders ? <WatchProvidersList listName='C рекламой' watchProviders={adsWatchProviders} /> : ''}
-          { buyWatchProviders ? <WatchProvidersList listName='Для покупки' watchProviders={buyWatchProviders} /> : ''}
-          {rentWatchProviders ? <WatchProvidersList listName='В аренду' watchProviders={rentWatchProviders} /> : ''}
+          {flatrateWatchProviders ? <WatchProvidersList movieName={title} listName='Бесплатно по подписке' watchProviders={flatrateWatchProviders} /> : ''}
+          {adsWatchProviders ? <WatchProvidersList movieName={title} listName='C рекламой' watchProviders={adsWatchProviders} /> : ''}
+          { buyWatchProviders ? <WatchProvidersList movieName={title} listName='Для покупки' watchProviders={buyWatchProviders} /> : ''}
+          {rentWatchProviders ? <WatchProvidersList movieName={title} listName='В аренду' watchProviders={rentWatchProviders} /> : ''}
         </Box>
         <Box>
           <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '3.2rem' }}>
@@ -132,10 +132,6 @@ export function MoviePage({
           <Box sx={{ maxWidth: '60vw' }}>
             {similarFilms ? <CustomSwiper movies={similarFilms} slidesPerView={5} spaceBetween={30} /> : '' }
           </Box>
-
-          {/* <RecomendationsList
-            similarFilms={similarFilms}
-          /> */}
         </Box>
       </section>
     </main>
