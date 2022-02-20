@@ -52,7 +52,7 @@ export function MoviePage({
   deleteFilmFromFavorite,
 } : IMoviePage) {
   const translatedGenres = TranslateGenre(genres);
-
+  const isEmpty = !(adsWatchProviders || flatrateWatchProviders || buyWatchProviders || rentWatchProviders);
   return (
     <main className='movie-page'>
       <section className='movie-page__poster'>
@@ -112,10 +112,17 @@ export function MoviePage({
           {translatedGenres?.join(', ')}
         </Typography>
         <Box sx={{ marginTop: '3.2rem' }}>
-          {flatrateWatchProviders ? <WatchProvidersList movieName={title} listName='Бесплатно по подписке' watchProviders={flatrateWatchProviders} /> : ''}
-          {adsWatchProviders ? <WatchProvidersList movieName={title} listName='C рекламой' watchProviders={adsWatchProviders} /> : ''}
-          { buyWatchProviders ? <WatchProvidersList movieName={title} listName='Для покупки' watchProviders={buyWatchProviders} /> : ''}
-          {rentWatchProviders ? <WatchProvidersList movieName={title} listName='В аренду' watchProviders={rentWatchProviders} /> : ''}
+          {isEmpty ? (
+            <Typography variant='h4' sx={{ fontWeight: '600' }}>Данный фильм недоступен в онлайн кинотеатрах</Typography>
+          ) : (
+            <>
+              {flatrateWatchProviders ? <WatchProvidersList movieName={title} listName='Бесплатно по подписке' watchProviders={flatrateWatchProviders} /> : ''}
+              {adsWatchProviders ? <WatchProvidersList movieName={title} listName='C рекламой' watchProviders={adsWatchProviders} /> : ''}
+              { buyWatchProviders ? <WatchProvidersList movieName={title} listName='Для покупки' watchProviders={buyWatchProviders} /> : ''}
+              {rentWatchProviders ? <WatchProvidersList movieName={title} listName='В аренду' watchProviders={rentWatchProviders} /> : ''}
+            </>
+          ) }
+
         </Box>
         <Box>
           <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '3.2rem' }}>
