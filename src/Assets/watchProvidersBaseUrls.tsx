@@ -1,0 +1,37 @@
+export const watchProvidersBaseUrls : IwatchProvidersBaseUrls = {
+  8: 'https://www.netflix.com/',
+  119: 'https://www.primevideo.com/',
+  2: 'https://itunes.apple.com/ru/movie/',
+  3: 'https://play.google.com/store/movies/',
+  115: 'https://okko.tv/search/',
+  116: 'https://www.amediateka.ru',
+  113: 'https://www.ivi.ru/?ivi_search=',
+  11: 'https://mubi.com/',
+  100: 'https://guidedoc.tv/search/docs/?s=search&q=',
+  534: 'https://guidedoc.tv/search/docs/?s=search&q=',
+  350: 'https://tv.apple.com/ru/',
+  190: 'https://tv.apple.com/ru/',
+  521: 'https://spamflix.com/film.do?methodcall=now_playing',
+  501: 'https://wink.ru/search?query=',
+  475: 'https://www.docsville.com/',
+  546: 'https://www.wowpresentsplus.com/',
+  551: 'https://www.magellantv.com/',
+  554: 'https://www.broadwayhd.com/search?q=',
+  559: 'https://filmzie.com/',
+  444: 'https://www.dekkoo.com/search?q=',
+  556: 'http://tvzavr.ru/',
+  557: 'https://more.tv/',
+  567: 'https://more.tv/',
+  445: 'https://more.tv/',
+  569: 'https://dafilms.com/',
+  315: 'https://www.hoichoi.tv/viewplans',
+  677: 'https://eventive.org/',
+  570: 'https://premier.one/search?query=',
+  577: 'https://www.tvigle.ru/search/?q=',
+  117: 'https://www.kinopoisk.ru/index.php?kp_query=',
+  188: 'https://www.youtube.com/premium',
+}; // if url contains query or search we can search, else we cant
+
+interface IwatchProvidersBaseUrls {
+  [index : number] : string
+}
