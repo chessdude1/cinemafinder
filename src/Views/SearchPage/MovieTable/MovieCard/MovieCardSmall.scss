@@ -28,3 +28,8 @@
     max-width: 20%;
   }
 }
+@media (max-width: $SIZEADAPTIVE) {
+  .movie-card__small {
+    width: 30%;
+  }
+}
