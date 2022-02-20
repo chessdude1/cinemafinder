@@ -27,3 +27,8 @@
   color: $WHITE;
   background-color: $BLUE !important;
 }
+@media (max-width: $SIZEADAPTIVE) {
+  .custom-button.MuiButton-outlined {
+    width: 100%;
+  }
+}
