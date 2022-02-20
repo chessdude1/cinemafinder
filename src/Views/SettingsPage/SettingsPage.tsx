@@ -208,7 +208,9 @@ export function SettingsPage({ user } : ISettingsPage) {
                     <Grid item xs={6} md={4}>
                       <Item>
                         <Item>
-                          <CustomChangeButton onClick={() => setIsNameChanged(!isNameChanged)} type='button' variant='outlined'>Изменить</CustomChangeButton>
+                          <CustomChangeButton onClick={() => setIsNameChanged(!isNameChanged)} type='button' variant='outlined'>
+                            {isNameChanged ? 'Сохранить' : 'Изменить'}
+                          </CustomChangeButton>
                         </Item>
                       </Item>
                     </Grid>
