@@ -11,14 +11,7 @@
   width: 40vw;
   height: 50vh;
 }
-.search-field-wrapper {
-  margin-left: 1rem;
-  border: 1px solid $BORDERGRAY;
-  background-color: $WHITE;
-  border-radius: 0.4rem;
-  color: $GRAYLINKS;
-  font-size: 1.6rem;
-}
+
 .movie-cards__container {
   height: 100%;
   padding: 2rem 1rem;
@@ -32,6 +25,13 @@
   .search-field-wrapper {
     width: 100%;
     margin-left: 0;
+    border: 1px solid $BORDERGRAY;
+    background-color: $WHITE;
+    border-radius: 0.4rem;
+    color: $GRAYLINKS;
+    font-size: 1.6rem;
+  }
+  .search-field-wrapper {
     .MuiInputBase-root {
       width: 100%;
     }
