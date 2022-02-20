@@ -14,14 +14,14 @@ export function CustomLabeledCheckbox({ label, onChange, isDefaultChecked = true
   return (
     <FormControlLabel
       sx={{ fontSize: '1.2rem' }}
-      control={
+      control={(
         <Checkbox
           defaultChecked={isDefaultChecked}
           onChange={(e) => {
             onChange(e.target.checked);
           }}
         />
-      }
+      )}
       label={label}
     />
   );

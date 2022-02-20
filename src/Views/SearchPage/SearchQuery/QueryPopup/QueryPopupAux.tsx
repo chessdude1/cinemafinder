@@ -46,6 +46,7 @@ export function QueryResultPopupAux({ movies, setFocus, focused }: QueryResultPo
       >
         {movies.map((movie) => (
           <MovieCardSmall
+            title={movie.title}
             classStyle='movie-card__popup'
             key={movie.id}
             year={movie.release_date?.slice(0, 4)}

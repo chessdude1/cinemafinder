@@ -66,7 +66,7 @@ export function App() {
           <Route path='/favourites' element={<FavouritesPageAux />} />
           <Route path='/settings' element={<SettingsPageAux />} />
           <Route path='/movie/:movieId' element={<MoviePageAux />} />
-          <Route path='*' element={<PageNotFound />} />
+          <Route path='*' element={<StartPage />} />
         </Routes>
       </div>
     </ThemeProvider>

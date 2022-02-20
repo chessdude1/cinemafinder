@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import { TranslateGenre } from '../../Auxiliary/TranslateGenre';
 import { RatingDisplay } from '../../Common/UX/RatingDisplay/RatingDisplay';
 import { filmResponse, onlineCinema } from '../../Services/ServiceTypes';
-import { RecomendationsList } from './RecomendationsList/RecomendationsList';
 import { WatchProvidersList } from './WatchProvidersList/WatchProvidersList';
 import './MoviePageStyles.scss';
 import { ConverTime } from '../../Auxiliary/ConvertTime';
@@ -30,9 +29,13 @@ interface IMoviePage {
   isFilmAlreadyInFavourites: boolean;
   deleteFilmFromFavorite: (filmId : string) => void;
   isLogin: boolean;
+  overviewTranslated : string | undefined;
+  titleTranslated: string | undefined
 }
 
 export function MoviePage({
+  titleTranslated,
+  overviewTranslated,
   isLogin,
   isFilmAlreadyInFavourites,
   genres,
@@ -103,7 +106,7 @@ export function MoviePage({
       </section>
       <section className='movie-description'>
         <Typography sx={{ fontWeight: '600' }} variant='h2'>
-          {title}
+          {titleTranslated || title}
           (
           {releaseYear}
           )
@@ -129,7 +132,7 @@ export function MoviePage({
             Описание
           </Typography>
           <Typography sx={{ marginTop: '0.8rem' }} variant='h5'>
-            {overview}
+            {overviewTranslated || overview}
           </Typography>
         </Box>
         <Box>

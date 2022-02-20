@@ -52,10 +52,11 @@ export interface MovieWithAdditionalInformation {
   name: string}>,
   status : string,
   tagline : string,
-  production_companies : Array<{id : number, logo_path: string}>
-  production_countries : Array<{name : string}>
-  watchProviders : ListOfWatchProvidersType
-
+  production_companies : Array<{id : number, logo_path: string}>,
+  production_countries : Array<{name : string}>,
+  watchProviders : ListOfWatchProvidersType,
+  titleTranslated?: string,
+  overviewTranslated?: string
 }
 
 export interface filmResponse{

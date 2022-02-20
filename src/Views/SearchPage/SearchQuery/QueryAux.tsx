@@ -7,8 +7,6 @@ import { CustomSearchField } from '../../../Common/UI/CustomSearchField/CustomSe
 import { useTypedSelector } from '../../../Hooks/useTypedSelector';
 import { SearchQuerySagaTypes } from '../../../redux/Sages/SearchQuerySaga';
 import { SearchQueryActionTypes } from '../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
-import { INIT_GENRES_STATE } from '../Filters/InitialStates';
-import { MovieCardSmall } from '../MovieTable/MovieCard/MovieCardSmall';
 import { QueryResultPopupAux } from './QueryPopup/QueryPopupAux';
 
 import './QueryStyle.scss';

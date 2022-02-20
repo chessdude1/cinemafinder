@@ -25,7 +25,9 @@ export interface FavouriteFilm {
   status : string,
   releaseDate: string,
   voteAverage : number,
-  watchProviders : ListOfWatchProvidersType
+  watchProviders : ListOfWatchProvidersType,
+  titleTranslated ?: string,
+  overviewTranslated ?: string
 }
 
 interface AddFavouriteFilm {

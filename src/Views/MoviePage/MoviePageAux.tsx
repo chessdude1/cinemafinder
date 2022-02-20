@@ -6,6 +6,7 @@ import { getMovieWithAdditionalInformation, postUser } from '../../Services/Serv
 import { MovieWithAdditionalInformation } from '../../Services/ServiceTypes';
 import { AuthPageActions } from '../../redux/AuthPageRedux/AuthPageActions';
 import { useTypedSelector } from '../../Hooks/useTypedSelector';
+import { currentLanguage } from '../../redux/AuthPageRedux/AuthPageReducer';
 
 export function MoviePageAux() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export function MoviePageAux() {
   }
 
   useEffect(() => {
-    getMovieWithAdditionalInformation(currentMovieId).then((movie) => { setCurrentMovie(movie); });
+    getMovieWithAdditionalInformation(currentMovieId, currentLanguage).then((movie) => { setCurrentMovie(movie); });
   }, [currentMovieId]);
 
   const setNewFavoriteFilm = (filmId : string) => {
@@ -50,6 +51,8 @@ export function MoviePageAux() {
   return (
     <div>
       <MoviePage
+        titleTranslated={currentMovie?.titleTranslated}
+        overviewTranslated={currentMovie?.overviewTranslated}
         isLogin={isLogin}
         deleteFilmFromFavorite={deleteFilmFromFavorite}
         isFilmAlreadyInFavourites={isFilmAlreadyInFavourites}
