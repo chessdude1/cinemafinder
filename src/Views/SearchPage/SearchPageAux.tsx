@@ -150,7 +150,7 @@ export function SearchPageAux() {
       ) : (
         <div className='search-page__ui'>
           <div className='search-filter-wrapper'>
-            <SearchQueryAux inputPaddings={1} />
+            {/* <SearchQueryAux inputPaddings={1} /> */}
             <CustomButton type='button' onClick={() => setDrawer(true)} variant='outlined'>
               Фильтры
             </CustomButton>

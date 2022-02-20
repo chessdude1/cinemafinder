@@ -5,6 +5,7 @@ import { AuthPageReducer } from './AuthPageRedux/AuthPageReducer';
 import { SearchPageReducer } from './SearchPageRedux/SearchPageReducer';
 import rootSaga from './Sages/rootSaga';
 import { SearchQueryReducer } from './SearchPageRedux/SearchQueryRedux/SearchQueryReducer';
+import { StartPageReducer } from './StartPageRedux/StartPageReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   AuthPageReducer,
   SearchPageReducer,
   SearchQueryReducer,
+  StartPageReducer,
 });
 
 declare global {

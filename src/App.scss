@@ -1,15 +1,10 @@
 @import './Variables.scss';
 .App {
-  max-width: 1440px;
+  max-width: 1200px;
+  padding: 0 24px;
   margin: 0 auto;
-  padding: 2rem 5rem;
 }
 
 a {
   text-decoration: none;
-}
-@media (max-width: $SIZEADAPTIVE) {
-  .App {
-    padding: 1rem 2rem;
-  }
 }

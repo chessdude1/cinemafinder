@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -31,11 +31,10 @@ function Header() {
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
   const isLogin = useTypedSelector((store) => store.AuthPageReducer.isLogin);
-<<<<<<< HEAD
   const picture = useTypedSelector((store) => store.AuthPageReducer.user.picture);
-=======
->>>>>>> c42af84 (feat: add header layout plus start page)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -60,11 +59,7 @@ function Header() {
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-<<<<<<< HEAD
           {picture ? <Avatar alt='user image' src={`http://localhost:5000/${picture}`} /> : <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
-=======
-          <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
->>>>>>> c42af84 (feat: add header layout plus start page)
         </IconButton>
       </Tooltip>
       <Menu
@@ -83,7 +78,6 @@ function Header() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-<<<<<<< HEAD
         {settings.map((setting) => (setting !== 'Logout' ? (
           <NavLink to={constructRoute(setting)}>
             <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -102,34 +96,11 @@ function Header() {
             <Typography textAlign='center'>{setting}</Typography>
           </MenuItem>
         )))}
-=======
-        {settings.map((setting) => (
-          setting !== 'Logout' ? (
-            <NavLink to={constructRoute(setting)}>
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign='center'>{setting}</Typography>
-              </MenuItem>
-            </NavLink>
-          ) : (
-            <MenuItem
-              onClick={() => {
-                logout();
-                handleCloseUserMenu();
-                dispatch(AuthPageActions.SetIsLogin(false));
-              }}
-              key={setting}
-            >
-              <Typography textAlign='center'>{setting}</Typography>
-            </MenuItem>
-          )
-        ))}
->>>>>>> c42af84 (feat: add header layout plus start page)
       </Menu>
     </Box>
   ) : (
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-<<<<<<< HEAD
         <NavLink className='navlink' to='/authorization'>
           Sign In
         </NavLink>
@@ -138,12 +109,6 @@ function Header() {
         <NavLink className='navlink' to='/registration'>
           Sign Up
         </NavLink>
-=======
-        <NavLink className='navlink' to='/authorization'>Sign In</NavLink>
-      </Button>
-      <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-        <NavLink className='navlink' to='/registration'>Sign Up</NavLink>
->>>>>>> c42af84 (feat: add header layout plus start page)
       </Button>
     </Box>
   );
@@ -196,13 +161,9 @@ function Header() {
                 </NavLink>
               </Button>
             ))}
-<<<<<<< HEAD
             <div className='search-field__hidden'>
-              <SearchQueryAux inputPaddings={1} />
+              <SearchQueryAux searchQuery={searchQuery} setSearchQuery={setSearchQuery} inputPaddings={1} />
             </div>
-=======
-            <SearchQueryAux inputPaddings={1} />
->>>>>>> c42af84 (feat: add header layout plus start page)
           </Box>
           {userStatus}
         </Toolbar>

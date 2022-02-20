@@ -12,12 +12,14 @@ import { QueryResultPopupAux } from './QueryPopup/QueryPopupAux';
 import './QueryStyle.scss';
 
 interface ISearchQueryAux {
-  inputPaddings: number;
+  inputPaddings: number,
+  searchQuery: string,
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
+export function SearchQueryAux({ inputPaddings, searchQuery, setSearchQuery }: ISearchQueryAux) {
   const [focused, setFocused] = useState<boolean>(true);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  // const [searchQuery, setSearchQuery] = useState<string>('');
   const movies = useTypedSelector((store) => store.SearchQueryReducer.movies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
