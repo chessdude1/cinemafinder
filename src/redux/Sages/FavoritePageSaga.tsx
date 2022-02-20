@@ -1,6 +1,7 @@
 import { put, select, takeEvery } from '@redux-saga/core/effects';
 import { getMovie, getWatchProviders } from '../../Services/Service';
 import { ListOfWatchProvidersType } from '../../Services/ServiceTypes';
+import { currentLanguage } from '../AuthPageRedux/AuthPageReducer';
 import { FavouritePageActions } from '../FavouritesPageRedux/FavouritePageActions';
 import { RootState } from '../store';
 
@@ -20,6 +21,8 @@ interface FavouriteFilmRequest {
   release_date: string;
   status: string;
   vote_average: number;
+  titleTranslated ?: string;
+  overviewTranslated?: string
 }
 
 function* workerAddFavouriteFilm() {
@@ -30,8 +33,10 @@ function* workerAddFavouriteFilm() {
     const watchProviders: ListOfWatchProvidersType = yield getWatchProviders(
       userFilmIds[i],
     );
-    const filmRequest: FavouriteFilmRequest = yield getMovie(userFilmIds[i]);
+    const filmRequest: FavouriteFilmRequest = yield getMovie(userFilmIds[i], currentLanguage);
     const favoriteFilm = {
+      titleTranslated: filmRequest.titleTranslated,
+      overviewTranslated: filmRequest.overviewTranslated,
       id: filmRequest.id,
       backdropPath: filmRequest.backdrop_path,
       genres: filmRequest.genres,

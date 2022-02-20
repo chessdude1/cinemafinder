@@ -1,5 +1,7 @@
 import { AuthPageActionsTypes, UserOperations, UserType } from './AuthPageActions';
 
+export const currentLanguage = 'ru'; // TODO: language must be in user data
+
 const initialState = {
   isLogin: false,
   user: {

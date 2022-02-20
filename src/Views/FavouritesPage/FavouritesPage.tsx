@@ -62,6 +62,7 @@ export function FavouritesPage({
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                     {favoriteFilms.map((favoriteFilm) => (
                       <FavoriteFilmCard
+                        titleTranslated={favoriteFilm.titleTranslated}
                         key={favoriteFilm.id + Math.random()}
                         releaseDate={favoriteFilm.releaseDate}
                         watchProviders={favoriteFilm.watchProviders}
@@ -73,7 +74,6 @@ export function FavouritesPage({
                       />
                     ))}
                   </Box>
-
                   <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
                     <div className='favourite-page__filters'>
                       <div className='filters__rating-filter'>

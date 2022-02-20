@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MovieCardSmall } from './MovieCard/MovieCardSmall';
 import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
@@ -13,13 +13,13 @@ export function SearchPage() {
     const genresArray = GetGenresFromIds(ids);
     return TranslateGenre(genresArray).join(', ');
   }
-
   return (
     <section>
       <TransitionGroup className='movie-table'>
         {movies.map((movie) => (
           <CSSTransition key={movie.id} timeout={500} classNames='movie-table__item'>
             <MovieCardSmall
+              title={movie.title}
               classStyle='movie-card__small'
               key={movie.id}
               id={movie.id}

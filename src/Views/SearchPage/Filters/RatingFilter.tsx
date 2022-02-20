@@ -9,6 +9,7 @@ export interface RatingFilterType {
   filterOfRatings: number[];
   windowSize: number;
 }
+
 export function RatingFilter({ setFilterOfRatings, filterOfRatings, windowSize }: RatingFilterType) {
   return (
     <div className='search-page__range-filter'>

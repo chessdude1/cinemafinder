@@ -31,6 +31,7 @@ export interface SearchQueryStateType {
 }
 
 export interface QueriedMovie {
+  title: string,
   id: number;
   backdropPath: string;
   genres: number[];

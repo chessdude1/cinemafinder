@@ -10,16 +10,17 @@ interface MovieCardSmallType {
   year: string;
   genre: string;
   classStyle?: string;
+  title: string
 }
 
-export function MovieCardSmall({ id, posterPath, originalTitle, year, genre, classStyle }: MovieCardSmallType) {
+export function MovieCardSmall({ id, posterPath, originalTitle, year, genre, classStyle, title }: MovieCardSmallType) {
   const link = `/movie/${id}`;
   const nodeRef = React.useRef(null);
   return (
     <NavLink className={classStyle} to={link}>
       <img className='poster' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
       <div className='description'>
-        <h2 className='description__title'>{originalTitle}</h2>
+        <h2 className='description__title'>{title || originalTitle}</h2>
         <div className='description__extra'>
           {year}
           {', '}

@@ -47,18 +47,28 @@ export async function getMovieByQuery(query: string, language = 'en-US', apiKey 
   return movieResponse.data.results;
 }
 export async function getMovie(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
-  const movieResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);
-  return movieResponse.data;
+  const movieOriginalLanguageResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=en-US`);
+  let movieUserLanguageResponse = movieOriginalLanguageResponse;
+  if (language !== 'en-US') {
+    movieUserLanguageResponse = await instance.get(`movie/${id}?api_key=${apiKey}&language=${language}`);
+    return {
+      ...movieOriginalLanguageResponse.data,
+      titleTranslated: movieUserLanguageResponse.data.title,
+      overviewTranslated: movieUserLanguageResponse.data.overview,
+    };
+  }
+  return movieOriginalLanguageResponse.data;
 }
 export async function getSimilarMovies(id: string, language = 'en-US', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const similarFilms = await instance.get(`movie/${id}/similar?api_key=${apiKey}&language=${language}`);
   return similarFilms.data.results;
 }
 
-export async function getWatchProvidersList(language = 'en-US', watchRegion = 'RU', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
+export async function getWatchProvidersList(language = 'en-US', watchRegion = 'ru', apiKey = 'a48c1568134ff7732653e3df2aee4eaf') {
   const providersResponse = await instance.get(`/watch/providers/movie?api_key=${apiKey}&language=${language}&watch_region=${watchRegion}`);
   return providersResponse.data.results;
 }
+
 export async function getWatchProviders(id: string, apiKey = 'a48c1568134ff7732653e3df2aee4eaf'): Promise<ListOfWatchProvidersType> {
   const responseListOfProviders: WatchProvidersResponseType = await instance.get(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${apiKey}`);
   let listOfProviders = {};

@@ -11,16 +11,22 @@ import { GetListnotRepeatWatchProvidersWithSaveFields } from '../../../Auxiliary
 import notFoundImg from '../../../Assets/img/NotFoundImg/notFound.svg';
 
 interface FavoriteFilmCardType {
-  id: number;
-  posterPath: string;
-  originalTitle: string;
-  releaseDate: string;
-  watchProviders: ListOfWatchProvidersType;
-  voteAverage: number;
-  genres: Array<{ id: number; name: string }>;
+  id : number,
+  posterPath: string,
+  originalTitle : string,
+  releaseDate: string,
+  watchProviders: ListOfWatchProvidersType,
+  voteAverage: number,
+  genres: Array<{id: number, name: string}> ;
+  titleTranslated: string | undefined;
 }
 
-export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, watchProviders, voteAverage, genres }: FavoriteFilmCardType) {
+export function FavoriteFilmCard({ id, posterPath, originalTitle,
+  releaseDate,
+  watchProviders,
+  voteAverage,
+  genres,
+  titleTranslated } : FavoriteFilmCardType) {
   const link = `/movie/${id}`;
   const year = new Date(releaseDate).getFullYear();
   const transalteGenres = TranslateGenre(genres);
@@ -38,19 +44,17 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, w
             <img className='poster__image' alt='not found img' src={notFoundImg} />
           )}
         </Box>
-        <Box className='movie-description-wrapper'>
-          <div className='movie-description__info'>
-            <Typography variant='h4' sx={{ fontWeight: '600' }}>
-              {originalTitle}({year})
-            </Typography>
-
-            <Typography sx={{ paddingTop: '0.2rem', paddingBottom: '0.8rem' }} variant='subtitle1'>
-              {transalteGenres.join(', ')}
-            </Typography>
-            <div className='movie-card__rating'>
-              <RatingDisplay evaluator='IMDb' rating={voteAverage} />
-            </div>
-          </div>
+        <Box sx={{ marginLeft: '1.6rem' }}>
+          <Typography variant='h4' sx={{ fontWeight: '600' }}>
+            {titleTranslated || originalTitle}
+            (
+            {year}
+            )
+          </Typography>
+          <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
+            {transalteGenres.join(', ')}
+          </Typography>
+          <RatingDisplay evaluator='IMDb' rating={voteAverage} />
           {watchProvidersWithoutRepeats.length > 0 ? (
             <div className='movie-description__providers'>
               <Typography sx={{ fontWeight: '600' }} variant='h5'>
