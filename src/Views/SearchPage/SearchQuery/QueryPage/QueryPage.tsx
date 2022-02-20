@@ -29,16 +29,6 @@ export function QueryPageAux() {
             genres={GetGenresFromIds(movie.genres)}
             id={movie.id}
           />
-          // <FavoriteFilmCard
-          //   key={movie.id}
-          //   watchProviders={movie.watchProviders}
-          //   voteAverage={movie.voteAverage}
-          //   releaseDate={movie.releaseDate}
-          //   originalTitle={movie.originalTitle}
-          //   posterPath={movie.posterPath}
-          //   genres={GetGenresFromIds(movie.genres)}
-          //   id={movie.id}
-          // />
         ))}
       </div>
     </>

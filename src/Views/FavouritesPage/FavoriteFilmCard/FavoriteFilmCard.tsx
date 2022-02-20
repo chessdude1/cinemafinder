@@ -57,11 +57,13 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, w
                 Доступные площадки
               </Typography>
               <div className='film-card__providers-wrapper'>
-                {watchProvidersWithoutRepeats.map((watchProvider) => (
-                  <div key={watchProvider.provider_id}>
-                    <img alt={watchProvider.provider_name} className='film-card__provider-image' src={`https://image.tmdb.org/t/p/w342${watchProvider.logo_path}`} />
-                  </div>
-                ))}
+                <div className='card-scroll'>
+                  {watchProvidersWithoutRepeats.map((watchProvider) => (
+                    <div key={watchProvider.provider_id}>
+                      <img alt={watchProvider.provider_name} className='film-card__provider-image' src={`https://image.tmdb.org/t/p/w342${watchProvider.logo_path}`} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
