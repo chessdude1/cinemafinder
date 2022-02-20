@@ -3,7 +3,7 @@ import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 're
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TranslateGenre } from '../../../Auxiliary/TranslateGenre';
-import { CustomSearchField } from '../../../Common/UI/CustomSearchField';
+import { CustomSearchField } from '../../../Common/UI/CustomSearchField/CustomSearchField';
 import { useTypedSelector } from '../../../Hooks/useTypedSelector';
 import { SearchQuerySagaTypes } from '../../../redux/Sages/SearchQuerySaga';
 import { SearchQueryActionTypes } from '../../../redux/SearchPageRedux/SearchQueryRedux/SearchQueryActions';
@@ -14,7 +14,7 @@ import { QueryResultPopupAux } from './QueryPopup/QueryPopupAux';
 import './QueryStyle.scss';
 
 interface ISearchQueryAux {
-  inputPaddings: number
+  inputPaddings: number;
 }
 
 export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
@@ -48,20 +48,22 @@ export function SearchQueryAux({ inputPaddings }: ISearchQueryAux) {
     delayedQuery(e.target.value);
   };
   return (
-    <div>
-      <CustomSearchField
-        resultContainer={ref}
-        setFocus={setFocused}
-        onKeyDown={loadQueryPage}
-        key='search-field'
-        id='header-search-field'
-        searchResult={movies}
-        searchInput={searchQuery}
-        onChange={onChange}
-        placeholder='Movie name'
-        inputPaddings={inputPaddings}
-      />
+    <>
+      <div className='search-field-wrapper'>
+        <CustomSearchField
+          resultContainer={ref}
+          setFocus={setFocused}
+          onKeyDown={loadQueryPage}
+          key='search-field'
+          id='header-search-field'
+          searchResult={movies}
+          searchInput={searchQuery}
+          onChange={onChange}
+          placeholder='Что бы посмотреть?'
+          inputPaddings={inputPaddings}
+        />
+      </div>
       {focused && movies.length > 0 ? <QueryResultPopupAux focused={focused} setFocus={setFocused} movies={movies} /> : ''}
-    </div>
+    </>
   );
 }

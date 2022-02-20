@@ -21,6 +21,7 @@ import { ADAPTIVE_BREAK_POINT } from '../../Auxiliary/Constants';
 import { TemporaryDrawer } from '../../Common/UX/Drawer/Drawer';
 import { AdaptiveDrawer } from './Filters/AdaptiveFilterDrawer/AdaptiveFilterDrawer';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
+import { SearchQueryAux } from './SearchQuery/QueryAux';
 
 interface IFilter {
   sort: string;
@@ -149,9 +150,12 @@ export function SearchPageAux() {
         </div>
       ) : (
         <div className='search-page__ui'>
-          <CustomButton type='button' onClick={() => setDrawer(true)} variant='outlined'>
-            Фильтры
-          </CustomButton>
+          <div className='search-filter-wrapper'>
+            <SearchQueryAux inputPaddings={0} />
+            <CustomButton type='button' onClick={() => setDrawer(true)} variant='outlined'>
+              Фильтры
+            </CustomButton>
+          </div>
           <TemporaryDrawer isDrawerOpen={isDrawerOpen} setDrawer={setDrawer}>
             <div className='search-page__drawer'>
               <div className='search-page__drawer-header'>

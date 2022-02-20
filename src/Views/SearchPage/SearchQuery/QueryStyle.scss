@@ -11,6 +11,14 @@
   width: 40vw;
   height: 50vh;
 }
+.search-field-wrapper {
+  margin-left: 1rem;
+  border: 1px solid $BORDERGRAY;
+  background-color: $WHITE;
+  border-radius: 0.4rem;
+  color: $GRAYLINKS;
+  font-size: 1.6rem;
+}
 .movie-cards__container {
   height: 100%;
   padding: 2rem 1rem;
@@ -19,4 +27,13 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 1rem;
+}
+@media (max-width: $SIZEADAPTIVE) {
+  .search-field-wrapper {
+    width: 100%;
+    margin-left: 0;
+    .MuiInputBase-root {
+      width: 100%;
+    }
+  }
 }

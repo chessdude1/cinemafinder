@@ -3,11 +3,11 @@
 .navlink {
   text-decoration: none;
   font-size: 1.6rem;
-  color: $GRAYLINKS
+  color: $GRAYLINKS;
 }
 
 .navlink.active {
-  color : $BLUELINK
+  color: $BLUELINK;
 }
 
 .MuiAppBar-root {
@@ -16,4 +16,9 @@
 
 .MuiAppBar-colorDefault {
   background-color: $WHITE;
+}
+@media (max-width: $SIZEADAPTIVE) {
+  .search-field__hidden {
+    display: none;
+  }
 }

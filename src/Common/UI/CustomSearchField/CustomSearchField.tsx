@@ -2,7 +2,7 @@ import React, { MutableRefObject, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, InputBase, styled } from '@mui/material';
-import { Movie } from '../../redux/SearchPageRedux/SearchPageActions';
+import { Movie } from '../../../redux/SearchPageRedux/SearchPageActions';
 
 interface ICustomSearchFieldType {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
