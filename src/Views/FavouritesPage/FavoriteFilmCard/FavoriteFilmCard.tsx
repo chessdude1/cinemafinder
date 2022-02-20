@@ -27,28 +27,33 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, w
   const watchProvidersWithoutRepeats = GetListnotRepeatWatchProvidersWithSaveFields(watchProviders);
 
   return (
-    <Card sx={{ width: '48%', marginTop: '2.4rem' }}>
-      <Box sx={{ padding: '2.4rem', display: 'flex' }}>
-        <Box sx={{ maxWidth: '17rem' }}>
+    <Card className='movie-card__medium'>
+      <Box className='card-medium__wrapper'>
+        <Box className='poster__wrapper'>
           {posterPath ? (
             <NavLink to={link}>
-              <img className='film-card__image' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
+              <img className='poster__image' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
             </NavLink>
           ) : (
-            <img className='film-card__image' alt='not found img' src={notFoundImg} />
+            <img className='poster__image' alt='not found img' src={notFoundImg} />
           )}
         </Box>
-        <Box sx={{ marginLeft: '1.6rem' }}>
-          <Typography variant='h4' sx={{ fontWeight: '600' }}>
-            {originalTitle}({year})
-          </Typography>
-          <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
-            {transalteGenres.join(', ')}
-          </Typography>
-          <RatingDisplay evaluator='IMDb' rating={voteAverage} />
+        <Box className='movie-description-wrapper'>
+          <div className='movie-description__info'>
+            <Typography variant='h4' sx={{ fontWeight: '600' }}>
+              {originalTitle}({year})
+            </Typography>
+
+            <Typography sx={{ paddingTop: '0.2rem', paddingBottom: '0.8rem' }} variant='subtitle1'>
+              {transalteGenres.join(', ')}
+            </Typography>
+            <div className='movie-card__rating'>
+              <RatingDisplay evaluator='IMDb' rating={voteAverage} />
+            </div>
+          </div>
           {watchProvidersWithoutRepeats.length > 0 ? (
-            <>
-              <Typography sx={{ fontWeight: '600', marginTop: '9.7rem', marginBottom: '0.4rem' }} variant='h5'>
+            <div className='movie-description__providers'>
+              <Typography sx={{ fontWeight: '600' }} variant='h5'>
                 Доступные площадки
               </Typography>
               <div className='film-card__providers-wrapper'>
@@ -58,9 +63,12 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle, releaseDate, w
                   </div>
                 ))}
               </div>
-            </>
-          ) : '' }
-
+            </div>
+          ) : (
+            <Typography sx={{ fontWeight: '600' }} variant='h5'>
+              Доступные площадки не найдены
+            </Typography>
+          )}
         </Box>
         <Paper elevation={3} />
       </Box>

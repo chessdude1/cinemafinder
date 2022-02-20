@@ -15,18 +15,18 @@ export function QueryPageAux() {
   return (
     <>
       <div className='query-page__search-field'>
-        <SearchQueryAux />
+        <SearchQueryAux inputPaddings={1} />
       </div>
       <div className='movie-table'>
         {movies.map((movie) => (
-          <MovieCardMedium
+          <FavoriteFilmCard
             key={movie.id}
-            providers={movie.watchProviders}
-            rating={movie.voteAverage}
-            year={movie.releaseDate}
+            watchProviders={movie.watchProviders}
+            voteAverage={movie.voteAverage}
+            releaseDate={movie.releaseDate}
             originalTitle={movie.originalTitle}
             posterPath={movie.posterPath}
-            genre={GetGenresFromIds(movie.genres)}
+            genres={GetGenresFromIds(movie.genres)}
             id={movie.id}
           />
           // <FavoriteFilmCard
