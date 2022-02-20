@@ -32,7 +32,12 @@
     justify-content: flex-start;
     align-items: center;
   }
-
+  .search-page__drawer-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
   .search-page__drawer {
     width: 100%;
     padding: 0 1rem;
@@ -51,5 +56,8 @@
   }
   .search-page__range-filter {
     width: 100%;
+  }
+  .search-page__button {
+    margin-top: 1rem;
   }
 }
