@@ -18,7 +18,6 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList, windowSize }: So
   function updateFieldChanged(name: string) {
     setSortOrder(getKeyName(name) as string);
   }
-  console.log(window.innerWidth);
   return (
     <section>
       <div className='search-page__sort-options'>

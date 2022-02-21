@@ -1,5 +1,6 @@
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import './MovieCardSmall.scss';
 
@@ -20,11 +21,15 @@ export function MovieCardSmall({ id, posterPath, originalTitle, year, genre, cla
     <NavLink className={classStyle} to={link}>
       <img className='poster' alt={originalTitle} src={`https://image.tmdb.org/t/p/w342${posterPath}`} />
       <div className='description'>
-        <h2 className='description__title'>{title || originalTitle}</h2>
+        <Typography sx={{ color: 'black', fontWeight: '500' }} variant='h5'>
+          {title || originalTitle}
+        </Typography>
         <div className='description__extra'>
-          {year}
-          {', '}
-          {genre}
+          <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
+            {year}
+            {', '}
+            {genre}
+          </Typography>
         </div>
       </div>
     </NavLink>
