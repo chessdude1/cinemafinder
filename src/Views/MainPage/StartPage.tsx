@@ -15,7 +15,8 @@ export function StartPage() {
   const [popularMovies, setPopularMovies] = useState<Array<Movie>>(initalMovies);
 
   async function getPopularMoviesForStartPage() {
-    const popularMoviesForStartPage = await getPopularMovies(1, 'week', 'ru-Ru');
+    const popularMoviesForStartPage = await getPopularMovies(1, 'week', 'ru');
+
     setPopularMovies(popularMoviesForStartPage);
   }
 

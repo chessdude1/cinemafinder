@@ -22,7 +22,7 @@ interface TCustomSelect {
 
 export function CustomSelect({ variants, placeholder, checkedArray, handleMultipleSelect, isMultiple }: TCustomSelect) {
   const [item, setItem] = useState(checkedArray);
-  console.log(checkedArray);
+
   useEffect(() => setItem(checkedArray), [checkedArray]);
   function deleteDublicates(array: Array<selectableTypes>) {
     let dublicateName = '';

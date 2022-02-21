@@ -75,7 +75,7 @@ export function RegistrationPage() {
 
   const dispatch = useDispatch();
   const [handleFile, setFile] = useState<string | File>('');
-  console.log(handleFile);
+
   async function createUser(user : ISignUpForm) {
     try {
       const response = await registrationUserFormData(user.email, user.password, user.Name, handleFile);

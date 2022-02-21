@@ -37,7 +37,7 @@ function* workerFetchFiltered() {
   const storeSaga: RootState = yield select((store) => store);
   const { pageNumber } = storeSaga.SearchPageReducer;
   const { genre, year, rating, providers, sortOrder } = storeSaga.SearchPageReducer.filters;
-  const filtered: Movie[] = yield getMoviesWithFilter(genre, year[0], year[1], rating[0], rating[1], providers, sortOrder, pageNumber, currentLanguage, currentLanguage);
+  const filtered: Movie[] = yield getMoviesWithFilter(genre, year[0], year[1], rating[0], rating[1], providers, sortOrder, pageNumber, 'RU', currentLanguage);
   yield put(SearchPageActions.FetchFilteredMovies(filtered));
 }
 
