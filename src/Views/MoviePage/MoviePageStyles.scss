@@ -1,19 +1,45 @@
 .movie-page {
-  display: flex;
   margin-top: 7.2rem;
-  max-width: 1440px;
+  display: grid;
+  grid-template-columns: 0.28fr 0.72fr;
+  grid-template: auto auto;
+  grid-column-gap: 4rem;
 }
 
 .movie-page__poster {
-  max-width: percentage(371 / 1440);
+  grid-column: 1/2;
+  grid-row: 1/3;
 }
 
 .movie-page__poster_img {
-  max-height: 52.7rem;
-  max-width: 37.1rem;
   border-radius: 8px;
 }
 
 .movie-description {
-  margin-left: 4rem;
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.movie-similar-films {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
+
+.similar-slider-holder {
+  max-width: 40vw;
+}
+
+@media (max-width: 800px) {
+  .movie-page {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  
+  .similar-slider-holder {
+    max-width: 70vw;
+  }
 }

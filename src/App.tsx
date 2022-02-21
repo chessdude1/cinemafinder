@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 import axios from 'axios';
 import { StartPage } from './Views/MainPage/StartPage';
 import { PageNotFound } from './Views/ErrorPage/PageNotFound';
@@ -19,14 +19,14 @@ import { AuthPageActions } from './redux/AuthPageRedux/AuthPageActions';
 import { fetchUser } from './Services/Service';
 import './App.scss';
 
-const theme = createTheme({
+const theme = responsiveFontSizes(createTheme({
   typography: {
     allVariants: {
       fontFamily: 'Inter',
       textTransform: 'none',
     },
   },
-});
+}));
 
 export function App() {
   const dispatch = useDispatch();

@@ -43,7 +43,7 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
+      width: '100%',
     },
   }));
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
