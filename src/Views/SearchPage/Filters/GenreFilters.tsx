@@ -1,7 +1,7 @@
 import { divide } from 'lodash';
 import React from 'react';
 import { ADAPTIVE_BREAK_POINT } from '../../../Auxiliary/Constants';
-import { Genres } from '../../../Auxiliary/TranslateGenre';
+import { GENRES_TRANSLATION } from '../../../Auxiliary/TranslateGenre';
 import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox/CustomLabeledCheckbox';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { IGenre } from '../SearchQueryTypes';
@@ -13,11 +13,13 @@ export interface GenreFiltersType {
   windowSize: number;
 }
 export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: GenreFiltersType) {
+  function getKeyName(value: string) {
+    return Object.entries(GENRES_TRANSLATION).find(([key, val]) => val === value)?.[0];
+  }
   function updateFieldChanged(names: string[]) {
-    const newNames = names.map((name) => Genres[name as keyof typeof Genres] as string);
     const allGenres = INIT_GENRES_STATE;
     const newArr = allGenres.map((obj) => {
-      if (!newNames.includes(obj.name)) {
+      if (!names.includes(obj.name)) {
         return obj;
       }
       const { id, name } = obj;
@@ -30,17 +32,22 @@ export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: Gen
       {windowSize > ADAPTIVE_BREAK_POINT ? (
         <CustomSelect
           isMultiple
-          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => Genres[genre.name as keyof typeof Genres])}
-          variants={genreFilter.map((genre) => Genres[genre.name as keyof typeof Genres])}
+          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION] as string)}
+          variants={genreFilter.map((genre) => GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION] as string)}
           placeholder='Жанр'
           handleMultipleSelect={(value: string[]) => {
-            updateFieldChanged(value);
+            updateFieldChanged(value.map((name) => getKeyName(name) as string));
           }}
         />
       ) : (
         <div className='search-page__checkbox-filter'>
           {genreFilter.map((genre) => (
-            <CustomLabeledCheckbox key={genre.id} isDefaultChecked={genre.isApplied} label={genre.name} onChange={() => updateFieldChanged([genre.name])} />
+            <CustomLabeledCheckbox
+              key={genre.id}
+              isDefaultChecked={genre.isApplied}
+              label={GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION]}
+              onChange={() => updateFieldChanged([genre.name])}
+            />
           ))}
         </div>
       )}
