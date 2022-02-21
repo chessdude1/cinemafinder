@@ -30,7 +30,7 @@ export function CustomTextField({
       value={value}
       helperText={helperText}
       error={error}
-      variant='standard'
+      variant='outlined'
     />
   );
 }

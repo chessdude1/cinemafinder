@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => createStyles({
   textField: {
     '& > *': {
       marginTop: '2.2rem',
-      width: '120%',
+      width: '100%',
     },
   },
   submitButton: {
@@ -159,8 +159,9 @@ export function RegistrationPage() {
                 Создать аккаунт
               </Typography>
 
-              <Grid container spacing={2} direction='row'>
+              <Grid container spacing={1} direction='row'>
                 <Grid
+                  sx={{ margin: '0 auto' }}
                   item
                   lg={10}
                   md={10}
@@ -185,6 +186,7 @@ export function RegistrationPage() {
                   />
                 </Grid>
                 <Grid
+                  sx={{ margin: '0 auto' }}
                   item
                   lg={10}
                   md={10}
@@ -209,6 +211,7 @@ export function RegistrationPage() {
                   />
                 </Grid>
                 <Grid
+                  sx={{ margin: '0 auto' }}
                   item
                   lg={10}
                   md={10}
@@ -235,6 +238,7 @@ export function RegistrationPage() {
                   />
                 </Grid>
                 <Grid
+                  sx={{ margin: '0 auto' }}
                   item
                   lg={10}
                   md={10}
@@ -259,6 +263,7 @@ export function RegistrationPage() {
                   />
                 </Grid>
                 <Grid
+                  sx={{ margin: '0 auto' }}
                   item
                   lg={10}
                   md={10}
@@ -266,26 +271,17 @@ export function RegistrationPage() {
                   xs={10}
                   className={classes.submitButton}
                 >
-                  <Box sx={{ display: 'flex',
-                    width: '130%',
-                    marginBottom: '4.8rem',
-                    justifyContent: 'center' }}
-                  >
+                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '3.2rem', marginBottom: '4.8rem' }}>
                     <UploadButton text='Загрузить изображение' handleChange={setFile} name='file' />
                   </Box>
-
-                  <Box sx={{ display: 'flex',
-                    width: '130%',
-                    justifyContent: 'center' }}
+                  <CustomButton
+                    variant='text'
+                    type='submit'
+                    disabled={isErrors}
                   >
-                    <CustomButton
-                      variant='text'
-                      type='submit'
-                      disabled={isErrors}
-                    >
-                      Зарегистрироваться
-                    </CustomButton>
-                  </Box>
+                    Зарегистрироваться
+                  </CustomButton>
+
                 </Grid>
               </Grid>
             </Form>

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CustomButton } from '../../UI/CustomButton/CustomButton';
 
 export function UserNotAuthorizedCard() {
@@ -18,7 +18,9 @@ export function UserNotAuthorizedCard() {
           и отслеживания подходящих вам подписок зарегистрируйтесь.
         </Typography>
         <Link to='/registration'>
-          <CustomButton type='button' variant='text'>Зарегистрироваться</CustomButton>
+          <Box sx={{ maxWidth: '20rem' }}>
+            <CustomButton type='button' variant='text'>Зарегистрироваться</CustomButton>
+          </Box>
         </Link>
       </Box>
       <Paper elevation={3} />
