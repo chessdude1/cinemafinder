@@ -3,3 +3,19 @@
   width: 23.8rem;
   border-radius: 18rem;
 }
+
+.registrtion-page__content {
+  margin-top: 8rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+@media (max-width: 800px) {
+  
+  .registrtion-page__content {
+    margin-top: 4rem;
+    flex-direction: column;
+    align-items: center;
+  }
+}

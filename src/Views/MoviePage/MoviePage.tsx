@@ -135,15 +135,18 @@ export function MoviePage({
             {overviewTranslated || overview}
           </Typography>
         </Box>
+      </section>
+      <section className='movie-similar-films'>
         <Box>
           <Typography variant='h4' sx={{ fontWeight: '600', marginTop: '4rem', marginBottom: '1.6rem' }}>
             Похожие фильмы
           </Typography>
-          <Box sx={{ maxWidth: '60vw' }}>
-            {similarFilms ? <CustomSwiper movies={similarFilms} slidesPerView={5} spaceBetween={30} /> : '' }
-          </Box>
+          <div className='similar-slider-holder'>
+            {similarFilms ? <CustomSwiper movies={similarFilms} slidesPerView={4} spaceBetween={22} /> : '' }
+          </div>
         </Box>
       </section>
+
     </main>
   );
 }

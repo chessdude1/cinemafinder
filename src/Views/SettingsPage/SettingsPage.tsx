@@ -166,7 +166,7 @@ export function SettingsPage({ user } : ISettingsPage) {
           const isNameError = name === '' && isNameFieldTouched;
           return (
             <Form className='registration-page__wrapper'>
-              <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '8rem' }}>
+              <div className="registrtion-page__content">
                 <Box>
                   <Typography sx={{ fontWeight: '600', marginBottom: '2.5rem', display: 'flex', justifyContent: 'center' }} variant='h2'>Аккаунт</Typography>
                   <Box sx={{ display: 'flex', marginBottom: '2.4rem', justifyContent: 'center' }}>
@@ -248,7 +248,7 @@ export function SettingsPage({ user } : ISettingsPage) {
                     </Box>
                   </Grid>
                 </Grid>
-              </Box>
+              </div>
             </Form>
           );
         }}

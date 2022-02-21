@@ -29,7 +29,7 @@ export function StartPage() {
     <div>
       <section className='search-block'>
         <div className='search-block__container'>
-          <h1 className='search-block__heading'>Смотрите фильмы на площадках, которые у вас есть</h1>
+          <div className='search-block__content'><Typography variant='h1' sx={{ color: 'white', textAlign: 'center' }}>Смотрите фильмы на площадках, которые у вас есть</Typography></div>
         </div>
       </section>
       <section className='latest-block'>
