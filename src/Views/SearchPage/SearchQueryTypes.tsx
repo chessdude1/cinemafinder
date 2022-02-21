@@ -1,11 +1,11 @@
 export const sortTypes: string[] = ['popularity.desc', 'popularity.asc', 'release_date.desc', 'release_date.asc', 'original_title.desc', 'original_title.asc'];
 export enum SORT_ORDER {
-  'popularity.desc' = 'More Popular',
-  'popularity.asc' = 'Less Popular',
-  'release_date.desc' = 'New first',
-  'release_date.asc' = 'Old first',
-  'original_title.asc' = 'Alphabet order',
-  'original_title.desc' = 'Reverse alphabet order',
+  'popularity.desc' = 'Наиболее популярные',
+  'popularity.asc' = 'Наименее популярные',
+  'release_date.desc' = 'Сначала новые',
+  'release_date.asc' = 'Сначала старые',
+  'original_title.asc' = 'Алфавитный порядок',
+  'original_title.desc' = 'Обратный алфавитынй порядок',
 }
 export interface IGenre {
   id: number;

@@ -149,7 +149,7 @@ export function SettingsPage({ user } : ISettingsPage) {
               / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces',
+              'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.',
             ),
 
         })}
@@ -182,11 +182,11 @@ export function SettingsPage({ user } : ISettingsPage) {
                     <CustomTextField
                       name='Name'
                       id='Name'
-                      label='name'
+                      label='Имя'
                       value={name}
                       type='text'
                       error={isNameError}
-                      helperText='Enter your name'
+                      helperText='Введите имя пользователя'
                       onChange={handleNameChange}
                       onBlur={handleBlur}
                     />
@@ -212,8 +212,8 @@ export function SettingsPage({ user } : ISettingsPage) {
                         type='password'
                         helperText={
                             errors.password && touched.password
-                              ? 'Please valid password. One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
-                              : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
+                              ? 'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
+                              : 'Пароль должен состоять из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
                         }
                         error={!!(errors.password && touched.password)}
                         onChange={handleChange}
@@ -224,7 +224,7 @@ export function SettingsPage({ user } : ISettingsPage) {
                         <CustomTextField
                           name='password'
                           id='password'
-                          label='Password'
+                          label='Пароль'
                           value='**********'
                           type='password'
                           helperText=''

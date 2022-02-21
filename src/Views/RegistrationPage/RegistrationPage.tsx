@@ -122,18 +122,18 @@ export function RegistrationPage() {
           createUser(values);
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email().required('Enter valid email'),
-          Name: Yup.string().required('Please enter full name'),
+          email: Yup.string().email().required('Введите валидную почту'),
+          Name: Yup.string().required('Введите имя'),
           password: Yup.string()
             .matches(
               / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces',
+              'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.',
             ),
           confirmPassword: Yup.string()
             .required('Required')
-            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+            .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
         })}
       >
         {(props: FormikProps<ISignUpForm>) => {
@@ -172,13 +172,13 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='Name'
                     id='Name'
-                    label='Name'
+                    label='Имя'
                     value={values.Name}
                     type='text'
                     helperText={
                       errors.Name && touched.Name
                         ? errors.Name
-                        : 'Enter your name.'
+                        : 'Введите имя пользователя'
                     }
                     error={!!(errors.Name && touched.Name)}
                     onChange={handleChange}
@@ -197,13 +197,13 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='password'
                     id='password'
-                    label='Password'
+                    label='Пароль'
                     value={values.password}
                     type='password'
                     helperText={
                       errors.password && touched.password
-                        ? 'Please valid password. One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
-                        : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
+                        ? 'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
+                        : 'Пароль должен состоять из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
                     }
                     error={!!(errors.password && touched.password)}
                     onChange={handleChange}
@@ -222,13 +222,13 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='confirmPassword'
                     id='confirmPassword'
-                    label='Confirm password'
+                    label='Подтверждение пароля'
                     value={values.confirmPassword}
                     type='password'
                     helperText={
                       errors.confirmPassword && touched.confirmPassword
                         ? errors.confirmPassword
-                        : 'Re-enter password to confirm'
+                        : 'Повторите пароль для подтверждения'
                     }
                     error={
                       !!(errors.confirmPassword && touched.confirmPassword)
@@ -249,13 +249,13 @@ export function RegistrationPage() {
                   <CustomTextField
                     name='email'
                     id='email'
-                    label='Email'
+                    label='Почта'
                     value={values.email}
                     type='email'
                     helperText={
                       errors.email && touched.email
                         ? errors.email
-                        : 'Enter email'
+                        : 'Введите почту'
                     }
                     error={!!(errors.email && touched.email)}
                     onChange={handleChange}
