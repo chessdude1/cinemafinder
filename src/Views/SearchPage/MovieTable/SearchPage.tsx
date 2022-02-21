@@ -8,11 +8,12 @@ import { useTypedSelector } from '../../../Hooks/useTypedSelector';
 
 export function SearchPage() {
   const movies = useTypedSelector((store) => store.SearchPageReducer.movies);
-
+  const nodeRef = React.useRef(null);
   function translate(ids: number[]) {
     const genresArray = GetGenresFromIds(ids);
     return TranslateGenre(genresArray).join(', ');
   }
+
   return (
     <section>
       <TransitionGroup className='movie-table'>

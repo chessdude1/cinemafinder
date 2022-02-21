@@ -7,8 +7,8 @@
   position: absolute;
   z-index: 2;
   top: 9rem;
-  right: 5rem;
-  width: 40vw;
+  right: 25vw;
+  width: 25vw;
   height: 50vh;
 }
 
@@ -18,9 +18,12 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 1rem;
+  gap: 2rem;
 }
+.movie-card__popup {
+  height: 20rem;
+}
+
 @media (max-width: $SIZEADAPTIVE) {
   .search-field-wrapper {
     width: 100%;

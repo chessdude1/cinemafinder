@@ -45,7 +45,7 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
           )}
         </Box>
         <Box sx={{ marginLeft: '1.6rem' }}>
-          <Typography variant='h4' sx={{ fontWeight: '600' }}>
+          <Typography variant='h4' sx={{ fontWeight: '600', overflow: 'none' }}>
             {titleTranslated || originalTitle}
             (
             {year}
@@ -54,7 +54,7 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
           <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
             {transalteGenres.join(', ')}
           </Typography>
-          <RatingDisplay evaluator='IMDb' rating={voteAverage} />
+          {voteAverage !== 0 ? <RatingDisplay evaluator='IMDb' rating={voteAverage} /> : ''}
           {watchProvidersWithoutRepeats.length > 0 ? (
             <div className='movie-description__providers'>
               <Typography sx={{ fontWeight: '600' }} variant='h5'>

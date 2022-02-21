@@ -19,7 +19,7 @@ export function YearFilter({ setFilterOfYears, filterOfYears, windowSize }: Year
             onChange={(value: number | number[]) => {
               setFilterOfYears(value as number[]);
             }}
-            placeholder='year'
+            placeholder='Год'
             defaultValue={0}
             step={10}
             min={1900}

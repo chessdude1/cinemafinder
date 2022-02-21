@@ -22,7 +22,6 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
     setFocus(true);
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
-
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -65,7 +64,16 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase onKeyDown={onKeyDown} key={id} inputRef={searchInputField} id={id} onChange={onChange} value={searchInput} placeholder={placeholder} inputProps={{ 'aria-label': 'search' }} />
+      <StyledInputBase
+        onKeyDown={onKeyDown}
+        key={id}
+        inputRef={searchInputField}
+        id={id}
+        onChange={onChange}
+        value={searchInput}
+        placeholder={placeholder}
+        inputProps={{ 'aria-label': 'search' }}
+      />
     </Search>
   );
 }

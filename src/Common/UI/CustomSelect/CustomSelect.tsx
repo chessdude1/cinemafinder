@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import './CustomSelectStyles.scss';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { IGenre } from '../../../Views/SearchPage/SearchQueryTypes';
+import { GENRES_TRANSLATION } from '../../../Auxiliary/TranslateGenre';
 
 type selectableTypes = string;
 
@@ -21,6 +22,7 @@ interface TCustomSelect {
 
 export function CustomSelect({ variants, placeholder, checkedArray, handleMultipleSelect, isMultiple }: TCustomSelect) {
   const [item, setItem] = useState(checkedArray);
+  console.log(checkedArray);
   useEffect(() => setItem(checkedArray), [checkedArray]);
   function deleteDublicates(array: Array<selectableTypes>) {
     let dublicateName = '';
@@ -36,6 +38,7 @@ export function CustomSelect({ variants, placeholder, checkedArray, handleMultip
     const {
       target: { value },
     } = event;
+
     const newItems = deleteDublicates([...item, value[1]]);
     handleMultipleSelect(newItems);
     setItem(newItems);
@@ -51,8 +54,7 @@ export function CustomSelect({ variants, placeholder, checkedArray, handleMultip
           onChange={(e) => {
             handleChange(e);
           }}
-          renderValue={(selected) => selected.join(', ')}
-        >
+          renderValue={(selected) => selected.join(', ')}>
           {variants.map((variant) => (
             <MenuItem key={variant} value={variant}>
               <Checkbox checked={item.indexOf(variant) > -1} />

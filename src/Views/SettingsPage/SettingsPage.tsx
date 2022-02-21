@@ -3,10 +3,10 @@ import React, { useState, SyntheticEvent } from 'react';
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
+import { createStyles, makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
 import { AuthPageActions, UserType } from '../../redux/AuthPageRedux/AuthPageActions';
 import { CustomButton } from '../../Common/UI/CustomButton/CustomButton';
@@ -18,19 +18,19 @@ import { changePassword, changePicture, postUser } from '../../Services/Service'
 import './SettingsPageStyle.scss';
 import { Snackbars } from '../../Common/UX/SnackBar/SnackBar';
 
+const useStyles = makeStyles(() => createStyles({
+
+  textField: {
+    '& > *': {
+      width: '100%',
+      marginTop: '2.5rem',
+    },
+  },
+}));
+
 interface ISettingsPage {
   user : UserType
 }
-
-const LeftColumnItems = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  textAlign: 'left',
-}));
-
-const Item = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1),
-  textAlign: 'center',
-}));
 
 interface ISettings {
   password: string;
@@ -39,13 +39,14 @@ interface ISettings {
 export function SettingsPage({ user } : ISettingsPage) {
   const [handleFile, setFile] = useState<string | File>('');
   const [isPasswordChanged, setIsPasswordChanged] = useState<boolean>(false);
-  const [isNameChanged, setIsNameChanged] = useState<boolean>(false);
   const [isSuccessSnackBarOpen, setSuccessSnackBarOpen] = React.useState(false);
   const [isErrorSnackBarOpen, setErrorSnackBarOpen] = React.useState(false);
   const [isNameFieldTouched, setIsNameFieldTouched] = React.useState(false);
-  const [name, setName] = React.useState<string>('');
+  const [name, setName] = React.useState<string>(`${user.name}`);
 
   const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -148,7 +149,7 @@ export function SettingsPage({ user } : ISettingsPage) {
               / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces',
+              'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.',
             ),
 
         })}
@@ -165,132 +166,88 @@ export function SettingsPage({ user } : ISettingsPage) {
           const isNameError = name === '' && isNameFieldTouched;
           return (
             <Form className='registration-page__wrapper'>
-              <div className='settings'>
-                <Box sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <Typography sx={{ fontWeight: '600', marginTop: '4.7rem', marginBottom: '4.7rem', display: 'flex', justifyContent: 'center' }} variant='h2'>Избранное</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '8rem' }}>
+                <Box>
+                  <Typography sx={{ fontWeight: '600', marginBottom: '2.5rem', display: 'flex', justifyContent: 'center' }} variant='h2'>Аккаунт</Typography>
                   <Box sx={{ display: 'flex', marginBottom: '2.4rem', justifyContent: 'center' }}>
                     {user.picture ? <img className='settings__user-image' alt='user' src={`http://localhost:5000/${user.picture}`} />
                       : <Avatar sx={{ width: '23.8rem', height: '23.8rem', borderRadius: '18rem' }} alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <UploadButton text='Загрузить изображение' handleChange={setFile} name='file' />
+                    <UploadButton file={handleFile ? (handleFile as File).name : ''} text='Загрузить изображение' handleChange={setFile} name='file' />
                   </Box>
-                  <Grid sx={{ marginTop: '4.3rem', alignItems: 'center' }} container spacing={3}>
-                    <Grid item xs={6} md={4}>
-                      <LeftColumnItems>
-                        <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                          Имя пользователя:
-                        </Typography>
-                      </LeftColumnItems>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        { isNameChanged ? (
-                          <CustomTextField
-                            name='Name'
-                            id='Name'
-                            label='name'
-                            value={name}
-                            type='text'
-                            error={isNameError}
-                            helperText='Enter your name'
-                            onChange={handleNameChange}
-                            onBlur={handleBlur}
-                          />
-                        ) : (
-                          <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                            {user.name}
-                          </Typography>
-                        )}
-
-                      </Item>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        <Item>
-                          <CustomChangeButton onClick={() => setIsNameChanged(!isNameChanged)} type='button' variant='outlined'>
-                            {isNameChanged ? 'Сохранить' : 'Изменить'}
-                          </CustomChangeButton>
-                        </Item>
-                      </Item>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <LeftColumnItems>
-                        <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                          Почта:
-                        </Typography>
-                      </LeftColumnItems>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                          {user.email}
-                        </Typography>
-                      </Item>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        <Typography sx={{ color: 'white', marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                          0
-                        </Typography>
-                      </Item>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <LeftColumnItems>
-                        <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                          Пароль:
-                        </Typography>
-                      </LeftColumnItems>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        {isPasswordChanged ? (
-                          <CustomTextField
-                            name='password'
-                            id='password'
-                            label='Password'
-                            value={values.password}
-                            type='password'
-                            helperText={
-                            errors.password && touched.password
-                              ? 'Please valid password. One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
-                              : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
-                        }
-                            error={!!(errors.password && touched.password)}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-                        )
-                          : (
-                            <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.2rem' }} variant='h5'>
-                              •••••••••••
-                            </Typography>
-                          )}
-
-                      </Item>
-                    </Grid>
-                    <Grid item xs={6} md={4}>
-                      <Item>
-                        <CustomChangeButton onClick={() => setIsPasswordChanged(!isPasswordChanged)} type='button' variant='outlined'>
-                          {isPasswordChanged ? 'Сохранить' : 'Изменить'}
-                        </CustomChangeButton>
-                      </Item>
-                    </Grid>
-                  </Grid>
                 </Box>
-              </div>
-              <Box sx={{ display: 'flex',
-                marginTop: '3rem',
-                justifyContent: 'center' }}
-              >
-                <CustomButton
-                  variant='text'
-                  type='submit'
-                  onClick={() => { handleForm(); }}
-                  disabled={Boolean(isPasswordErrors || isNameError)}
-                >
-                  Сохранить
-                </CustomButton>
+                <Grid sx={{ marginTop: '4.3rem', marginLeft: '7rem', alignItems: 'center', maxWidth: '40rem' }} container spacing={1}>
+                  <Grid className={classes.textField} item xs={10} md={10} lg={10}>
+                    <CustomTextField
+                      name='Name'
+                      id='Name'
+                      label='Имя'
+                      value={name}
+                      type='text'
+                      error={isNameError}
+                      helperText='Введите имя пользователя'
+                      onChange={handleNameChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid>
+                  <Grid className={classes.textField} item xs={10} md={10} lg={10}>
+                    <CustomTextField
+                      name='email'
+                      id='email'
+                      label='Почта'
+                      value={user.email}
+                      type='email'
+                      helperText=''
+                      error={false}
+                    />
+                  </Grid>
+                  <Grid className={classes.textField} item xs={10} md={10} lg={10}>
+                    {isPasswordChanged ? (
+                      <CustomTextField
+                        name='password'
+                        id='password'
+                        label='Password'
+                        value={values.password}
+                        type='password'
+                        helperText={
+                            errors.password && touched.password
+                              ? 'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
+                              : 'Пароль должен состоять из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
+                        }
+                        error={!!(errors.password && touched.password)}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                    )
+                      : (
+                        <CustomTextField
+                          name='password'
+                          id='password'
+                          label='Пароль'
+                          value='**********'
+                          type='password'
+                          helperText=''
+                          error={false}
+                        />
+                      )}
+                    <CustomChangeButton onClick={() => setIsPasswordChanged(!isPasswordChanged)} type='button' variant='outlined'>
+                      {isPasswordChanged ? 'Сохранить' : 'Изменить пароль'}
+                    </CustomChangeButton>
+                  </Grid>
+                  <Grid item xs={10} md={10} lg={10} sx={{ display: 'flex', justifyContent: 'right' }}>
+                    <Box sx={{ width: '20rem', marginTop: '5rem' }}>
+                      <CustomButton
+                        variant='text'
+                        type='submit'
+                        onClick={() => { handleForm(); }}
+                        disabled={Boolean(isPasswordErrors || isNameError)}
+                      >
+                        Сохранить
+                      </CustomButton>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
             </Form>
           );

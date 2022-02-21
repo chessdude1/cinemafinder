@@ -18,7 +18,9 @@ export function EmptyFavouriteFilmsCard() {
           На странице поиска вы точно найдите подходящий фильм.
         </Typography>
         <Link to='/search'>
-          <CustomButton type='button' variant='text'>Найти фильм</CustomButton>
+          <Box sx={{ maxWidth: '20rem' }}>
+            <CustomButton type='button' variant='text'>Найти фильм</CustomButton>
+          </Box>
         </Link>
       </Box>
       <Paper elevation={3} />

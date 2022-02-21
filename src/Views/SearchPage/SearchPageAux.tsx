@@ -144,7 +144,7 @@ export function SearchPageAux() {
             <RatingFilter windowSize={dimensions.width} setFilterOfRatings={setFilterOfRatings} filterOfRatings={filterOfRatings} />
           </div>
           <div className='search-page__button'>
-            <CustomResetButton type='button' variant='outlined' content='reset' onClick={() => resetFilters()} />
+            <CustomResetButton type='button' variant='outlined' content='Сбросить' onClick={() => resetFilters()} />
           </div>
         </div>
       ) : (

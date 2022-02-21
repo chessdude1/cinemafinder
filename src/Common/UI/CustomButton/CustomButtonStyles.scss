@@ -26,7 +26,13 @@
   height: 5rem;
   color: $WHITE;
   background-color: $BLUE !important;
+  width: 100%;
 }
+
+.custom-button.MuiButton-text.Mui-disabled {
+  background-color: $WHITE !important;
+}
+
 @media (max-width: $SIZEADAPTIVE) {
   .custom-button.MuiButton-outlined {
     width: 100%;

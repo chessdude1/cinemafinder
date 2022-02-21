@@ -1,6 +1,7 @@
 import { divide } from 'lodash';
 import React from 'react';
 import { ADAPTIVE_BREAK_POINT } from '../../../Auxiliary/Constants';
+import { GENRES_TRANSLATION } from '../../../Auxiliary/TranslateGenre';
 import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox/CustomLabeledCheckbox';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { IGenre } from '../SearchQueryTypes';
@@ -12,6 +13,9 @@ export interface GenreFiltersType {
   windowSize: number;
 }
 export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: GenreFiltersType) {
+  function getKeyName(value: string) {
+    return Object.entries(GENRES_TRANSLATION).find(([key, val]) => val === value)?.[0];
+  }
   function updateFieldChanged(names: string[]) {
     const allGenres = INIT_GENRES_STATE;
     const newArr = allGenres.map((obj) => {
@@ -28,17 +32,22 @@ export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: Gen
       {windowSize > ADAPTIVE_BREAK_POINT ? (
         <CustomSelect
           isMultiple
-          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => genre.name)}
-          variants={genreFilter.map((genre) => genre.name)}
-          placeholder='genres'
+          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION] as string)}
+          variants={genreFilter.map((genre) => GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION] as string)}
+          placeholder='Жанр'
           handleMultipleSelect={(value: string[]) => {
-            updateFieldChanged(value);
+            updateFieldChanged(value.map((name) => getKeyName(name) as string));
           }}
         />
       ) : (
         <div className='search-page__checkbox-filter'>
           {genreFilter.map((genre) => (
-            <CustomLabeledCheckbox key={genre.id} isDefaultChecked={genre.isApplied} label={genre.name} onChange={() => updateFieldChanged([genre.name])} />
+            <CustomLabeledCheckbox
+              key={genre.id}
+              isDefaultChecked={genre.isApplied}
+              label={GENRES_TRANSLATION[genre.name as keyof typeof GENRES_TRANSLATION]}
+              onChange={() => updateFieldChanged([genre.name])}
+            />
           ))}
         </div>
       )}

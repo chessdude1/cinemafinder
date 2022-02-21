@@ -20,9 +20,9 @@ import './CustomSwiperStyles.scss';
 import { filmResponse } from '../../../Services/ServiceTypes';
 
 interface ICustomSwiper {
-  slidesPerView: number,
-  spaceBetween: number,
-  movies: Array<Movie> | Array<filmResponse>
+  slidesPerView: number;
+  spaceBetween: number;
+  movies: Array<Movie> | Array<filmResponse>;
 }
 
 export function CustomSwiper({ slidesPerView, spaceBetween, movies }: ICustomSwiper) {
@@ -40,7 +40,7 @@ export function CustomSwiper({ slidesPerView, spaceBetween, movies }: ICustomSwi
     <Swiper
       slidesPerView={slidesPerView}
       spaceBetween={spaceBetween}
-        // eslint-disable-next-line react/jsx-boolean-value
+      // eslint-disable-next-line react/jsx-boolean-value
       navigation={true}
       modules={[Pagination, Navigation]}
       className='mySwiper'
@@ -64,8 +64,7 @@ export function CustomSwiper({ slidesPerView, spaceBetween, movies }: ICustomSwi
           slidesPerView,
           spaceBetween,
         },
-      }}
-    >
+      }}>
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <MovieCardSmall

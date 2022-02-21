@@ -7,7 +7,7 @@ interface ICustomTextFieldType {
   id?: string,
   label: string,
   type: string,
-  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   onBlur?: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   value: string,
   helperText: string,
@@ -30,7 +30,7 @@ export function CustomTextField({
       value={value}
       helperText={helperText}
       error={error}
-      variant='standard'
+      variant='outlined'
     />
   );
 }

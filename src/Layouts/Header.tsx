@@ -23,8 +23,19 @@ import { useTypedSelector } from '../Hooks/useTypedSelector';
 import './HeaderStyles.scss';
 import Logo from '../Assets/img/header/Logo.png';
 
-const PAGES = ['Search', 'Favourites'];
-const settings = ['Account', 'Settings', 'Logout'];
+const PAGESTRANSLATED: IPageTranslated = {
+  Поиск: 'search',
+  Избранные: 'favourites',
+  Настройки: 'settings',
+  Выход: 'logout',
+};
+
+interface IPageTranslated {
+  [key: string]: string;
+}
+
+const PAGES = ['Поиск', 'Избранные'];
+const settings = ['Настройки', 'Выход'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -51,11 +62,19 @@ function Header() {
   };
 
   const dispatch = useDispatch();
-  const constructRoute = (page: string) => `/${page.toLowerCase()}`;
+  const constructRoute = (page: string) => {
+    let translatedLink = '';
+    if (PAGESTRANSLATED[page]) {
+      translatedLink = PAGESTRANSLATED[page];
+    } else {
+      translatedLink = page;
+    }
+    return `/${translatedLink.toLowerCase()}`;
+  };
 
   const userStatus = isLogin ? (
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
-      <Tooltip title='Open settings'>
+      <Tooltip title='Открыть настройки'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           {picture ? <Avatar alt='user image' src={`http://localhost:5000/${picture}`} /> : <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
         </IconButton>
@@ -74,38 +93,38 @@ function Header() {
           horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (setting !== 'Logout' ? (
-          <NavLink to={constructRoute(setting)}>
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        onClose={handleCloseUserMenu}>
+        {settings.map((setting) =>
+          setting !== 'Выход' ? (
+            <NavLink to={constructRoute(setting)}>
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign='center'>{setting}</Typography>
+              </MenuItem>
+            </NavLink>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                logout();
+                handleCloseUserMenu();
+                dispatch(AuthPageActions.SetIsLogin(false));
+              }}
+              key={setting}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>
-          </NavLink>
-        ) : (
-          <MenuItem
-            onClick={() => {
-              logout();
-              handleCloseUserMenu();
-              dispatch(AuthPageActions.SetIsLogin(false));
-            }}
-            key={setting}
-          >
-            <Typography textAlign='center'>{setting}</Typography>
-          </MenuItem>
-        )))}
+          ),
+        )}
       </Menu>
     </Box>
   ) : (
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
         <NavLink className='navlink' to='/authorization'>
-          Sign In
+          Логин
         </NavLink>
       </Button>
       <Button sx={{ my: 2, color: 'white', display: 'block' }}>
         <NavLink className='navlink' to='/registration'>
-          Sign Up
+          Регистрация
         </NavLink>
       </Button>
     </Box>
@@ -133,8 +152,7 @@ function Header() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
+              sx={{ display: { xs: 'block', md: 'none' } }}>
               {PAGES.map((page) => (
                 <NavLink className='navlink' key={page} to={constructRoute(page)}>
                   <MenuItem onClick={handleCloseNavMenu}>

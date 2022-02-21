@@ -35,7 +35,7 @@ export function ProviderFilter({ setFilterOfProviders, filterOfProviders, provid
           isMultiple
           checkedArray={getAppliedNames(filterOfProviders)}
           variants={providerList.map((provider) => provider.provider_name)}
-          placeholder='providers'
+          placeholder='Кинотеатры'
           handleMultipleSelect={(value: string[]) => {
             updateFieldChanged(value);
           }}

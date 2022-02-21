@@ -7,15 +7,19 @@
   cursor: pointer;
   font-size: 1.6rem;
   font-family: 'Inter';
-  color: $GRAYTEXTCOLOR;
-  padding: 1rem 2.2rem 1rem 3rem;
-  border: 1px solid $BLACK;
+  color: $BLACK;
+  padding: 1rem 2.2rem 1rem 2.2rem;
+  border: 2px solid $BLACK;
   border-radius: 4px;
+  background-color: $WHITE
+}
+
+.upload-img-wrapper {
+  margin-right: 1.2rem;
 }
 
 .upload-button img {
   height: 2.4rem;
-  margin-right: 1.2rem;
 }
 
 #upload-photo {

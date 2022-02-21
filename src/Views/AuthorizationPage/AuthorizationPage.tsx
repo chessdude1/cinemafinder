@@ -20,17 +20,17 @@ import { TIMEBEFOREREDIRECT } from '../RegistrationPage/RegistrationPage';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    maxWidth: '450px',
+    maxWidth: '405px',
     display: 'block',
     margin: '0 auto',
   },
   textField: {
     '& > *': {
-      width: '120%',
+      width: '100%',
     },
   },
   submitButton: {
-    marginTop: '2.4rem',
+    marginTop: '2rem',
   },
 }));
 
@@ -93,13 +93,13 @@ export function AuthorizationPage() {
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email()
-            .required('Enter valid email-id'),
+            .required('Введите валидную почту'),
           password: Yup.string()
             .matches(
               / ((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/,
             )
             .required(
-              'Please valid password. One uppercase, one lowercase, one special character and no spaces, more then 8 letters',
+              'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.',
             ),
         })}
       >
@@ -130,15 +130,15 @@ export function AuthorizationPage() {
               <Typography
                 sx={{ fontWeight: '600',
                   display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '4.8rem',
+                  justifyContent: 'start',
+                  marginTop: '18rem',
                   marginBottom: '2.4rem' }}
                 variant='h2'
               >
                 Логин
               </Typography>
               <Grid
-                sx={{ marginTop: '10rem' }}
+                sx={{ marginTop: '2.4rem' }}
                 container
                 spacing={2}
                 direction='row'
@@ -154,13 +154,13 @@ export function AuthorizationPage() {
                   <CustomTextField
                     name='email'
                     id='email'
-                    label='Email'
+                    label='Почта'
                     value={values.email}
                     type='email'
                     helperText={
                       errors.email && touched.email
                         ? errors.email
-                        : 'Enter email'
+                        : 'Введите почту'
                     }
                     error={
                       !!(errors.email && touched.email)
@@ -180,13 +180,13 @@ export function AuthorizationPage() {
                   <CustomTextField
                     name='password'
                     id='password'
-                    label='Password'
+                    label='Пароль'
                     value={values.password}
                     type='password'
                     helperText={
                       errors.password && touched.password
-                        ? 'Please valid password. One uppercase, one lowercase, one special character, at least 8 symbols and no spaces'
-                        : 'One uppercase, one lowercase, one special character at least 8 symbols and no spaces'
+                        ? 'Введите валидный пароль, состоящий из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
+                        : 'Пароль должен состоять из одного символа в нижнем регистре, одного в верхнем и одного специального символа. Длина пароля не менее 8 символов.'
                     }
                     error={
                       !!(errors.password && touched.password)
@@ -205,8 +205,6 @@ export function AuthorizationPage() {
                   className={classes.submitButton}
                 >
                   <Box sx={{ display: 'flex',
-                    width: '130%',
-                    marginTop: '5rem',
                     justifyContent: 'center' }}
                   >
                     <CustomButton

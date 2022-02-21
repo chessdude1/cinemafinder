@@ -5,7 +5,7 @@ export const currentLanguage = 'ru'; // TODO: language must be in user data
 const initialState = {
   isLogin: false,
   user: {
-    name: 'user',
+    name: 'Имя',
     isActivated: false,
     email: '1@mail.ru',
     favoriteFilms: ['123', '321'],

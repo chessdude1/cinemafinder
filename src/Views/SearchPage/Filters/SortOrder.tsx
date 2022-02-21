@@ -18,7 +18,6 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList, windowSize }: So
   function updateFieldChanged(name: string) {
     setSortOrder(getKeyName(name) as string);
   }
-  console.log(window.innerWidth);
   return (
     <section>
       <div className='search-page__sort-options'>
@@ -26,7 +25,7 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList, windowSize }: So
           <CustomSingleSelect
             checkedItem={SORT_ORDER[sortOrder as keyof typeof SORT_ORDER]}
             variants={sortsList.map((order) => SORT_ORDER[order as keyof typeof SORT_ORDER])}
-            placeholder='order'
+            placeholder='Сортировка'
             handleSelect={(value: string) => {
               updateFieldChanged(value);
             }}
