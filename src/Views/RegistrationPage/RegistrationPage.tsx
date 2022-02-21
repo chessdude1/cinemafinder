@@ -75,7 +75,7 @@ export function RegistrationPage() {
 
   const dispatch = useDispatch();
   const [handleFile, setFile] = useState<string | File>('');
-
+  console.log(handleFile);
   async function createUser(user : ISignUpForm) {
     try {
       const response = await registrationUserFormData(user.email, user.password, user.Name, handleFile);
@@ -272,7 +272,7 @@ export function RegistrationPage() {
                   className={classes.submitButton}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '3.2rem', marginBottom: '4.8rem' }}>
-                    <UploadButton text='Загрузить изображение' handleChange={setFile} name='file' />
+                    <UploadButton file={handleFile ? (handleFile as File).name : ''} text='Загрузить изображение' handleChange={setFile} name='file' />
                   </Box>
                   <CustomButton
                     variant='text'

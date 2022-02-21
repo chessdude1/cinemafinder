@@ -174,7 +174,7 @@ export function SettingsPage({ user } : ISettingsPage) {
                       : <Avatar sx={{ width: '23.8rem', height: '23.8rem', borderRadius: '18rem' }} alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <UploadButton text='Загрузить изображение' handleChange={setFile} name='file' />
+                    <UploadButton file={handleFile ? (handleFile as File).name : ''} text='Загрузить изображение' handleChange={setFile} name='file' />
                   </Box>
                 </Box>
                 <Grid sx={{ marginTop: '4.3rem', marginLeft: '7rem', alignItems: 'center', maxWidth: '40rem' }} container spacing={1}>
