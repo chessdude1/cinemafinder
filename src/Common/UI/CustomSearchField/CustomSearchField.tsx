@@ -21,7 +21,6 @@ export function CustomSearchField({ resultContainer, onChange, onKeyDown, search
   useEffect(() => {
     searchInputField.current?.focus();
   }, [searchInput, searchResult]);
-
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
