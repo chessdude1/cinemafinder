@@ -1,6 +1,7 @@
 import { divide } from 'lodash';
 import React from 'react';
 import { ADAPTIVE_BREAK_POINT } from '../../../Auxiliary/Constants';
+import { Genres } from '../../../Auxiliary/TranslateGenre';
 import CustomLabeledCheckbox from '../../../Common/UI/CustomLabeledCheckbox/CustomLabeledCheckbox';
 import { CustomSelect } from '../../../Common/UI/CustomSelect/CustomSelect';
 import { IGenre } from '../SearchQueryTypes';
@@ -13,9 +14,10 @@ export interface GenreFiltersType {
 }
 export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: GenreFiltersType) {
   function updateFieldChanged(names: string[]) {
+    const newNames = names.map((name) => Genres[name as keyof typeof Genres] as string);
     const allGenres = INIT_GENRES_STATE;
     const newArr = allGenres.map((obj) => {
-      if (!names.includes(obj.name)) {
+      if (!newNames.includes(obj.name)) {
         return obj;
       }
       const { id, name } = obj;
@@ -28,9 +30,9 @@ export function GenreFilters({ setFilterOfGenres, genreFilter, windowSize }: Gen
       {windowSize > ADAPTIVE_BREAK_POINT ? (
         <CustomSelect
           isMultiple
-          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => genre.name)}
-          variants={genreFilter.map((genre) => genre.name)}
-          placeholder='genres'
+          checkedArray={genreFilter.filter((genre) => genre.isApplied).map((genre) => Genres[genre.name as keyof typeof Genres])}
+          variants={genreFilter.map((genre) => Genres[genre.name as keyof typeof Genres])}
+          placeholder='Жанр'
           handleMultipleSelect={(value: string[]) => {
             updateFieldChanged(value);
           }}

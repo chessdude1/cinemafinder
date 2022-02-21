@@ -5,7 +5,7 @@ export enum SORT_ORDER {
   'release_date.desc' = 'Сначала новые',
   'release_date.asc' = 'Сначала старые',
   'original_title.asc' = 'Алфавитный порядок',
-  'original_title.desc' = 'Обратный алфавитынй порядок',
+  'original_title.desc' = 'Обратный алфавитный порядок',
 }
 export interface IGenre {
   id: number;

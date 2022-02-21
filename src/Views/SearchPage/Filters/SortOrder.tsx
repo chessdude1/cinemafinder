@@ -25,7 +25,7 @@ export function SortOrder({ setSortOrder, sortOrder, sortsList, windowSize }: So
           <CustomSingleSelect
             checkedItem={SORT_ORDER[sortOrder as keyof typeof SORT_ORDER]}
             variants={sortsList.map((order) => SORT_ORDER[order as keyof typeof SORT_ORDER])}
-            placeholder='order'
+            placeholder='Сортировка'
             handleSelect={(value: string) => {
               updateFieldChanged(value);
             }}

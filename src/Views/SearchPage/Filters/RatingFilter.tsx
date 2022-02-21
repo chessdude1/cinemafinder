@@ -18,7 +18,7 @@ export function RatingFilter({ setFilterOfRatings, filterOfRatings, windowSize }
           onChange={(value: number | number[]) => {
             setFilterOfRatings(value as number[]);
           }}
-          placeholder='rating'
+          placeholder='Рейтинг'
           defaultValue={0}
           value={filterOfRatings}
           step={1}
