@@ -47,6 +47,7 @@ export function SearchPageAux() {
       window.removeEventListener('resize', handleResize);
     };
   });
+
   const [isDrawerOpen, setDrawer] = useState<boolean>(false);
 
   const providers = useTypedSelector((store) => store.SearchPageReducer.providersList);
@@ -63,6 +64,7 @@ export function SearchPageAux() {
   const [filterOfYears, setFilterOfYears] = useState<number[]>(filtersInStore.year);
   const [filterOfRatings, setFilterOfRatings] = useState<number[]>(filtersInStore.rating);
   const [sortOrder, setSortOrder] = useState(filtersInStore.sortOrder);
+  const bottomMargin = 10;
 
   const dispatch = useDispatch();
   function updateFilterState({ sort, provider, ratings, years, genres }: IFilter) {
@@ -101,7 +103,7 @@ export function SearchPageAux() {
       }
     }
   }, [filtersInStore]);
-  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight;
+  const isBottom = (el: HTMLElement) => el.getBoundingClientRect().bottom <= window.innerHeight + bottomMargin;
   const trackScrolling = useCallback(() => {
     const el = document.getElementById('movies-filtered-list') as HTMLElement;
     if (isBottom(el) && !loading) {
