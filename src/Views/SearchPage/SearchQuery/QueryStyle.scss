@@ -1,0 +1,42 @@
+@import '../../../Variables.scss';
+.query-results {
+  padding: 2rem 1rem;
+  background-color: $WHITE;
+  border: 0.1rem solid black;
+  border-radius: 1rem;
+  position: absolute;
+  z-index: 2;
+  top: 9rem;
+  right: 25vw;
+  width: 25vw;
+  height: 50vh;
+}
+
+.movie-cards__container {
+  height: 100%;
+  padding: 2rem 1rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.movie-card__popup {
+  height: 20rem;
+}
+
+@media (max-width: $SIZEADAPTIVE) {
+  .search-field-wrapper {
+    width: 100%;
+    margin-left: 0;
+    border: 1px solid $BORDERGRAY;
+    background-color: $WHITE;
+    border-radius: 0.4rem;
+    color: $GRAYLINKS;
+    font-size: 1.6rem;
+  }
+  .search-field-wrapper {
+    .MuiInputBase-root {
+      width: 100%;
+    }
+  }
+}

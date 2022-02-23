@@ -1,0 +1,24 @@
+.swiper-button-next {
+  top: 40%;
+  background-image: url('../../../Assets/img/Swiper/swiper-next.svg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after {
+  display: none;
+}
+
+.swiper-button-prev {
+  top: 40%;
+  background-image: url('../../../Assets/img/Swiper/swiper-next.svg');
+  transform: rotate(180deg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-prev::after {
+  display: none;
+}

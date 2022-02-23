@@ -1,0 +1,61 @@
+import { IGenre, providerFilter } from '../SearchQueryTypes';
+
+export const ITEMS_ON_PAGE = 20;
+export const INIT_SORT_ORDER = 'popularity.desc';
+export const INIT_YEARS_STATE = [1900, 2022];
+export const INIT_RATING_STATE = [0, 10];
+export const INIT_REGION = 'RU';
+export const INIT_GENRES_STATE: IGenre[] = [
+  { id: 28, name: 'Action', isApplied: false },
+  { id: 12, name: 'Adventure', isApplied: false },
+  { id: 16, name: 'Animation', isApplied: false },
+  { id: 35, name: 'Comedy', isApplied: false },
+  { id: 80, name: 'Crime', isApplied: false },
+  { id: 99, name: 'Documentary', isApplied: false },
+  { id: 18, name: 'Drama', isApplied: false },
+  { id: 10751, name: 'Family', isApplied: false },
+  { id: 14, name: 'Fantasy', isApplied: false },
+  { id: 36, name: 'History', isApplied: false },
+  { id: 27, name: 'Horror', isApplied: false },
+  { id: 10402, name: 'Music', isApplied: false },
+  { id: 9648, name: 'Mystery', isApplied: false },
+  { id: 10749, name: 'Romance', isApplied: false },
+  { id: 878, name: 'Science Fiction', isApplied: false },
+  { id: 10770, name: 'TV Movie', isApplied: false },
+  { id: 53, name: 'Thriller', isApplied: false },
+  { id: 10752, name: 'War', isApplied: false },
+  { id: 37, name: 'Western', isApplied: false },
+];
+export const INIT_PROVIDERS_STATE: providerFilter[] = [
+  { id: 8, name: 'Netflix', isApplied: false },
+  { id: 119, name: 'Amazon Prime Video', isApplied: false },
+  { id: 2, name: 'Apple iTunes', isApplied: false },
+  { id: 3, name: 'Google Play Movies', isApplied: false },
+  { id: 115, name: 'Okko', isApplied: false },
+  { id: 116, name: 'Amediateka', isApplied: false },
+  { id: 113, name: 'Ivi', isApplied: false },
+  { id: 11, name: 'Mubi', isApplied: false },
+  { id: 100, name: 'GuideDoc', isApplied: false },
+  { id: 534, name: 'Argo', isApplied: false },
+  { id: 350, name: 'Apple TV Plus', isApplied: false },
+  { id: 190, name: 'Curiosity Stream', isApplied: false },
+  { id: 521, name: 'Spamflix', isApplied: false },
+  { id: 501, name: 'Wink', isApplied: false },
+  { id: 475, name: 'DOCSVILLE', isApplied: false },
+  { id: 546, name: 'WOW Presents Plus', isApplied: false },
+  { id: 551, name: 'Magellan TV', isApplied: false },
+  { id: 554, name: 'BroadwayHD', isApplied: false },
+  { id: 559, name: 'Filmzie', isApplied: false },
+  { id: 444, name: 'Dekkoo', isApplied: false },
+  { id: 556, name: 'tvzavr', isApplied: false },
+  { id: 557, name: 'More TV', isApplied: false },
+  { id: 567, name: 'True Story', isApplied: false },
+  { id: 445, name: 'Classix', isApplied: false },
+  { id: 569, name: 'DocAlliance Films', isApplied: false },
+  { id: 315, name: 'Hoichoi', isApplied: false },
+  { id: 677, name: 'Eventive', isApplied: false },
+  { id: 570, name: 'Premier', isApplied: false },
+  { id: 577, name: 'TvIgle', isApplied: false },
+  { id: 117, name: 'Kinopoisk', isApplied: false },
+  { id: 188, name: 'YouTube Premium', isApplied: false },
+];

@@ -1,0 +1,125 @@
+@import '../../../Variables.scss';
+.film-card__image {
+  max-width: 17rem;
+  border-radius: 4px;
+}
+
+.film-card__provider-image {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 4px;
+  margin-right: 1.2rem;
+}
+
+
+.movie-description__providers {
+  margin-top: 10%;
+}
+
+.movie-card__medium {
+  height: 25rem;
+  width: 45%;
+  padding: 1rem 2rem;
+}
+.card-medium__wrapper {
+  height: 100%;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  align-items: flex-start;
+
+  .poster__wrapper {
+    height: 20rem;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    .poster__image {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .movie-description-wrapper {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .movie-description__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+  .film-card__providers-wrapper {
+    width: 90%;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    .card-scroll {
+      display: flex;
+      width: fit-content;
+    }
+  }
+}
+@media (max-width: $SIZEADAPTIVE) {
+  .movie-card__rating {
+    display: none;
+  }
+  .movie-card__medium {
+    height: 20rem;
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+  .film-card__provider-image {
+    width: 4rem;
+    height: 4rem;
+  }
+  .card-medium__wrapper {
+    padding: 0;
+
+    .poster__wrapper {
+      width: 12rem;
+      height: 18rem;
+      .poster__image {
+        min-width: 10rem;
+      }
+    }
+    .movie-description-wrapper {
+      height: 100%;
+      width: 70%;
+    }
+  }
+}
+@media (max-width: $SIZEADAPTIVEMOBILE) {
+  .movie-card__rating {
+    display: none;
+  }
+  .movie-card__medium {
+    height: fit-content;
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+  .film-card__provider-image {
+    width: 4rem;
+    height: 4rem;
+  }
+  .card-medium__wrapper {
+    padding: 0;
+    .poster__wrapper {
+      height: auto;
+      min-width: 8rem;
+      .poster__image {
+        height: auto;
+        min-width: 8rem;
+      }
+    }
+    .movie-description-wrapper {
+      height: 100%;
+      width: 70%;
+    }
+  }
+}

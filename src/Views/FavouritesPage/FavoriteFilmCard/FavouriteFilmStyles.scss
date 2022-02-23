@@ -1,0 +1,20 @@
+@import '../../../Variables.scss';
+
+.film-card {
+  text-decoration: none;
+}
+.film-card__title {
+  font-size: 2rem;
+  line-height: 120%;
+  color: $GRAYLINKS;
+  margin: 0;
+}
+
+.film-card__info {
+  font-size: 1.2rem;
+  line-height: 135%;
+  color: #828282;
+  margin: 0;
+
+}
+

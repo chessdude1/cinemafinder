@@ -1,0 +1,18 @@
+.custom__range-value-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  .custom__range-values {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .range-value {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 1rem 0;
+  }
+}

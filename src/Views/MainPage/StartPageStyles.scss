@@ -1,0 +1,35 @@
+@import "../../Variables.scss";
+
+.search-block {
+  background-image: url('../../Assets/img/StartPage/main-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 60px;
+  width: 100vw;
+  margin-left: calc(50% - 50.45vw);
+}
+
+.search-block__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: calc(100vh - 72px);
+}
+
+.search-block__content {
+  text-align: center;
+  max-width: 950px;
+}
+
+.latest-block__heading-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.popular-block__heading-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
