@@ -30,7 +30,11 @@ export function StartPage() {
     <div>
       <section className='search-block'>
         <div className='search-block__container'>
-          <div className='search-block__content'><Typography variant='h1' sx={{ color: 'white', textAlign: 'center' }}>Смотрите фильмы на площадках, которые у вас есть</Typography></div>
+          <div className='search-block__content'>
+            <Typography variant='h1' sx={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+              Смотрите фильмы на площадках, которые у вас есть
+            </Typography>
+          </div>
         </div>
       </section>
       <section className='latest-block'>

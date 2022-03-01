@@ -5,39 +5,44 @@
 }
 
 .film-card__provider-image {
-  width: 5.5rem;
-  height: 5.5rem;
+  max-width: 5.5rem;
+  max-height: 5.5rem;
   border-radius: 4px;
-  margin-right: 1.2rem;
+  // margin-right: 1.2rem;
 }
 
 
 .movie-description__providers {
-  margin-top: 10%;
+  
+  // height: 100%;
 }
 
 .movie-card__medium {
-  height: 25rem;
+  height: 30rem;
   width: 45%;
   padding: 1rem 2rem;
+  overflow: visible !important;
 }
 .card-medium__wrapper {
   height: 100%;
   padding: 2rem 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 2rem;
   align-items: flex-start;
 
   .poster__wrapper {
-    height: 20rem;
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    // height: 20rem;
+    // height: 100%;
+    width: 35%;
+    min-width: 35%;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // overflow: hidden;
     .poster__image {
       width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -56,15 +61,34 @@
     align-items: flex-start;
   }
   .film-card__providers-wrapper {
-    width: 90%;
-    overflow-x: auto;
-    padding-bottom: 1rem;
+    width: 80%;
+    overflow-x: scroll;
+    // padding-bottom: 1rem;
+    &::-webkit-scrollbar {
+      width: 3rem;
+      height: 1rem;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: #BDBDBD;
+      border-radius: 50px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      border-radius: 100px;
+      background-color: #2F80ED;
+      box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+    }
     .card-scroll {
       display: flex;
-      width: fit-content;
+      align-items: center;
+      gap: 1rem;
     }
   }
 }
+
+
+
 @media (max-width: $SIZEADAPTIVE) {
   .movie-card__rating {
     display: none;

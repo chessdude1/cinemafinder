@@ -44,17 +44,19 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
             <img className='poster__image' alt='not found img' src={notFoundImg} />
           )}
         </Box>
-        <Box sx={{ marginLeft: '1.6rem' }}>
-          <Typography variant='h4' sx={{ fontWeight: '600', overflow: 'none' }}>
-            {titleTranslated || originalTitle}
-            (
-            {year}
-            )
-          </Typography>
-          <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
-            {transalteGenres.join(', ')}
-          </Typography>
-          {voteAverage !== 0 ? <RatingDisplay evaluator='IMDb' rating={voteAverage} /> : ''}
+        <Box sx={{ marginLeft: '1.6rem', width: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+          <div>
+            <Typography variant='h4' sx={{ fontWeight: '600', overflow: 'none' }}>
+              {titleTranslated || originalTitle}
+              (
+              {year}
+              )
+            </Typography>
+            <Typography sx={{ marginTop: '0.2rem', marginBottom: '0.8rem' }} variant='subtitle1'>
+              {transalteGenres.join(', ')}
+            </Typography>
+            {voteAverage !== 0 ? <RatingDisplay evaluator='IMDb' rating={voteAverage} /> : ''}
+          </div>
           {watchProvidersWithoutRepeats.length > 0 ? (
             <div className='movie-description__providers'>
               <Typography sx={{ fontWeight: '600' }} variant='h5'>
@@ -71,9 +73,11 @@ export function FavoriteFilmCard({ id, posterPath, originalTitle,
               </div>
             </div>
           ) : (
-            <Typography sx={{ fontWeight: '600' }} variant='h5'>
-              Доступные площадки не найдены
-            </Typography>
+            <div className='movie-description__providers'>
+              <Typography sx={{ fontWeight: '600' }} variant='h5'>
+                Доступные площадки не найдены
+              </Typography>
+            </div>
           )}
         </Box>
         <Paper elevation={3} />
